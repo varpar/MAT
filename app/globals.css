@@ -1,26 +1,95 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-paper: #fafaf7;
+  --color-paper-deep: #f3f1ec;
+  --color-ink: #1a1a1a;
+  --color-sage: #436c67;
+  --color-sage-light: #e8efee;
+  --color-sage-lighter: #f4f7f7;
+  --color-sindoor: #c41e1e;
+
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-inter);
+  --font-script: var(--font-caveat);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+*, *::before, *::after { box-sizing: border-box; }
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(26,26,26,0.18); border-radius: 4px; }
+
+/* ---------- Animation keyframes ---------- */
+@keyframes mat-spin { to { transform: rotate(360deg); } }
+@keyframes mat-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes mat-pulse-ring { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.6); opacity: 0; } }
+@keyframes mat-fade-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes mat-shimmer { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.7; } }
+
+@keyframes ma-bindu-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.18); opacity: 0.85; }
+}
+
+@keyframes mg-spin { to { transform: rotate(360deg); } }
+@keyframes mg-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+@keyframes mg-flicker {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(2deg); }
+  75% { transform: rotate(-2deg); }
+}
+@keyframes mg-fall {
+  0%   { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+  8%   { opacity: 1; }
+  50%  { transform: translate(var(--mg-sway), 55vh) rotate(180deg); }
+  92%  { opacity: 1; }
+  100% { transform: translate(0, 110vh) rotate(360deg); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ---------- Mobile horizontal padding reduction
+   Sections in this codebase use inline `padding: "X 40px"`. The selectors
+   below claw back the horizontal padding on narrow viewports without
+   touching the inline styles. Targets all <section>, <div>, <article>
+   and similar that we'd want to gutter-shrink. ---------- */
+@media (max-width: 720px) {
+  main > section,
+  main > div[class*="mat-"] {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+}
+@media (min-width: 721px) and (max-width: 1024px) {
+  main > section,
+  main > div[class*="mat-"] {
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+  }
+}
+
+/* Smaller type ramp on phones so display-1 headlines don't dominate. */
+@media (max-width: 600px) {
+  h1 { letter-spacing: -0.01em; }
 }
