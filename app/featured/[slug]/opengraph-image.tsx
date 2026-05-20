@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { FEATURED } from "../../_components/data";
+import { matImageUrl } from "../../_lib/mat-image-url";
 
 export const runtime = "edge";
 export const size = { width: 1200, height: 630 };
@@ -12,7 +13,7 @@ export default async function OG({ params }: { params: Promise<{ slug: string }>
   const bride = couple?.bride ?? "Riya";
   const groom = couple?.groom ?? "Mohit";
   const place = couple?.place ?? "Udaipur";
-  const img = couple?.img ?? "";
+  const imgUrl = couple ? matImageUrl(couple.img, 1200) : "";
 
   return new ImageResponse(
     (
@@ -26,10 +27,9 @@ export default async function OG({ params }: { params: Promise<{ slug: string }>
           color: "#fff",
         }}
       >
-        {img && (
-          // eslint-disable-next-line @next/next/no-img-element
+        {imgUrl && (
           <img
-            src={img}
+            src={imgUrl}
             alt=""
             width={1200}
             height={630}

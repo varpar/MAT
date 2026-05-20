@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import { SERIF, SANS, T } from "./tokens";
+import Image from "next/image";
+import { SANS, T } from "./tokens";
 
 type FootLink = [label: string, href: string | null];
 
@@ -56,17 +57,13 @@ export function Footer() {
         }}
       >
         <div>
-          <div
-            style={{
-              fontFamily: SERIF,
-              fontStyle: "italic",
-              fontSize: 40,
-              fontWeight: 400,
-              lineHeight: 1,
-            }}
-          >
-            Mi Amor<span style={{ color: T.sage }}>.</span> Tales
-          </div>
+          <Image
+            src="/brand/mat-logo-cream.webp"
+            alt="Mi Amor Tales"
+            width={220}
+            height={68}
+            style={{ height: 68, width: "auto", display: "block" }}
+          />
           <div
             style={{
               marginTop: 16,

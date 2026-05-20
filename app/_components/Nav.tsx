@@ -2,10 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { SERIF, SANS, T } from "./tokens";
-import { PhotoCascadeLoader } from "./PhotoCascadeLoader";
-import { FEATURED } from "./data";
+
+const LOGO_W = 156;
+const LOGO_H = 48; // logo file is ~3.24:1; height of 48 gives a width of ~156
 
 const NAV_LINKS: [string, string][] = [
   ["Featured", "/featured"],
@@ -22,7 +24,6 @@ function isActive(pathname: string, href: string) {
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
-  const [loaderDone, setLoaderDone] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const pathname = usePathname();
   // Pages that open with a dark full-bleed hero — nav must read white initially.
@@ -36,12 +37,6 @@ export function Nav() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const seen = sessionStorage.getItem("mat_loader_seen");
-    if (seen) setLoaderDone(true);
   }, []);
 
   // close drawer on route change
@@ -58,25 +53,8 @@ export function Nav() {
     };
   }, [drawerOpen]);
 
-  const handleLoaderDone = () => {
-    setLoaderDone(true);
-    try {
-      sessionStorage.setItem("mat_loader_seen", "1");
-    } catch {}
-  };
-
-  const loaderImages = FEATURED.map((c) => c.img);
-
   return (
     <>
-      {!loaderDone && (
-        <PhotoCascadeLoader
-          images={loaderImages}
-          bg="#0e0e0e"
-          accent="#fff"
-          onDone={handleLoaderDone}
-        />
-      )}
       <nav
         aria-label="Primary"
         style={{
@@ -102,18 +80,28 @@ export function Nav() {
       >
         <Link
           href="/"
+          aria-label="Mi Amor Tales — Home"
           style={{
-            fontFamily: SERIF,
-            fontStyle: "italic",
-            fontSize: 22,
-            letterSpacing: "0.005em",
-            fontWeight: 500,
-            lineHeight: 1,
+            display: "inline-flex",
+            alignItems: "center",
+            height: LOGO_H,
             color: "inherit",
             textDecoration: "none",
           }}
         >
-          Mi Amor<span style={{ color: T.sage }}>.</span> Tales
+          <Image
+            src={overDark ? "/brand/mat-logo-cream.webp" : "/brand/mat-logo-ink.webp"}
+            alt="Mi Amor Tales"
+            width={LOGO_W}
+            height={LOGO_H}
+            priority
+            style={{
+              height: LOGO_H,
+              width: "auto",
+              display: "block",
+              transition: "opacity 350ms ease",
+            }}
+          />
         </Link>
 
         {/* Desktop link row */}
@@ -245,16 +233,22 @@ function MobileDrawer({
         <Link
           href="/"
           onClick={onClose}
+          aria-label="Mi Amor Tales — Home"
           style={{
-            fontFamily: SERIF,
-            fontStyle: "italic",
-            fontSize: 22,
-            fontWeight: 500,
+            display: "inline-flex",
+            alignItems: "center",
+            height: LOGO_H,
             color: "inherit",
             textDecoration: "none",
           }}
         >
-          Mi Amor<span style={{ color: T.sage }}>.</span> Tales
+          <Image
+            src="/brand/mat-logo-ink.webp"
+            alt="Mi Amor Tales"
+            width={LOGO_W}
+            height={LOGO_H}
+            style={{ height: LOGO_H, width: "auto", display: "block" }}
+          />
         </Link>
         <button
           type="button"

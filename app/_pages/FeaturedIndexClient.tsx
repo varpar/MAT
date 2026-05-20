@@ -2,115 +2,201 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { motion } from "motion/react";
 import { SERIF, SANS, T } from "../_components/tokens";
 import { useReveal } from "../_components/hooks";
 import { FEATURED, type Couple } from "../_components/data";
+import { MatImage } from "../_components/MatImage";
 
-function FeatCard({
-  couple,
-  idx,
-  visible,
-}: {
-  couple: Couple;
-  idx: number;
-  visible: boolean;
-}) {
+const EASE = [0.2, 0.7, 0.2, 1] as const;
+
+/* ─────────────────────────────────────────────────────────────
+   Editorial spread per couple — sage name-plate beside a tall
+   feature photo. Layout alternates side-to-side. Lifted from the
+   MAT magazine PDF (Harsh / Pooja cover spread, page 10).
+   ───────────────────────────────────────────────────────────── */
+function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
   const [hov, setHov] = useState(false);
   const router = useRouter();
-  const tall = idx % 3 === 0;
+  const reverse = idx % 2 === 1;
+  const go = () => router.push(`/featured/${couple.slug ?? "riya-sang-mohit"}`);
+
   return (
-    <article
-      onClick={() =>
-        router.push(`/featured/${couple.slug ?? "riya-sang-mohit"}`)
-      }
+    <motion.article
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
+      onClick={go}
+      initial={{ opacity: 0, y: 32 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-10%" }}
+      transition={{ duration: 1, ease: EASE }}
+      className="mat-spread"
       style={{
         cursor: "pointer",
-        gridRow: tall ? "span 2" : "auto",
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(24px)",
-        transition: `opacity 1s cubic-bezier(.2,.7,.2,1) ${idx * 0.05}s, transform 1s cubic-bezier(.2,.7,.2,1) ${idx * 0.05}s`,
+        display: "grid",
+        gridTemplateColumns: reverse ? "5fr 7fr" : "7fr 5fr",
+        gap: 0,
+        alignItems: "stretch",
       }}
     >
       <div
         style={{
+          gridColumn: reverse ? 2 : 1,
           position: "relative",
-          aspectRatio: tall ? "3/4.4" : "3/2",
+          aspectRatio: "4/5",
           overflow: "hidden",
-          background: "#222",
+          background: "#0e0e0e",
         }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={couple.img}
-          alt={`${couple.bride} sang ${couple.groom} — ${couple.place}`}
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            transform: hov ? "scale(1.03)" : "scale(1)",
-            transition: "transform 1.2s cubic-bezier(.2,.7,.2,1)",
-          }}
-        />
+        <motion.div
+          style={{ position: "absolute", inset: 0, willChange: "transform" }}
+          animate={{ scale: hov ? 1.04 : 1 }}
+          transition={{ duration: 1.6, ease: EASE }}
+        >
+          <MatImage
+            image={couple.img}
+            variant="Grid"
+            alt={`${couple.bride} sang ${couple.groom} — ${couple.place}`}
+          />
+        </motion.div>
       </div>
+
       <div
         style={{
-          marginTop: 18,
+          gridColumn: reverse ? 1 : 2,
+          gridRow: 1,
+          background: T.sage,
+          color: "#f1f4f3",
+          padding: "56px 40px",
           display: "flex",
+          flexDirection: "column",
           justifyContent: "space-between",
-          alignItems: "baseline",
-          gap: 16,
+          position: "relative",
+          overflow: "hidden",
         }}
       >
-        <div>
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              "radial-gradient(ellipse at center, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0.08) 100%)",
+            pointerEvents: "none",
+          }}
+        />
+
+        <div style={{ position: "relative", zIndex: 1 }}>
+          <div
+            style={{
+              fontFamily: SANS,
+              fontSize: 10,
+              letterSpacing: "0.4em",
+              textTransform: "uppercase",
+              opacity: 0.78,
+              marginBottom: 8,
+            }}
+          >
+            No. {String(idx + 1).padStart(2, "0")} — A story by Mi Amor Tales
+          </div>
+        </div>
+
+        <div
+          style={{
+            position: "relative",
+            zIndex: 1,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: reverse ? "flex-end" : "flex-start",
+            textAlign: reverse ? "right" : "left",
+            margin: "8px 0",
+          }}
+        >
+          <span
+            style={{
+              fontFamily: SERIF,
+              fontWeight: 400,
+              fontSize: "clamp(48px, 7.2vw, 124px)",
+              lineHeight: 0.92,
+              letterSpacing: "-0.02em",
+              textTransform: "uppercase",
+            }}
+          >
+            {couple.bride}
+          </span>
+          <span
+            style={{
+              fontFamily: SERIF,
+              fontStyle: "italic",
+              fontWeight: 300,
+              fontSize: "clamp(20px, 2.4vw, 32px)",
+              opacity: 0.85,
+              margin: "8px 0",
+            }}
+          >
+            sang
+          </span>
+          <span
+            style={{
+              fontFamily: SERIF,
+              fontWeight: 400,
+              fontSize: "clamp(48px, 7.2vw, 124px)",
+              lineHeight: 0.92,
+              letterSpacing: "-0.02em",
+              textTransform: "uppercase",
+            }}
+          >
+            {couple.groom}
+          </span>
+        </div>
+
+        <div
+          style={{
+            position: "relative",
+            zIndex: 1,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+            flexWrap: "wrap",
+            gap: 16,
+            marginTop: 16,
+          }}
+        >
           <div
             style={{
               fontFamily: SERIF,
-              fontSize: tall ? 28 : 24,
-              lineHeight: 1.2,
-              fontWeight: 400,
+              fontStyle: "italic",
+              fontSize: 15,
+              opacity: 0.85,
+              maxWidth: 320,
+              lineHeight: 1.55,
             }}
           >
-            <span style={{ fontStyle: "italic" }}>{couple.bride}</span>{" "}
-            <span style={{ fontStyle: "italic", color: T.sage, fontSize: "0.55em" }}>
-              sang
-            </span>{" "}
-            <span style={{ fontStyle: "italic" }}>{couple.groom}</span>
+            {couple.place} — three days, one quiet sit-down, every frame kept.
           </div>
-          <div
+          <motion.span
+            animate={{ x: hov ? 6 : 0, opacity: hov ? 1 : 0.78 }}
+            transition={{ duration: 0.4, ease: EASE }}
             style={{
-              marginTop: 6,
               fontFamily: SANS,
-              fontSize: 11,
-              letterSpacing: "0.2em",
+              fontSize: 10,
+              letterSpacing: "0.4em",
               textTransform: "uppercase",
-              opacity: 0.6,
+              borderBottom: "1px solid rgba(255,255,255,0.55)",
+              paddingBottom: 4,
+              whiteSpace: "nowrap",
             }}
           >
-            {couple.place} — Three Days
-          </div>
-        </div>
-        <div
-          style={{
-            fontFamily: SANS,
-            fontSize: 10,
-            letterSpacing: "0.32em",
-            textTransform: "uppercase",
-            color: T.sage,
-            opacity: 0.7,
-          }}
-        >
-          No. {String(idx + 1).padStart(2, "0")}
+            Read the story →
+          </motion.span>
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 }
 
 export function FeaturedIndexClient() {
   const [ref, vis] = useReveal<HTMLElement>(0.05);
-  const items = [...FEATURED, ...FEATURED.slice(0, 2)];
   return (
     <main>
       <section
@@ -172,21 +258,20 @@ export function FeaturedIndexClient() {
         </p>
       </section>
       <section style={{ padding: "40px 40px 160px", background: T.paper }}>
-        <div
-          className="mat-feat-grid"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-            gap: 32,
-          }}
-        >
-          {items.map((c, i) => (
-            <FeatCard key={i} couple={c} idx={i} visible={vis} />
+        <div style={{ display: "flex", flexDirection: "column", gap: 64 }}>
+          {FEATURED.map((c, i) => (
+            <CoupleSpread key={i} couple={c} idx={i} />
           ))}
         </div>
         <style>{`
-          @media (max-width: 720px) {
-            .mat-feat-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+          @media (max-width: 880px) {
+            .mat-spread { grid-template-columns: 1fr !important; }
+            .mat-spread > *:first-child { aspect-ratio: 4/5 !important; }
+            .mat-spread > *:nth-child(2) {
+              grid-column: 1 !important;
+              grid-row: auto !important;
+              padding: 32px 24px !important;
+            }
           }
         `}</style>
       </section>

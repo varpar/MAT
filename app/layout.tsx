@@ -41,6 +41,16 @@ export default function RootLayout({
       lang="en"
       className={`${cormorant.variable} ${inter.variable} ${caveat.variable}`}
     >
+      <head>
+        {/* Open the TCP/TLS connection to Cloudinary early so the first
+            image request lands without a cold handshake. */}
+        <link
+          rel="preconnect"
+          href="https://res.cloudinary.com"
+          crossOrigin="anonymous"
+        />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+      </head>
       <body>
         <ScrollProgress />
         <Nav />

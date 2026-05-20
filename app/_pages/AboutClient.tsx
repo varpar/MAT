@@ -5,8 +5,10 @@ import { SERIF, SANS, T } from "../_components/tokens";
 import { useReveal } from "../_components/hooks";
 import { MAT_IMAGES } from "../_components/data";
 import { Marigold } from "../_components/Marigold";
+import { MatImage } from "../_components/MatImage";
+import type { MatImageRecord } from "../_lib/mat-image-types";
 
-type Person = { name: string; role: string; img: string };
+type Person = { name: string; role: string; img: MatImageRecord };
 
 function TeamCard({ t }: { t: Person }) {
   const [hov, setHov] = useState(false);
@@ -23,15 +25,13 @@ function TeamCard({ t }: { t: Person }) {
           background: "#222",
         }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={t.img}
+        <MatImage
+          image={t.img}
+          variant="Thumbnail"
           alt={t.name}
+          filter={hov ? "grayscale(0)" : "grayscale(0.4)"}
           style={{
-            width: "100%",
-            height: "100%",
             objectFit: "cover",
-            filter: hov ? "grayscale(0)" : "grayscale(0.4)",
             transform: hov ? "scale(1.03)" : "scale(1)",
             transition: "all 1s cubic-bezier(.2,.7,.2,1)",
           }}
@@ -207,17 +207,8 @@ export function AboutClient() {
           alignItems: "center",
         }}
       >
-        <div style={{ aspectRatio: "3/4", overflow: "hidden" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={MAT_IMAGES.detail1}
-            alt=""
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
-          />
+        <div style={{ aspectRatio: "3/4", overflow: "hidden", position: "relative" }}>
+          <MatImage image={MAT_IMAGES.detail1} variant="Grid" alt="" />
         </div>
         <div>
           <div

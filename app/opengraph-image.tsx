@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { MAT_IMAGES } from "./_components/data";
+import { matImageUrl } from "./_lib/mat-image-url";
 
 export const runtime = "edge";
 export const size = { width: 1200, height: 630 };
@@ -19,9 +20,8 @@ export default function OG() {
           color: "#fff",
         }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={MAT_IMAGES.hero}
+          src={matImageUrl(MAT_IMAGES.hero, 1200)}
           alt=""
           width={1200}
           height={630}

@@ -8,7 +8,9 @@ import { useReveal, useScrollProgress } from "../_components/hooks";
 import { MAT_IMAGES, RITUALS, type Couple } from "../_components/data";
 import { MehendiSVG } from "../_components/MehendiSVG";
 import { SelectiveColorImage } from "../_components/SelectiveColorImage";
+import { MatImage } from "../_components/MatImage";
 import { VinylIcon } from "../_components/Icons";
+import { FeaturedStoryClient } from "./FeaturedStoryClient";
 
 /* ─────────────────────────────────────────────────────────────
    TITLE — quiet, no marigolds, single Sang Devanagari ligature.
@@ -107,16 +109,11 @@ function FeaturedHero({ couple }: { couple: Couple }) {
         overflow: "hidden",
       }}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={couple.img}
+      <MatImage
+        image={couple.img}
+        variant="Hero"
         alt=""
-        style={{
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          filter: "brightness(0.86)",
-        }}
+        filter="brightness(0.86)"
       />
       <div
         style={{
@@ -316,7 +313,7 @@ function SelectiveColorSection() {
           }}
         >
           <SelectiveColorImage
-            src={MAT_IMAGES.bride1}
+            image={MAT_IMAGES.bride1}
             style={{ width: "100%", height: "100%" }}
             redSpot={{ x: 0.5, y: 0.16, r: 0.04 }}
           />
@@ -332,7 +329,7 @@ function SelectiveColorSection() {
           }}
         >
           <SelectiveColorImage
-            src={MAT_IMAGES.detail3}
+            image={MAT_IMAGES.detail3}
             style={{ width: "100%", height: "100%" }}
             redSpot={{ x: 0.45, y: 0.4, r: 0.08 }}
           />
@@ -347,7 +344,7 @@ function SelectiveColorSection() {
           }}
         >
           <SelectiveColorImage
-            src={MAT_IMAGES.bride2}
+            image={MAT_IMAGES.bride2}
             style={{ width: "100%", height: "100%" }}
             redSpot={{ x: 0.5, y: 0.18, r: 0.05 }}
           />
@@ -478,16 +475,7 @@ function RitualRow({
           background: "#222",
         }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={r.img}
-          alt=""
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-          }}
-        />
+        <MatImage image={r.img} variant="Grid" alt={r.name} />
       </div>
       <div
         style={{
@@ -834,6 +822,10 @@ export function FeaturedSlugClient({
   couple: Couple;
   index: number;
 }) {
+  // Real-story couples (from the magazine PDF) get the editorial spread
+  // renderer. Placeholders fall back to the legacy template below.
+  if (couple.story) return <FeaturedStoryClient couple={couple} />;
+
   return (
     <main>
       <FeaturedTitle couple={couple} idx={index + 1} />

@@ -33,9 +33,17 @@ html, body {
 /* ---------- Animation keyframes ---------- */
 @keyframes mat-spin { to { transform: rotate(360deg); } }
 @keyframes mat-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-@keyframes mat-pulse-ring { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.6); opacity: 0; } }
 @keyframes mat-fade-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes mat-shimmer { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.7; } }
+
+/* MatImage blur-up — next/image swaps from `blurDataURL` to the real image
+   once it loads. Default snap is slightly snappier than the rest of the site;
+   this stretches the transition to 600ms with the brand ease curve so the
+   reveal feels editorial, not abrupt. */
+img[data-mat-image] {
+  transition:
+    filter 600ms cubic-bezier(.2, .7, .2, 1),
+    opacity 600ms cubic-bezier(.2, .7, .2, 1);
+}
 
 @keyframes ma-bindu-pulse {
   0%, 100% { transform: scale(1); opacity: 1; }

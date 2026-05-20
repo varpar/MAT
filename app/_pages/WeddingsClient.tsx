@@ -4,11 +4,13 @@ import React, { useMemo, useState } from "react";
 import { SERIF, SANS, T } from "../_components/tokens";
 import { useReveal } from "../_components/hooks";
 import { FEATURED, MAT_IMAGES, type Couple } from "../_components/data";
+import { MatImage } from "../_components/MatImage";
+import type { MatImageRecord } from "../_lib/mat-image-types";
 
 const ARCHIVE_FILTERS = ["All", "Bride", "Couple", "B&W", "Party", "Venue"] as const;
 
 type Frame = {
-  img: string;
+  img: MatImageRecord;
   couple: Couple;
   ratio: number; // width / height — controls grid span
   filter: (typeof ARCHIVE_FILTERS)[number][];
@@ -72,15 +74,13 @@ function FrameTile({
           background: "#222",
         }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={f.img}
+        <MatImage
+          image={f.img}
+          variant="Polaroid"
           alt={`${f.couple.bride} sang ${f.couple.groom}`}
+          filter={isBW ? "grayscale(1)" : "grayscale(0)"}
           style={{
-            width: "100%",
-            height: "100%",
             objectFit: "cover",
-            filter: isBW ? "grayscale(1)" : "grayscale(0)",
             transform: hov ? "scale(1.03)" : "scale(1)",
             transition: "transform 1.2s cubic-bezier(.2,.7,.2,1)",
           }}

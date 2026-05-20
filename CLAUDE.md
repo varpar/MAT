@@ -1,6 +1,13 @@
 @AGENTS.md
 
 
+## Working style for this repo
+
+- **Default to subagents.** Anything that touches multiple files, requires reading large assets (PDFs, magazine pages, contact sheets, many screenshots), inspecting batches of images, or running broad code searches → launch one or more Explore / general-purpose agents instead of doing it in the main thread. Fan them out in parallel whenever the tasks are independent (single message, multiple Agent tool calls).
+- Synthesis stays in the main thread — never delegate the *decision* of how to wire results together. Agents gather and report; the main thread plans and edits the code.
+- Use the Plan agent for multi-step implementations that span >3 files or introduce a new pattern.
+
+
 # Mi Amor Tales — Website Redesign
 
 ## Who is MAT?

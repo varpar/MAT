@@ -3,12 +3,14 @@
 import React, { useState } from "react";
 import { SERIF, SANS, T } from "../_components/tokens";
 import { MAT_IMAGES } from "../_components/data";
+import { MatImage } from "../_components/MatImage";
+import type { MatImageRecord } from "../_lib/mat-image-types";
 
 type Post = {
   cat: string;
   title: string;
   date: string;
-  img: string;
+  img: MatImageRecord;
   read: string;
 };
 
@@ -74,14 +76,12 @@ function TaleCard({ p }: { p: Post }) {
       onMouseLeave={() => setHov(false)}
       style={{ cursor: "pointer" }}
     >
-      <div style={{ aspectRatio: "3/2", overflow: "hidden", background: "#222" }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={p.img}
+      <div style={{ aspectRatio: "3/2", overflow: "hidden", background: "#222", position: "relative" }}>
+        <MatImage
+          image={p.img}
+          variant="Grid"
           alt=""
           style={{
-            width: "100%",
-            height: "100%",
             objectFit: "cover",
             transform: hov ? "scale(1.03)" : "scale(1)",
             transition: "transform 1.2s cubic-bezier(.2,.7,.2,1)",
@@ -191,16 +191,7 @@ export function TalesClient() {
             cursor: "pointer",
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={featured.img}
-            alt=""
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
-          />
+          <MatImage image={featured.img} variant="Grid" alt="" />
         </div>
         <div
           style={{

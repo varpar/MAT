@@ -8,9 +8,11 @@ import {
   useReducedMotion,
   type MotionValue,
 } from "motion/react";
+import { MatImage, type MatImageVariant } from "./MatImage";
+import type { MatImageRecord } from "../_lib/mat-image-types";
 
 type Props = {
-  src: string;
+  image: MatImageRecord;
   alt?: string;
   aspect?: string;
   parallax?: number; // px to translate vertically across the visible window
@@ -21,6 +23,8 @@ type Props = {
   style?: React.CSSProperties;
   filter?: string;
   priority?: boolean;
+  /** MatImage variant — drives `sizes`. Defaults to "Grid". */
+  variant?: MatImageVariant;
 };
 
 const REVEAL_VARIANTS = {
@@ -31,7 +35,7 @@ const REVEAL_VARIANTS = {
 };
 
 export function AnimatedImage({
-  src,
+  image,
   alt = "",
   aspect = "3/4",
   parallax = 0,
@@ -42,6 +46,7 @@ export function AnimatedImage({
   style,
   filter,
   priority,
+  variant = "Grid",
 }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const reduceMotion = useReducedMotion();
@@ -97,20 +102,19 @@ export function AnimatedImage({
       }}
       whileHover="hover"
     >
-      <motion.img
-        src={src}
-        alt={alt}
-        loading={priority ? "eager" : "lazy"}
-        decoding="async"
-        draggable={false}
+      <motion.div
         style={{
           position: "absolute",
-          inset: 0,
+          // Pre-offset the inner image UP by `parallax` so when the dynamic
+          // y-shift starts at +parallax (image entering viewport), the image
+          // sits flush with the container top — no black gap. The extra
+          // height = parallax*2 still gives full parallax travel.
+          top: parallax ? -Math.abs(parallax) : 0,
+          left: 0,
+          right: 0,
           width: "100%",
           height: parallax ? `calc(100% + ${Math.abs(parallax) * 2}px)` : "100%",
-          objectFit: "cover",
           y: yShift,
-          filter,
           willChange: "transform",
         }}
         variants={
@@ -124,7 +128,16 @@ export function AnimatedImage({
         initial="rest"
         animate="rest"
         transition={{ duration: 1.4, ease: [0.2, 0.7, 0.2, 1] }}
-      />
+      >
+        <MatImage
+          image={image}
+          variant={variant}
+          alt={alt}
+          priority={priority}
+          filter={filter}
+          style={{ objectFit: "cover" }}
+        />
+      </motion.div>
     </motion.div>
   );
 }

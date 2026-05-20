@@ -1,36 +1,36 @@
 "use client";
 
 import React from "react";
+import { MatImage, type MatImageVariant } from "./MatImage";
+import type { MatImageRecord } from "../_lib/mat-image-types";
 
 type Props = {
-  src: string;
+  image: MatImageRecord;
   intensity?: number;
   style?: React.CSSProperties;
   redSpot?: { x: number; y: number; r: number };
   alt?: string;
+  /** MatImage variant — drives `sizes`. Defaults to "Grid". */
+  variant?: MatImageVariant;
 };
 
 /** Greyscale photo with a red sindoor highlight at the parting. */
 export function SelectiveColorImage({
-  src,
+  image,
   intensity = 1,
   style = {},
   redSpot = { x: 0.5, y: 0.18, r: 0.06 },
   alt = "",
+  variant = "Grid",
 }: Props) {
   return (
     <div style={{ position: "relative", overflow: "hidden", ...style }}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={src}
+      <MatImage
+        image={image}
+        variant={variant}
         alt={alt}
-        style={{
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          display: "block",
-          filter: `grayscale(${intensity})`,
-        }}
+        filter={`grayscale(${intensity})`}
+        style={{ objectFit: "cover" }}
       />
       {intensity > 0 && (
         <div
