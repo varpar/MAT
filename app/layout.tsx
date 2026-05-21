@@ -4,6 +4,10 @@ import "./globals.css";
 import { Nav } from "./_components/Nav";
 import { Footer } from "./_components/Footer";
 import { ScrollProgress } from "./_components/ScrollProgress";
+import { PageTransition } from "./_components/PageTransition";
+import { PageMarigolds } from "./_components/PageMarigolds";
+import { SmoothScroll } from "./_components/SmoothScroll";
+import { Cursor } from "./_components/Cursor";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -52,9 +56,12 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
       </head>
       <body>
+        <SmoothScroll />
+        <Cursor />
         <ScrollProgress />
         <Nav />
-        {children}
+        <PageMarigolds />
+        <PageTransition>{children}</PageTransition>
         <Footer />
       </body>
     </html>

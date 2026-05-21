@@ -6,6 +6,7 @@ import { useReveal } from "../_components/hooks";
 import { MAT_IMAGES } from "../_components/data";
 import { Marigold } from "../_components/Marigold";
 import { MatImage } from "../_components/MatImage";
+import { Sep } from "../_components/Punc";
 import type { MatImageRecord } from "../_lib/mat-image-types";
 
 type Person = { name: string; role: string; img: MatImageRecord };
@@ -70,8 +71,8 @@ function PhilosophySlab() {
     <section
       ref={ref as React.RefObject<HTMLElement>}
       style={{
-        background: T.sage,
-        color: "#fff",
+        background: T.paper,
+        color: T.ink,
         padding: "180px 40px",
         textAlign: "center",
         position: "relative",
@@ -85,11 +86,11 @@ function PhilosophySlab() {
           left: "50%",
           top: "50%",
           transform: "translate(-50%, -50%)",
-          opacity: 0.07,
+          opacity: 0.18,
           pointerEvents: "none",
         }}
       >
-        <Marigold size={520} color="#ffffff" />
+        <Marigold size={520} color={T.sage} />
       </div>
       <div
         style={{
@@ -120,6 +121,7 @@ function PhilosophySlab() {
           transition: "all 1.4s cubic-bezier(.2,.7,.2,1)",
           position: "relative",
           zIndex: 1,
+          textWrap: "balance",
         }}
       >
         We don&apos;t capture moments. We compose{" "}
@@ -139,7 +141,6 @@ function PhilosophySlab() {
 }
 
 export function AboutClient() {
-  const [ref, vis] = useReveal<HTMLElement>(0.05);
   const stats: [string, string][] = [
     ["218", "Weddings"],
     ["41", "Cities"],
@@ -155,11 +156,12 @@ export function AboutClient() {
   return (
     <main>
       <section
-        ref={ref as React.RefObject<HTMLElement>}
         style={{
           padding: "180px 40px 80px",
           background: T.paper,
           textAlign: "center",
+          position: "relative",
+          overflow: "hidden",
         }}
       >
         <div
@@ -170,9 +172,11 @@ export function AboutClient() {
             textTransform: "uppercase",
             color: T.sage,
             marginBottom: 32,
+            position: "relative",
+            zIndex: 1,
           }}
         >
-          About — The Studio — Jaipur, IN
+          About<Sep />The Studio<Sep />Jaipur, IN
         </div>
         <h1
           style={{
@@ -184,13 +188,15 @@ export function AboutClient() {
             letterSpacing: "-0.02em",
             maxWidth: 1080,
             marginInline: "auto",
-            opacity: vis ? 1 : 0,
-            transform: vis ? "translateY(0)" : "translateY(20px)",
-            transition: "all 1.2s cubic-bezier(.2,.7,.2,1)",
+            position: "relative",
+            zIndex: 1,
+            textWrap: "balance",
           }}
         >
           We <span style={{ fontStyle: "italic" }}>sit</span> with families
-          <span style={{ color: T.sage }}>,</span> before we ever lift a lens
+          <span style={{ color: T.sage }}>,</span>
+          <br />
+          before we ever lift a lens
           <span style={{ color: T.sage }}>.</span>
         </h1>
       </section>
@@ -221,7 +227,7 @@ export function AboutClient() {
               marginBottom: 18,
             }}
           >
-            01 — Origin
+            01<Sep />Origin
           </div>
           <h2
             style={{
@@ -250,7 +256,7 @@ export function AboutClient() {
             In the winter of 2018, Aanya photographed her cousin&apos;s wedding in
             Bikaner with a borrowed camera. The album was passed around for months at
             family kitties, and by the next April she was photographing strangers. Mi
-            Amor Tales has been a small studio ever since — six weddings a season, not
+            Amor Tales has been a small studio ever since<Sep />six weddings a season, not
             eighty. We sit with the family, drink the chai, and then we make pictures.
           </p>
         </div>
@@ -357,7 +363,7 @@ export function AboutClient() {
               color: T.sage,
             }}
           >
-            02 — The Team
+            02<Sep />The Team
           </div>
         </header>
         <div
@@ -382,51 +388,6 @@ export function AboutClient() {
         `}</style>
       </section>
 
-      {/* As seen in */}
-      <section
-        style={{
-          padding: "60px 40px",
-          background: T.sageLight,
-          borderTop: `1px solid ${T.sage}25`,
-          borderBottom: `1px solid ${T.sage}25`,
-        }}
-      >
-        <div
-          style={{
-            textAlign: "center",
-            fontFamily: SANS,
-            fontSize: 10,
-            letterSpacing: "0.4em",
-            textTransform: "uppercase",
-            color: T.sage,
-            marginBottom: 28,
-          }}
-        >
-          As Seen In
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: 56,
-            fontFamily: SERIF,
-            fontStyle: "italic",
-            fontSize: 18,
-            opacity: 0.7,
-            flexWrap: "wrap",
-          }}
-        >
-          {[
-            "Vogue India",
-            "Brides Today",
-            "WedMeGood",
-            "The Knot",
-            "Architectural Digest",
-          ].map((m) => (
-            <span key={m}>{m}</span>
-          ))}
-        </div>
-      </section>
     </main>
   );
 }

@@ -1,12 +1,10 @@
 @AGENTS.md
 
-
 ## Working style for this repo
 
 - **Default to subagents.** Anything that touches multiple files, requires reading large assets (PDFs, magazine pages, contact sheets, many screenshots), inspecting batches of images, or running broad code searches → launch one or more Explore / general-purpose agents instead of doing it in the main thread. Fan them out in parallel whenever the tasks are independent (single message, multiple Agent tool calls).
 - Synthesis stays in the main thread — never delegate the *decision* of how to wire results together. Agents gather and report; the main thread plans and edits the code.
 - Use the Plan agent for multi-step implementations that span >3 files or introduce a new pattern.
-
 
 # Mi Amor Tales — Website Redesign
 
@@ -283,13 +281,13 @@ src/
 
 ## Key Development Notes
 
-* **No Figma.** Design direction is established via rough wireframes, then straight into code. Iterate in the browser where animations and responsiveness can be tested with real content.
-* **Self-host fonts.** Do not use Google Fonts CDN. Download and serve from `/public/fonts/` via `@font-face` in globals.css for performance.
-* **Image optimization is critical.** Wedding photos are large. Use Next/Image with proper `sizes` attribute, `priority` for above-fold, blur placeholders. Serve WebP/AVIF.
-* **GSAP plugins** — DrawSVG and MotionPath are Club GreenSock plugins. Make sure they're properly registered.
-* **Mobile-first responsive.** Polaroid scatter physics → gentle float-in on mobile. Marquee text size scales down. Hero video → static image on slow connections.
-* **SEO matters.** Server-render everything. No client-only content. Structured data on every page. OG images auto-generated per wedding.
-* **WordPress cost comparison.** The client is migrating from WordPress + Elementor (recurring fees). This custom build on Vercel free tier + Supabase free tier has zero recurring platform costs. Mention this advantage if relevant.
+* [ ] **No Figma.** Design direction is established via rough wireframes, then straight into code. Iterate in the browser where animations and responsiveness can be tested with real content.
+* [ ] **Self-host fonts.** Do not use Google Fonts CDN. Download and serve from `/public/fonts/` via `@font-face` in globals.css for performance.
+* [ ] **Image optimization is critical.** Wedding photos are large. Use Next/Image with proper `sizes` attribute, `priority` for above-fold, blur placeholders. Serve WebP/AVIF.
+* [ ] **GSAP plugins** — DrawSVG and MotionPath are Club GreenSock plugins. Make sure they're properly registered.
+* [ ] **Mobile-first responsive.** Polaroid scatter physics → gentle float-in on mobile. Marquee text size scales down. Hero video → static image on slow connections.
+* [ ] **SEO matters.** Server-render everything. No client-only content. Structured data on every page. OG images auto-generated per wedding.
+* [ ] **WordPress cost comparison.** The client is migrating from WordPress + Elementor (recurring fees). This custom build on Vercel free tier + Supabase free tier has zero recurring platform costs. Mention this advantage if relevant.
 
 ---
 

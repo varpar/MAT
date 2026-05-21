@@ -57,6 +57,7 @@ export function Nav() {
     <>
       <nav
         aria-label="Primary"
+        data-mat-nav
         style={{
           position: "fixed",
           top: 0,

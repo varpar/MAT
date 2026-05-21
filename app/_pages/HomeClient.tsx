@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -13,10 +13,10 @@ import {
 import { SERIF, SANS, T } from "../_components/tokens";
 import { Sang } from "../_components/Sang";
 import { FEATURED, MAT_IMAGES, type Couple } from "../_components/data";
-import { Marigold } from "../_components/Marigold";
 import { AnimatedImage } from "../_components/AnimatedImage";
 import { FilmStrip } from "../_components/FilmStrip";
 import { MatImage } from "../_components/MatImage";
+import { Sep } from "../_components/Punc";
 
 const EASE = [0.2, 0.7, 0.2, 1] as const;
 
@@ -103,6 +103,7 @@ function HomeHero() {
             fontWeight: 300,
             fontSize: "clamp(28px, 3.2vw, 40px)",
             lineHeight: 1.18,
+            textWrap: "balance",
           }}
         >
           Where love meets legacy.
@@ -192,7 +193,7 @@ function HomeTriptych() {
               marginBottom: 28,
             }}
           >
-            Studio, Jaipur — est. 2018
+            Studio, Jaipur<Sep />est. 2018
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -225,9 +226,10 @@ function HomeTriptych() {
               fontStyle: "italic",
               fontSize: 18,
               lineHeight: 1.55,
+              textWrap: "balance",
             }}
           >
-            We accept six weddings a season — sat with, photographed, and remembered.
+            We accept six weddings a season<Sep />sat with, photographed, and remembered.
           </motion.p>
         </div>
         <AnimatedImage
@@ -290,7 +292,7 @@ function HomeFilmReel() {
             color: T.sage,
           }}
         >
-          From the reel — 2024 to 2026
+          From the reel<Sep />2024 to 2026
         </div>
         <div
           style={{
@@ -356,42 +358,59 @@ function HomeFilmReel() {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   MARQUEE — couple names that scatter their photos on hover.
-   Hovering any name:
+   MARQUEE — couple names. Hovering any name:
      • dims the rest of the page (fixed paper-tinted overlay),
-     • renders that couple's photos in a fixed-position scatter,
-     • slows the marquee animation,
+     • renders eight of that couple's photos as two straight rows
+       (four above, four below the band) — calm, evenly spaced,
+     • pauses the marquee so the user can click,
      • Click → /featured/[slug].
    ───────────────────────────────────────────────────────────── */
-type ScatterPos = {
-  /** CSS positioning relative to the viewport. */
-  top?: string;
-  left?: string;
-  right?: string;
-  bottom?: string;
-  width: number;
-  rotate: number;
-  delay: number;
-};
-
-const SCATTER_POSITIONS: ScatterPos[] = [
-  { top: "12vh",  left: "6vw",   width: 240, rotate: -4, delay: 0    },
-  { top: "18vh",  right: "8vw",  width: 300, rotate:  5, delay: 0.08 },
-  { bottom: "22vh", left: "14vw", width: 220, rotate:  7, delay: 0.16 },
-  { bottom: "16vh", right: "12vw", width: 280, rotate: -3, delay: 0.24 },
-  { top: "44vh",  left: "42vw",  width: 200, rotate:  2, delay: 0.32 },
-];
-
-function scatterPhotos(couple: Couple) {
+function previewPhotos(couple: Couple) {
   if (couple.story) {
-    const { hero, bride, intimateBW, pheras, closing } = couple.story.photos;
-    return [hero, bride, intimateBW, pheras, closing];
+    const p = couple.story.photos;
+    return [
+      p.hero,
+      p.bride,
+      p.groom,
+      p.haldi,
+      p.mehendi,
+      p.sangeet,
+      p.pheras,
+      p.vidaai,
+    ];
   }
-  return [couple.img, couple.img, couple.img, couple.img, couple.img];
+  return Array.from({ length: 8 }, () => couple.img);
 }
 
-function CoupleScatter({ couple }: { couple: Couple }) {
-  const photos = scatterPhotos(couple);
+function CouplePreview({ couple }: { couple: Couple }) {
+  const photos = previewPhotos(couple);
+  const top = photos.slice(0, 4);
+  const bottom = photos.slice(4, 8);
+
+  const TILE_HEIGHT = "26vh"; // photo height — keeps four-up rows from overflowing
+
+  const rowStyle: React.CSSProperties = {
+    position: "fixed",
+    left: 0,
+    right: 0,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "1.2vw",
+    zIndex: 65,
+    pointerEvents: "none",
+  };
+
+  const tileStyle: React.CSSProperties = {
+    position: "relative",
+    height: TILE_HEIGHT,
+    aspectRatio: "3/4",
+    overflow: "hidden",
+    background: "#0e0e0e",
+    boxShadow: "0 20px 44px rgba(0,0,0,0.14)",
+    willChange: "transform, opacity",
+  };
+
   return (
     <>
       {/* Dimmer — paper tint with mild blur, fades the rest of the page */}
@@ -399,46 +418,28 @@ function CoupleScatter({ couple }: { couple: Couple }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 0.45, ease: EASE }}
+        transition={{ duration: 0.4, ease: EASE }}
         style={{
           position: "fixed",
           inset: 0,
           zIndex: 60,
-          background: "rgba(250,250,247,0.86)",
+          background: "rgba(250,250,247,0.88)",
           backdropFilter: "blur(8px)",
           WebkitBackdropFilter: "blur(8px)",
           pointerEvents: "none",
         }}
       />
-      {/* Scattered photos */}
-      {SCATTER_POSITIONS.map((pos, i) => {
-        const photo = photos[i % photos.length];
-        return (
+
+      {/* Top row — three small photos hugged to the top of the viewport */}
+      <div style={{ ...rowStyle, top: "4vh" }}>
+        {top.map((photo, i) => (
           <motion.div
-            key={`${couple.slug}-${i}`}
-            initial={{ opacity: 0, scale: 0.92, rotate: pos.rotate * 0.4 }}
-            animate={{ opacity: 1, scale: 1, rotate: pos.rotate }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{
-              duration: 0.7,
-              ease: EASE,
-              delay: pos.delay,
-            }}
-            style={{
-              position: "fixed",
-              top: pos.top,
-              left: pos.left,
-              right: pos.right,
-              bottom: pos.bottom,
-              width: pos.width,
-              aspectRatio: "3/4",
-              zIndex: 65,
-              boxShadow: "0 30px 80px rgba(0,0,0,0.18)",
-              pointerEvents: "none",
-              overflow: "hidden",
-              background: "#0e0e0e",
-              willChange: "transform, opacity",
-            }}
+            key={`${couple.slug}-t-${i}`}
+            initial={{ opacity: 0, y: -14 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.55, ease: EASE, delay: i * 0.06 }}
+            style={tileStyle}
           >
             <MatImage
               image={photo}
@@ -446,25 +447,54 @@ function CoupleScatter({ couple }: { couple: Couple }) {
               alt={`${couple.bride} sang ${couple.groom}`}
             />
           </motion.div>
-        );
-      })}
+        ))}
+      </div>
+
+      {/* Bottom row — three small photos hugged to the bottom of the viewport */}
+      <div style={{ ...rowStyle, bottom: "4vh" }}>
+        {bottom.map((photo, i) => (
+          <motion.div
+            key={`${couple.slug}-b-${i}`}
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.55, ease: EASE, delay: 0.18 + i * 0.06 }}
+            style={tileStyle}
+          >
+            <MatImage
+              image={photo}
+              variant="Thumbnail"
+              alt={`${couple.bride} sang ${couple.groom}`}
+            />
+          </motion.div>
+        ))}
+      </div>
     </>
   );
 }
 
 function HomeMarquee() {
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
-  const [sectionHovered, setSectionHovered] = useState(false);
   const hovered = FEATURED.find((c) => c.slug === hoveredSlug);
   const isAnyHovered = hoveredSlug !== null;
 
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    if (hoveredSlug !== null) {
+      document.body.setAttribute("data-marquee-preview", "true");
+    } else {
+      document.body.removeAttribute("data-marquee-preview");
+    }
+    return () => {
+      if (typeof document !== "undefined") {
+        document.body.removeAttribute("data-marquee-preview");
+      }
+    };
+  }, [hoveredSlug]);
+
   return (
     <section
-      onMouseEnter={() => setSectionHovered(true)}
-      onMouseLeave={() => {
-        setSectionHovered(false);
-        setHoveredSlug(null);
-      }}
+      onMouseLeave={() => setHoveredSlug(null)}
       style={{
         position: "relative",
         zIndex: isAnyHovered ? 70 : "auto",
@@ -494,11 +524,11 @@ function HomeMarquee() {
       </div>
       <div style={{ position: "relative", whiteSpace: "nowrap", zIndex: 75 }}>
         <div
-          className={`mat-marquee-track${sectionHovered ? " is-section-hover" : ""}${isAnyHovered ? " is-name-hover" : ""}`}
+          className={`mat-marquee-track${isAnyHovered ? " is-name-hover" : ""}`}
           style={{
             display: "inline-flex",
             gap: 80,
-            animation: "mat-marquee 48s linear infinite",
+            animation: "mat-marquee 64s linear infinite",
             paddingLeft: 80,
             willChange: "transform",
           }}
@@ -516,6 +546,7 @@ function HomeMarquee() {
                 onMouseLeave={() => setHoveredSlug(null)}
                 onBlur={() => setHoveredSlug(null)}
                 aria-label={`${c.bride} sang ${c.groom} — ${c.place}`}
+                data-cursor="View story"
                 style={{
                   fontFamily: SERIF,
                   fontSize: "clamp(36px, 5vw, 56px)",
@@ -532,16 +563,8 @@ function HomeMarquee() {
                 }}
               >
                 <span style={{ fontStyle: "italic" }}>{c.bride}</span>
-                <span
-                  style={{
-                    fontFamily: SERIF,
-                    fontStyle: "italic",
-                    color: T.sage,
-                    fontSize: "0.4em",
-                    alignSelf: "center",
-                  }}
-                >
-                  sang
+                <span style={{ alignSelf: "center", display: "inline-flex" }}>
+                  <Sang size={22} />
                 </span>
                 <span style={{ fontStyle: "italic" }}>{c.groom}</span>
               </Link>
@@ -550,11 +573,9 @@ function HomeMarquee() {
         </div>
       </div>
       <AnimatePresence>
-        {hovered && <CoupleScatter key={hovered.slug} couple={hovered} />}
+        {hovered && <CouplePreview key={hovered.slug} couple={hovered} />}
       </AnimatePresence>
       <style>{`
-        /* Section hover (cursor anywhere in the marquee band) → slow drift. */
-        .mat-marquee-track.is-section-hover { animation-duration: 110s !important; }
         /* Name hover (cursor on a specific link) → freeze so the user can click. */
         .mat-marquee-track.is-name-hover { animation-play-state: paused !important; }
       `}</style>
@@ -563,211 +584,157 @@ function HomeMarquee() {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   RECENT — magazine-style editorial spreads. Each couple gets a
-   full-width row: oversized stacked-serif name plate on sage paired
-   with a tall feature photo. Layout alternates side-to-side row by row.
-   Lifted from the MAT magazine PDF (Harsh / Pooja cover spread).
+   RECENT — staircase grid. Each row has 3 tiles capped at ~30vw;
+   the 2nd descends by 20% of its own height, the 3rd by 40%.
+   Hover reveals the couple name + CTA; click navigates to story.
    ───────────────────────────────────────────────────────────── */
-function CoupleSpread({
+function CoupleTile({
   couple,
-  idx,
+  step,
 }: {
   couple: Couple;
-  idx: number;
+  step: 0 | 1 | 2;
 }) {
   const [hov, setHov] = useState(false);
   const router = useRouter();
-  const reverse = idx % 2 === 1; // alternate text-left/right
   const go = () => router.push(`/featured/${couple.slug ?? "riya-sang-mohit"}`);
+  const offsetPct = step * 20; // 0%, 20%, 40% — staircase descent
 
   return (
     <motion.article
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       onClick={go}
+      data-cursor="Open story"
       initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10%" }}
-      transition={{ duration: 1, ease: EASE }}
-      className="mat-spread"
+      transition={{ duration: 1, ease: EASE, delay: step * 0.08 }}
+      className="mat-stair"
       style={{
         cursor: "pointer",
-        display: "grid",
-        gridTemplateColumns: reverse ? "5fr 7fr" : "7fr 5fr",
-        gap: 0,
-        alignItems: "stretch",
+        position: "relative",
+        marginTop: `${offsetPct}%`,
+        aspectRatio: "3/4",
+        overflow: "hidden",
+        background: "#0e0e0e",
       }}
     >
-      {/* IMAGE — taller column */}
-      <div
-        style={{
-          gridColumn: reverse ? 2 : 1,
-          position: "relative",
-          aspectRatio: "4/5",
-          overflow: "hidden",
-          background: "#0e0e0e",
-        }}
+      <motion.div
+        style={{ position: "absolute", inset: 0, willChange: "transform" }}
+        animate={{ scale: hov ? 1.05 : 1 }}
+        transition={{ duration: 1.4, ease: EASE }}
       >
-        <motion.div
-          style={{ position: "absolute", inset: 0, willChange: "transform" }}
-          animate={{ scale: hov ? 1.04 : 1 }}
-          transition={{ duration: 1.6, ease: EASE }}
-        >
-          <MatImage
-            image={couple.img}
-            variant="Grid"
-            alt={`${couple.bride} sang ${couple.groom} — ${couple.place}`}
-          />
-        </motion.div>
-      </div>
-
-      {/* SAGE NAME PLATE — stacked serif names, editorial cover */}
-      <div
-        style={{
-          gridColumn: reverse ? 1 : 2,
-          gridRow: 1,
-          background: T.sage,
-          color: "#f1f4f3",
-          padding: "48px 36px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        {/* subtle grain via radial gradient — matches the PDF texture */}
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "radial-gradient(ellipse at center, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0.08) 100%)",
-            pointerEvents: "none",
-          }}
+        <MatImage
+          image={couple.img}
+          variant="Grid"
+          alt={`${couple.bride} sang ${couple.groom} — ${couple.place}`}
         />
+      </motion.div>
 
-        <div style={{ position: "relative", zIndex: 1 }}>
-          <div
-            style={{
-              fontFamily: SANS,
-              fontSize: 10,
-              letterSpacing: "0.4em",
-              textTransform: "uppercase",
-              opacity: 0.78,
-              marginBottom: 8,
-            }}
-          >
-            No. {String(idx + 1).padStart(2, "0")} — A story by Mi Amor Tales
-          </div>
-        </div>
+      {/* HOVER VEIL — sage wash + names + CTA */}
+      <motion.div
+        animate={{ opacity: hov ? 1 : 0 }}
+        transition={{ duration: 0.5, ease: EASE }}
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(180deg, rgba(67,108,103,0) 0%, rgba(67,108,103,0.05) 35%, rgba(20,28,27,0.78) 100%)",
+          pointerEvents: "none",
+        }}
+      />
 
-        {/* Stacked names — the editorial money shot */}
+      <motion.div
+        animate={{ opacity: hov ? 1 : 0, y: hov ? 0 : 12 }}
+        transition={{ duration: 0.6, ease: EASE }}
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          bottom: 0,
+          padding: "28px 26px 24px",
+          color: "#f4f7f7",
+          pointerEvents: "none",
+        }}
+      >
         <div
           style={{
-            position: "relative",
-            zIndex: 1,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: reverse ? "flex-end" : "flex-start",
-            textAlign: reverse ? "right" : "left",
-            margin: "8px 0",
+            fontFamily: SANS,
+            fontSize: 9,
+            letterSpacing: "0.42em",
+            textTransform: "uppercase",
+            opacity: 0.78,
+            marginBottom: 12,
           }}
         >
-          <span
-            style={{
-              fontFamily: SERIF,
-              fontWeight: 400,
-              fontSize: "clamp(48px, 7.2vw, 124px)",
-              lineHeight: 0.92,
-              letterSpacing: "-0.02em",
-              textTransform: "uppercase",
-            }}
-          >
-            {couple.bride}
-          </span>
-          <span
-            style={{
-              fontFamily: SERIF,
-              fontStyle: "italic",
-              fontWeight: 300,
-              fontSize: "clamp(20px, 2.4vw, 32px)",
-              opacity: 0.85,
-              margin: "8px 0",
-            }}
-          >
-            sang
-          </span>
-          <span
-            style={{
-              fontFamily: SERIF,
-              fontWeight: 400,
-              fontSize: "clamp(48px, 7.2vw, 124px)",
-              lineHeight: 0.92,
-              letterSpacing: "-0.02em",
-              textTransform: "uppercase",
-            }}
-          >
-            {couple.groom}
-          </span>
+          A story by Mi Amor Tales
         </div>
-
+        <h3
+          style={{
+            margin: 0,
+            fontFamily: SERIF,
+            fontWeight: 400,
+            fontSize: "clamp(22px, 2.4vw, 32px)",
+            lineHeight: 1.05,
+            letterSpacing: "-0.005em",
+          }}
+        >
+          {couple.bride}{" "}
+          <Sang size={20} color="#f4f7f7" accent={T.cream} />{" "}
+          {couple.groom}
+        </h3>
         <div
           style={{
-            position: "relative",
-            zIndex: 1,
+            marginTop: 14,
             display: "flex",
+            alignItems: "center",
             justifyContent: "space-between",
-            alignItems: "flex-end",
-            flexWrap: "wrap",
             gap: 16,
-            marginTop: 16,
           }}
         >
           <div
             style={{
               fontFamily: SERIF,
               fontStyle: "italic",
-              fontSize: 15,
+              fontSize: 13,
               opacity: 0.85,
-              maxWidth: 320,
-              lineHeight: 1.55,
             }}
           >
-            {couple.place} — three days, one quiet sit-down, every frame kept.
+            {couple.place}
           </div>
-          <motion.span
-            animate={{ x: hov ? 6 : 0, opacity: hov ? 1 : 0.78 }}
-            transition={{ duration: 0.4, ease: EASE }}
+          <span
             style={{
               fontFamily: SANS,
               fontSize: 10,
               letterSpacing: "0.4em",
               textTransform: "uppercase",
               borderBottom: "1px solid rgba(255,255,255,0.55)",
-              paddingBottom: 4,
+              paddingBottom: 3,
               whiteSpace: "nowrap",
             }}
           >
-            Read the story →
-          </motion.span>
+            Read →
+          </span>
         </div>
-      </div>
+      </motion.div>
     </motion.article>
   );
 }
 
 function HomeRecent() {
-  const items = FEATURED.slice(0, 4);
+  const items = FEATURED.slice(0, 6);
+  const rows: Couple[][] = [];
+  for (let i = 0; i < items.length; i += 3) rows.push(items.slice(i, i + 3));
+
   return (
-    <section style={{ padding: "120px 40px", background: T.paper }}>
+    <section style={{ padding: "120px 40px 200px", background: T.paper }}>
       <header
         style={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "flex-end",
-          marginBottom: 64,
+          marginBottom: 80,
           gap: 32,
           flexWrap: "wrap",
         }}
@@ -783,7 +750,7 @@ function HomeRecent() {
               marginBottom: 18,
             }}
           >
-            Recent Work — 04 of 24
+            Recent Work<Sep />{String(items.length).padStart(2, "0")} of 24
           </div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -819,25 +786,45 @@ function HomeRecent() {
           View archive →
         </Link>
       </header>
+
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: 64,
+          gap: 16,
         }}
       >
-        {items.map((c, i) => (
-          <CoupleSpread key={i} couple={c} idx={i} />
+        {rows.map((row, ri) => (
+          <div
+            key={ri}
+            className="mat-stair-row"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, minmax(0, 30%))",
+              justifyContent: "space-between",
+              alignItems: "flex-start",
+              gap: "2vw",
+            }}
+          >
+            {row.map((c, ci) => (
+              <CoupleTile
+                key={c.slug ?? `${ri}-${ci}`}
+                couple={c}
+                step={ci as 0 | 1 | 2}
+              />
+            ))}
+          </div>
         ))}
       </div>
+
       <style>{`
         @media (max-width: 880px) {
-          .mat-spread { grid-template-columns: 1fr !important; }
-          .mat-spread > *:first-child { aspect-ratio: 4/5 !important; }
-          .mat-spread > *:nth-child(2) {
-            grid-column: 1 !important;
-            grid-row: auto !important;
-            padding: 32px 24px !important;
+          .mat-stair-row {
+            grid-template-columns: 1fr !important;
+            gap: 40px !important;
+          }
+          .mat-stair {
+            margin-top: 0 !important;
           }
         }
       `}</style>
@@ -941,7 +928,7 @@ function HomeVideoSection() {
             opacity: 0.85,
           }}
         >
-          A Reel — The way light moves
+          A Reel<Sep />The way light moves
         </div>
         <h2
           style={{
@@ -1102,10 +1089,11 @@ function HomeQuoteFrame() {
             fontStyle: "italic",
             fontSize: "clamp(26px, 3.2vw, 40px)",
             lineHeight: 1.35,
+            textWrap: "balance",
           }}
         >
           &ldquo;They didn&apos;t photograph our wedding. They watched it the way our
-          grandmothers watched ours — slowly, with feeling.&rdquo;
+          grandmothers watched ours<Sep />slowly, with feeling.&rdquo;
         </motion.blockquote>
         <motion.footer
           initial={{ opacity: 0 }}
@@ -1229,82 +1217,6 @@ function HomeMosaic() {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   PHILOSOPHY — kept restrained, single still marigold.
-   ───────────────────────────────────────────────────────────── */
-function PhilosophySlab() {
-  return (
-    <section
-      style={{
-        background: T.sage,
-        color: "#fff",
-        padding: "180px 40px",
-        textAlign: "center",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          left: "50%",
-          top: "50%",
-          transform: "translate(-50%, -50%)",
-          opacity: 0.07,
-          pointerEvents: "none",
-        }}
-      >
-        <Marigold size={520} color="#ffffff" />
-      </div>
-      <div
-        style={{
-          fontFamily: SANS,
-          fontSize: 10,
-          letterSpacing: "0.4em",
-          textTransform: "uppercase",
-          opacity: 0.7,
-          marginBottom: 40,
-          position: "relative",
-          zIndex: 1,
-        }}
-      >
-        A Philosophy
-      </div>
-      <motion.p
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-15%" }}
-        transition={{ duration: 1.4, ease: EASE }}
-        style={{
-          margin: 0,
-          maxWidth: 920,
-          marginInline: "auto",
-          fontFamily: SERIF,
-          fontStyle: "italic",
-          fontWeight: 300,
-          fontSize: "clamp(36px, 5.5vw, 64px)",
-          lineHeight: 1.14,
-          position: "relative",
-          zIndex: 1,
-        }}
-      >
-        We don&apos;t capture moments. We compose{" "}
-        <span
-          style={{
-            textDecoration: "underline",
-            textDecorationThickness: "1px",
-            textUnderlineOffset: "0.18em",
-          }}
-        >
-          legacies
-        </span>
-        .
-      </motion.p>
-    </section>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────────
    CTA — bordered button, hero image left as compositional anchor.
    ───────────────────────────────────────────────────────────── */
 function HomeCTA() {
@@ -1373,6 +1285,7 @@ function HomeCTA() {
             fontSize: 18,
             lineHeight: 1.6,
             opacity: 0.78,
+            textWrap: "balance",
           }}
         >
           Six weddings per season. The Indian winters fill before the monsoon ends.
@@ -1426,7 +1339,6 @@ export function HomeClient() {
       <HomeRecent />
       <HomeVideoSection />
       <HomeMosaic />
-      <PhilosophySlab />
       <HomeCTA />
     </main>
   );

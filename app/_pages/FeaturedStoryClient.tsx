@@ -6,194 +6,165 @@ import { SERIF, SANS, SCRIPT, T } from "../_components/tokens";
 import { Sang } from "../_components/Sang";
 import { useReveal } from "../_components/hooks";
 import { MatImage } from "../_components/MatImage";
-import { SelectiveColorImage } from "../_components/SelectiveColorImage";
-import type { Couple } from "../_components/data";
+import { withSeps } from "../_components/Punc";
+import { type Couple, MAT_IMAGES } from "../_components/data";
 import type { FeaturedStory, StorySection } from "../_lib/featured-story";
+import type { MatImageRecord } from "../_lib/mat-image-types";
 
 const EASE = "cubic-bezier(.2,.7,.2,1)";
 
 /* ─────────────────────────────────────────────────────────────
-   COVER — Stacked serif names on sage, mirrors page 4 / 10 of
-   the magazine PDF. Eyebrow + intro body below.
+   COVER+HERO — photo first (full-bleed), then a paper panel
+   with the names (smaller) and the intro copy below.
    ───────────────────────────────────────────────────────────── */
-function Cover({ couple, story }: { couple: Couple; story: FeaturedStory }) {
+function CoverHero({ couple, story }: { couple: Couple; story: FeaturedStory }) {
   const [ref, vis] = useReveal<HTMLElement>(0.05);
   return (
-    <section
-      ref={ref as React.RefObject<HTMLElement>}
-      style={{
-        background: T.sage,
-        color: "#f1f4f3",
-        padding: "180px 40px 140px",
-        textAlign: "center",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "radial-gradient(ellipse at center, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0.18) 100%)",
-          pointerEvents: "none",
-        }}
-      />
-      <div
+    <>
+      <section
         style={{
           position: "relative",
-          zIndex: 1,
-          fontFamily: SANS,
-          fontSize: 10,
-          letterSpacing: "0.4em",
-          textTransform: "uppercase",
-          opacity: vis ? 0.85 : 0,
-          transition: "opacity 1s ease",
-          marginBottom: 64,
+          height: "88svh",
+          minHeight: 560,
+          overflow: "hidden",
+          background: "#0e0e0e",
         }}
       >
-        A story by Mi Amor Tales
-      </div>
-      <h1
-        style={{
-          position: "relative",
-          zIndex: 1,
-          margin: 0,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 12,
-          fontFamily: SERIF,
-          fontWeight: 400,
-          textTransform: "uppercase",
-          lineHeight: 0.88,
-          letterSpacing: "-0.025em",
-          fontSize: "clamp(72px, 14vw, 220px)",
-          opacity: vis ? 1 : 0,
-          transform: vis ? "translateY(0)" : "translateY(28px)",
-          transition: `all 1.4s ${EASE}`,
-        }}
-      >
-        <span>{couple.bride}</span>
-        <span
+        <MatImage
+          image={story.photos.hero}
+          variant="Hero"
+          alt={`${couple.bride} sang ${couple.groom} — ${couple.place}`}
+          filter="brightness(0.94)"
+        />
+        <div
+          aria-hidden
           style={{
-            fontFamily: SERIF,
-            fontStyle: "italic",
-            fontWeight: 300,
-            fontSize: "clamp(24px, 3.2vw, 44px)",
-            textTransform: "lowercase",
-            opacity: 0.78,
-            letterSpacing: "0.04em",
+            position: "absolute",
+            inset: 0,
+            background:
+              "linear-gradient(180deg, rgba(0,0,0,0.0) 55%, rgba(0,0,0,0.55) 100%)",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            bottom: 36,
+            left: 40,
+            right: 40,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+            gap: 24,
+            flexWrap: "wrap",
+            color: "#fff",
+            fontFamily: SANS,
+            fontSize: 10,
+            letterSpacing: "0.32em",
+            textTransform: "uppercase",
+            opacity: 0.88,
           }}
         >
-          sang
-        </span>
-        <span>{couple.groom}</span>
-      </h1>
-      <p
-        style={{
-          position: "relative",
-          zIndex: 1,
-          margin: "72px auto 0",
-          maxWidth: 640,
-          fontFamily: SANS,
-          fontSize: 11,
-          lineHeight: 1.8,
-          letterSpacing: "0.18em",
-          textTransform: "uppercase",
-          opacity: vis ? 0.85 : 0,
-          transition: `opacity 1.4s ease 0.4s`,
-        }}
-      >
-        {story.coverIntro}
-      </p>
-    </section>
-  );
-}
+          <div>{withSeps(story.date)}</div>
+          <div>{story.detailLine}</div>
+        </div>
+      </section>
 
-/* ─────────────────────────────────────────────────────────────
-   FULL-BLEED HERO photo immediately under the cover, with the
-   date/detail line tucked into a bottom strip.
-   ───────────────────────────────────────────────────────────── */
-function StoryHero({ couple, story }: { couple: Couple; story: FeaturedStory }) {
-  return (
-    <section
-      style={{
-        position: "relative",
-        height: "92svh",
-        minHeight: 560,
-        overflow: "hidden",
-        background: "#0e0e0e",
-      }}
-    >
-      <MatImage
-        image={story.photos.hero}
-        variant="Hero"
-        alt={`${couple.bride} and ${couple.groom} — ${couple.place}`}
-        filter="brightness(0.92)"
-      />
-      <div
-        aria-hidden
+      <section
+        ref={ref as React.RefObject<HTMLElement>}
         style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "linear-gradient(180deg, rgba(0,0,0,0.0) 60%, rgba(0,0,0,0.55) 100%)",
-          pointerEvents: "none",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          bottom: 40,
-          left: 40,
-          right: 40,
-          color: "#fff",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-end",
-          gap: 40,
-          flexWrap: "wrap",
-          fontFamily: SANS,
-          fontSize: 10,
-          letterSpacing: "0.32em",
-          textTransform: "uppercase",
+          background: T.paper,
+          padding: "96px 40px 80px",
+          textAlign: "center",
+          opacity: vis ? 1 : 0,
+          transform: vis ? "translateY(0)" : "translateY(20px)",
+          transition: `all 1.1s ${EASE}`,
         }}
       >
-        <div style={{ opacity: 0.85 }}>{story.date}</div>
-        <div style={{ opacity: 0.85 }}>{story.detailLine}</div>
-      </div>
-    </section>
+        <div
+          style={{
+            fontFamily: SANS,
+            fontSize: 10,
+            letterSpacing: "0.4em",
+            textTransform: "uppercase",
+            color: T.sage,
+            marginBottom: 28,
+          }}
+        >
+          A story by Mi Amor Tales
+        </div>
+        <h1
+          style={{
+            margin: 0,
+            fontFamily: SERIF,
+            fontWeight: 400,
+            fontSize: "clamp(40px, 6.4vw, 88px)",
+            lineHeight: 1.0,
+            letterSpacing: "-0.015em",
+            display: "inline-flex",
+            alignItems: "baseline",
+            justifyContent: "center",
+            gap: "0.28em",
+            flexWrap: "wrap",
+          }}
+        >
+          <span style={{ fontStyle: "italic", fontWeight: 300 }}>
+            {couple.bride}
+          </span>
+          <Sang size={32} />
+          <span style={{ fontStyle: "italic", fontWeight: 300 }}>
+            {couple.groom}
+          </span>
+          <span style={{ color: T.sage, fontStyle: "normal" }}>.</span>
+        </h1>
+        <p
+          style={{
+            margin: "40px auto 0",
+            maxWidth: 640,
+            fontFamily: SANS,
+            fontSize: 11,
+            lineHeight: 1.85,
+            letterSpacing: "0.16em",
+            textTransform: "uppercase",
+            opacity: 0.72,
+          }}
+        >
+          {withSeps(story.coverIntro)}
+        </p>
+      </section>
+    </>
   );
 }
 
 /* ─────────────────────────────────────────────────────────────
    STORY SECTION — body paragraphs with either a script-style
-   headline ("Celebration / OF LOVE") or a serif headline
-   ("Chosen, Then Felt"). Optionally paired with a side photo.
+   headline ("Celebration / OF LOVE") or a serif headline.
+   Optionally paired with a side photo on left or right.
+   Text always takes the wider column.
    ───────────────────────────────────────────────────────────── */
 function StoryBody({
   section,
   imageLeft,
   imageRight,
-  idx,
 }: {
   section: StorySection;
   imageLeft?: React.ReactNode;
   imageRight?: React.ReactNode;
-  idx: number;
 }) {
   const [ref, vis] = useReveal<HTMLElement>(0.1);
-  const hasImage = imageLeft || imageRight;
-  const reverse = idx % 2 === 1;
+  const hasImage = Boolean(imageLeft || imageRight);
+  const imageOnLeft = Boolean(imageLeft);
 
-  // Decide whether the section's body copy looks like an all-caps editorial
-  // pull paragraph (e.g. "The Elegant Bride" on Pooja's spread). If yes,
-  // render it centred in larger spacing.
   const isAllCaps = section.paragraphs.every(
     (p) => p === p.toUpperCase() && p.length < 600,
   );
+
+  // When the image is on the left → grid 5fr 7fr → image col 1, text col 2.
+  // When the image is on the right → grid 7fr 5fr → text col 1, image col 2.
+  const gridTemplate = !hasImage
+    ? undefined
+    : imageOnLeft
+      ? "5fr 7fr"
+      : "7fr 5fr";
 
   return (
     <section
@@ -203,7 +174,7 @@ function StoryBody({
         background: T.paper,
         padding: "120px 40px",
         display: hasImage ? "grid" : "block",
-        gridTemplateColumns: hasImage ? (reverse ? "5fr 7fr" : "7fr 5fr") : undefined,
+        gridTemplateColumns: gridTemplate,
         gap: 64,
         alignItems: "center",
         opacity: vis ? 1 : 0,
@@ -212,13 +183,21 @@ function StoryBody({
       }}
     >
       {imageLeft && (
-        <div style={{ gridColumn: reverse ? 2 : 1, aspectRatio: "4/5", overflow: "hidden", position: "relative" }}>
+        <div
+          style={{
+            gridColumn: 1,
+            aspectRatio: "4/5",
+            overflow: "hidden",
+            position: "relative",
+          }}
+        >
           {imageLeft}
         </div>
       )}
+
       <div
         style={{
-          gridColumn: hasImage ? (reverse ? 1 : 2) : undefined,
+          gridColumn: hasImage ? (imageOnLeft ? 2 : 1) : undefined,
           maxWidth: hasImage ? undefined : 720,
           marginInline: hasImage ? undefined : "auto",
           textAlign: isAllCaps && !hasImage ? "center" : "left",
@@ -230,14 +209,17 @@ function StoryBody({
               margin: 0,
               fontFamily: SCRIPT,
               fontWeight: 400,
-              fontSize: "clamp(48px, 7vw, 96px)",
-              lineHeight: 0.85,
+              fontSize: "clamp(40px, 5.6vw, 76px)",
+              lineHeight: 0.9,
               letterSpacing: "0.005em",
               color: T.ink,
             }}
           >
             {section.heading.split(/\s+of\s+/i).map((part, i, arr) => (
-              <span key={i} style={{ display: "block", marginLeft: i === 1 ? "1.2em" : 0 }}>
+              <span
+                key={i}
+                style={{ display: "block", marginLeft: i === 1 ? "1.2em" : 0 }}
+              >
                 {part}
                 {i < arr.length - 1 && (
                   <span
@@ -246,7 +228,7 @@ function StoryBody({
                       fontWeight: 400,
                       fontStyle: "normal",
                       textTransform: "uppercase",
-                      fontSize: "0.62em",
+                      fontSize: "0.58em",
                       letterSpacing: "0.04em",
                       marginLeft: "0.3em",
                       color: T.sage,
@@ -265,8 +247,8 @@ function StoryBody({
               fontFamily: SERIF,
               fontWeight: 300,
               fontStyle: "italic",
-              fontSize: "clamp(32px, 4.5vw, 52px)",
-              lineHeight: 1.05,
+              fontSize: "clamp(28px, 3.6vw, 44px)",
+              lineHeight: 1.08,
               letterSpacing: "-0.01em",
               color: T.ink,
               textAlign: isAllCaps && !hasImage ? "center" : "left",
@@ -276,7 +258,14 @@ function StoryBody({
             <span style={{ color: T.sage, fontStyle: "normal" }}>.</span>
           </h2>
         )}
-        <div style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 18 }}>
+        <div
+          style={{
+            marginTop: 28,
+            display: "flex",
+            flexDirection: "column",
+            gap: 16,
+          }}
+        >
           {section.paragraphs.map((p, i) =>
             isAllCaps ? (
               <p
@@ -284,7 +273,7 @@ function StoryBody({
                 style={{
                   margin: 0,
                   fontFamily: SANS,
-                  fontSize: 12,
+                  fontSize: 11,
                   lineHeight: 1.95,
                   letterSpacing: "0.2em",
                   textTransform: "uppercase",
@@ -293,7 +282,7 @@ function StoryBody({
                   marginInline: hasImage ? undefined : "auto",
                 }}
               >
-                {p}
+                {withSeps(p)}
               </p>
             ) : (
               <p
@@ -301,26 +290,40 @@ function StoryBody({
                 style={{
                   margin: 0,
                   fontFamily: SERIF,
-                  fontSize: 17,
-                  lineHeight: 1.7,
-                  opacity: 0.82,
-                  maxWidth: 580,
+                  fontSize: 16,
+                  lineHeight: 1.72,
+                  opacity: 0.84,
+                  maxWidth: 620,
                 }}
               >
-                {p}
+                {withSeps(p)}
               </p>
             ),
           )}
         </div>
       </div>
+
       {imageRight && (
-        <div style={{ gridColumn: reverse ? 1 : 2, aspectRatio: "4/5", overflow: "hidden", position: "relative" }}>
+        <div
+          style={{
+            gridColumn: 2,
+            aspectRatio: "4/5",
+            overflow: "hidden",
+            position: "relative",
+          }}
+        >
           {imageRight}
         </div>
       )}
+
       <style>{`
         @media (max-width: 880px) {
-          .mat-story-body { grid-template-columns: 1fr !important; gap: 32px !important; padding: 80px 24px !important; }
+          .mat-story-body {
+            grid-template-columns: 1fr !important;
+            gap: 32px !important;
+            padding: 80px 24px !important;
+          }
+          .mat-story-body > * { grid-column: 1 !important; }
         }
       `}</style>
     </section>
@@ -329,9 +332,8 @@ function StoryBody({
 
 /* ─────────────────────────────────────────────────────────────
    PULL-QUOTE CHAPTER DIVIDER — full-bleed B&W photo with an
-   oversized accent word overlaid (e.g. "QUIETUDE", "THEM").
-   Lifted from PDF pages 9 ("THEM" red), 20 ("QUIETUDE"), 25
-   ("HEAVENLY BLESSED").
+   oversized accent word in cream, blended into the image.
+   No sindoor red here — the photo carries the mood.
    ───────────────────────────────────────────────────────────── */
 function PullQuoteFrame({
   pullQuote,
@@ -354,7 +356,7 @@ function PullQuoteFrame({
         image={bgImage}
         variant="Hero"
         alt=""
-        filter="grayscale(1) brightness(0.6)"
+        filter="grayscale(1) brightness(0.62)"
       />
       <div
         style={{
@@ -369,14 +371,14 @@ function PullQuoteFrame({
         <span
           style={{
             fontFamily: SERIF,
-            fontWeight: 500,
+            fontWeight: 400,
             textTransform: "uppercase",
             letterSpacing: "0.04em",
-            color: pullQuote.color ?? "#fff",
+            color: "#fff",
             fontSize: "clamp(72px, 18vw, 280px)",
             lineHeight: 0.85,
-            opacity: 0.92,
-            mixBlendMode: pullQuote.color ? "normal" : "difference",
+            opacity: 0.86,
+            mixBlendMode: "difference",
           }}
         >
           {pullQuote.word}
@@ -387,9 +389,373 @@ function PullQuoteFrame({
 }
 
 /* ─────────────────────────────────────────────────────────────
-   THE BRIDE — full-bleed bride portrait on the left, sage panel
-   with editorial uppercase paragraph on the right. Mirrors PDF
-   page 30 ("Pooja holds a presence…").
+   SEGMENTED RITUALS — one section per ceremony (Haldi, Mehendi,
+   Sangeet, Pheras, Vidaai). Each section uses the staircase grid
+   pattern: 3 photos with progressive 20% / 40% descent. Photos
+   fade-up on scroll into view.
+   ───────────────────────────────────────────────────────────── */
+const RITUAL_DEFS: {
+  key: "haldi" | "mehendi" | "sangeet" | "pheras" | "vidaai";
+  label: string;
+  num: string;
+  blurb: string;
+}[] = [
+  {
+    key: "haldi",
+    label: "Haldi",
+    num: "01",
+    blurb:
+      "A morning of turmeric, laughter, and family hands — colour worn before the gold.",
+  },
+  {
+    key: "mehendi",
+    label: "Mehendi",
+    num: "02",
+    blurb:
+      "Hours of henna while the women sing — the groom's name hidden in the paisleys.",
+  },
+  {
+    key: "sangeet",
+    label: "Sangeet",
+    num: "03",
+    blurb:
+      "The night before. Dholki, dance, dupatta blur — sound carrying every story forward.",
+  },
+  {
+    key: "pheras",
+    label: "Pheras",
+    num: "04",
+    blurb:
+      "Seven steps around the fire. The vow itself, witnessed by elders and silence.",
+  },
+  {
+    key: "vidaai",
+    label: "Vidaai",
+    num: "05",
+    blurb:
+      "The threshold. The handful of rice. The car door — and a new house to walk into.",
+  },
+];
+
+function ritualPhotosFor(
+  story: FeaturedStory,
+  k: (typeof RITUAL_DEFS)[number]["key"],
+): MatImageRecord[] {
+  // 3 photos: the dedicated ritual photo + two supporting from the broader pool.
+  const main = story.photos[k];
+  const pools: Record<typeof k, MatImageRecord[]> = {
+    haldi: [main, MAT_IMAGES.atmos1, MAT_IMAGES.detail1],
+    mehendi: [main, MAT_IMAGES.detail2, MAT_IMAGES.detail3],
+    sangeet: [main, MAT_IMAGES.reel1, MAT_IMAGES.atmos2],
+    pheras: [main, MAT_IMAGES.detail4, MAT_IMAGES.reel2],
+    vidaai: [main, MAT_IMAGES.detail5, MAT_IMAGES.atmos3],
+  };
+  return pools[k];
+}
+
+function RitualSection({
+  def,
+  photos,
+}: {
+  def: (typeof RITUAL_DEFS)[number];
+  photos: MatImageRecord[];
+}) {
+  const [ref, vis] = useReveal<HTMLElement>(0.1);
+  return (
+    <section
+      ref={ref as React.RefObject<HTMLElement>}
+      style={{
+        background: T.paper,
+        padding: "100px 40px 60px",
+      }}
+    >
+      <header
+        style={{
+          maxWidth: 1280,
+          margin: "0 auto 56px",
+          display: "flex",
+          alignItems: "flex-end",
+          justifyContent: "space-between",
+          gap: 32,
+          flexWrap: "wrap",
+        }}
+      >
+        <div>
+          <div
+            style={{
+              fontFamily: SANS,
+              fontSize: 10,
+              letterSpacing: "0.4em",
+              textTransform: "uppercase",
+              color: T.sage,
+              marginBottom: 16,
+            }}
+          >
+            Ceremony {def.num}
+          </div>
+          <h3
+            style={{
+              margin: 0,
+              fontFamily: SERIF,
+              fontWeight: 300,
+              fontStyle: "italic",
+              fontSize: "clamp(32px, 4.2vw, 56px)",
+              lineHeight: 1.04,
+              letterSpacing: "-0.01em",
+            }}
+          >
+            {def.label}
+            <span style={{ color: T.sage, fontStyle: "normal" }}>.</span>
+          </h3>
+        </div>
+        <p
+          style={{
+            margin: 0,
+            maxWidth: 380,
+            fontFamily: SERIF,
+            fontStyle: "italic",
+            fontSize: 16,
+            lineHeight: 1.55,
+            opacity: 0.78,
+          }}
+        >
+          {def.blurb}
+        </p>
+      </header>
+
+      <div
+        className="mat-rit-stair"
+        style={{
+          maxWidth: 1280,
+          margin: "0 auto",
+          display: "grid",
+          gridTemplateColumns: "repeat(3, minmax(0, 30%))",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+          gap: "2vw",
+        }}
+      >
+        {photos.map((p, i) => {
+          const offsetPct = i * 20;
+          return (
+            <div
+              key={`${def.key}-${i}`}
+              style={{
+                marginTop: `${offsetPct}%`,
+                aspectRatio: "3/4",
+                overflow: "hidden",
+                background: "#0e0e0e",
+                position: "relative",
+                opacity: vis ? 1 : 0,
+                transform: vis ? "translateY(0)" : "translateY(36px)",
+                transition: `all 1s ${EASE} ${i * 0.12}s`,
+              }}
+            >
+              <MatImage
+                image={p}
+                variant="Grid"
+                alt={`${def.label} ceremony — photograph ${i + 1}`}
+              />
+            </div>
+          );
+        })}
+      </div>
+
+      <style>{`
+        @media (max-width: 880px) {
+          .mat-rit-stair { grid-template-columns: 1fr !important; gap: 32px !important; }
+          .mat-rit-stair > * { margin-top: 0 !important; }
+        }
+      `}</style>
+    </section>
+  );
+}
+
+function SegmentedRituals({ story }: { story: FeaturedStory }) {
+  const [ref, vis] = useReveal<HTMLElement>(0.05);
+  return (
+    <section style={{ background: T.paper }}>
+      <header
+        ref={ref as React.RefObject<HTMLElement>}
+        style={{
+          textAlign: "center",
+          padding: "140px 40px 0",
+          opacity: vis ? 1 : 0,
+          transform: vis ? "translateY(0)" : "translateY(16px)",
+          transition: `all 1s ${EASE}`,
+        }}
+      >
+        <div
+          style={{
+            fontFamily: SANS,
+            fontSize: 10,
+            letterSpacing: "0.4em",
+            textTransform: "uppercase",
+            color: T.sage,
+            marginBottom: 22,
+          }}
+        >
+          The Three Days
+        </div>
+        <h2
+          style={{
+            margin: 0,
+            fontFamily: SERIF,
+            fontWeight: 300,
+            fontStyle: "italic",
+            fontSize: "clamp(28px, 3.6vw, 44px)",
+            lineHeight: 1.1,
+            maxWidth: 760,
+            marginInline: "auto",
+          }}
+        >
+          Five ceremonies, in the order they happened
+          <span style={{ color: T.sage, fontStyle: "normal" }}>.</span>
+        </h2>
+      </header>
+
+      {RITUAL_DEFS.map((def) => (
+        <RitualSection
+          key={def.key}
+          def={def}
+          photos={ritualPhotosFor(story, def.key)}
+        />
+      ))}
+    </section>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────
+   WALL OF IMAGES — dense editorial grid of the couple's photos
+   beyond the curated rituals. Three columns, mixed aspects, each
+   image fades up on scroll into view.
+   ───────────────────────────────────────────────────────────── */
+function buildWall(story: FeaturedStory): MatImageRecord[] {
+  // Pull every story photo + a slice of the broader pool. Deduped.
+  const fromStory = Object.values(story.photos);
+  const fromPool: MatImageRecord[] = [
+    MAT_IMAGES.detail6,
+    MAT_IMAGES.detail7,
+    MAT_IMAGES.detail8,
+    MAT_IMAGES.reel3,
+    MAT_IMAGES.reel4,
+    MAT_IMAGES.reel5,
+    MAT_IMAGES.reel6,
+    MAT_IMAGES.portrait3,
+    MAT_IMAGES.portrait4,
+  ].filter(Boolean);
+  const seen = new Set<string>();
+  const out: MatImageRecord[] = [];
+  for (const p of [...fromStory, ...fromPool]) {
+    if (!p || seen.has(p.publicId)) continue;
+    seen.add(p.publicId);
+    out.push(p);
+  }
+  return out;
+}
+
+function WallTile({ image, idx }: { image: MatImageRecord; idx: number }) {
+  const [ref, vis] = useReveal<HTMLDivElement>(0.08);
+  // Vary aspect ratios for visual rhythm.
+  const aspect = ["3/4", "4/3", "3/4", "1/1", "3/4", "4/5"][idx % 6];
+  return (
+    <div
+      ref={ref}
+      style={{
+        aspectRatio: aspect,
+        overflow: "hidden",
+        background: "#0e0e0e",
+        position: "relative",
+        opacity: vis ? 1 : 0,
+        transform: vis ? "translateY(0)" : "translateY(24px)",
+        transition: `all 0.9s ${EASE} ${(idx % 3) * 0.08}s`,
+      }}
+    >
+      <MatImage image={image} variant="Grid" alt="" />
+    </div>
+  );
+}
+
+function WallOfImages({
+  story,
+  couple,
+}: {
+  story: FeaturedStory;
+  couple: Couple;
+}) {
+  const photos = buildWall(story);
+  return (
+    <section
+      style={{
+        background: T.paper,
+        padding: "140px 40px 80px",
+      }}
+    >
+      <header style={{ textAlign: "center", marginBottom: 64 }}>
+        <div
+          style={{
+            fontFamily: SANS,
+            fontSize: 10,
+            letterSpacing: "0.4em",
+            textTransform: "uppercase",
+            color: T.sage,
+            marginBottom: 22,
+          }}
+        >
+          Every frame held
+        </div>
+        <h2
+          style={{
+            margin: 0,
+            fontFamily: SERIF,
+            fontWeight: 300,
+            fontStyle: "italic",
+            fontSize: "clamp(28px, 3.6vw, 44px)",
+            lineHeight: 1.1,
+            maxWidth: 760,
+            marginInline: "auto",
+          }}
+        >
+          {couple.bride}{" "}
+          <Sang size={20} />{" "}
+          {couple.groom}
+          <span style={{ color: T.sage, fontStyle: "normal" }}>
+            {" "}— a complete archive.
+          </span>
+        </h2>
+      </header>
+
+      <div
+        className="mat-wall"
+        style={{
+          maxWidth: 1400,
+          margin: "0 auto",
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: "1vw",
+        }}
+      >
+        {photos.map((p, i) => (
+          <WallTile key={p.publicId} image={p} idx={i} />
+        ))}
+      </div>
+
+      <style>{`
+        @media (max-width: 880px) {
+          .mat-wall { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (max-width: 480px) {
+          .mat-wall { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+    </section>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────
+   THE BRIDE — full-bleed bride portrait (B&W) on the left, sage
+   panel with editorial uppercase paragraph on the right.
+   No sindoor red — keep the photo monochrome.
    ───────────────────────────────────────────────────────────── */
 function BridePanel({
   bride,
@@ -398,7 +764,6 @@ function BridePanel({
 }: {
   bride: string;
   bridePortrait: FeaturedStory["photos"]["bride"];
-  /** Optional all-caps body paragraph (e.g. Pooja's "The Elegant Bride"). */
   body?: string;
 }) {
   return (
@@ -411,15 +776,24 @@ function BridePanel({
         background: T.paperDeep,
       }}
     >
-      {/* image column — explicit height via aspect-ratio + relative-positioned
-          inner div so the SelectiveColorImage's fill MatImage can size. */}
-      <div style={{ position: "relative", overflow: "hidden", background: "#0e0e0e", minHeight: 520 }}>
-        <SelectiveColorImage
-          image={bridePortrait}
-          intensity={0.35}
-          redSpot={{ x: 0.48, y: 0.16, r: 0.04 }}
+      <div
+        style={{
+          position: "relative",
+          overflow: "hidden",
+          background: "#0e0e0e",
+          minHeight: 520,
+        }}
+      >
+        <div
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
-        />
+        >
+          <MatImage
+            image={bridePortrait}
+            variant="Grid"
+            alt={`${bride} — bridal portrait`}
+            filter="grayscale(1) brightness(0.96)"
+          />
+        </div>
       </div>
       <div
         style={{
@@ -447,8 +821,8 @@ function BridePanel({
             fontFamily: SERIF,
             fontWeight: 300,
             fontStyle: "italic",
-            fontSize: "clamp(36px, 5vw, 64px)",
-            lineHeight: 1.05,
+            fontSize: "clamp(32px, 4.2vw, 56px)",
+            lineHeight: 1.06,
           }}
         >
           {bride}
@@ -482,122 +856,9 @@ function BridePanel({
 }
 
 /* ─────────────────────────────────────────────────────────────
-   RITUAL LINEUP — five-up ceremony strip. Compact, no descriptions
-   (the story prose already covered emotion).
-   ───────────────────────────────────────────────────────────── */
-const RITUAL_NAMES = ["Haldi", "Mehendi", "Sangeet", "Pheras", "Vidaai"] as const;
-type RitualKey = "haldi" | "mehendi" | "sangeet" | "pheras" | "vidaai";
-const RITUAL_KEYS: RitualKey[] = ["haldi", "mehendi", "sangeet", "pheras", "vidaai"];
-
-function RitualStrip({ photos }: { photos: FeaturedStory["photos"] }) {
-  const [ref, vis] = useReveal<HTMLElement>(0.1);
-  return (
-    <section
-      ref={ref as React.RefObject<HTMLElement>}
-      style={{
-        background: T.paper,
-        padding: "160px 40px",
-      }}
-    >
-      <header style={{ textAlign: "center", marginBottom: 64 }}>
-        <div
-          style={{
-            fontFamily: SANS,
-            fontSize: 10,
-            letterSpacing: "0.4em",
-            textTransform: "uppercase",
-            color: T.sage,
-            marginBottom: 24,
-          }}
-        >
-          The Three Days
-        </div>
-        <h2
-          style={{
-            margin: 0,
-            fontFamily: SERIF,
-            fontWeight: 300,
-            fontStyle: "italic",
-            fontSize: "clamp(32px, 4.5vw, 52px)",
-            lineHeight: 1.05,
-          }}
-        >
-          Five ceremonies, in the order they happened
-          <span style={{ color: T.sage, fontStyle: "normal" }}>.</span>
-        </h2>
-      </header>
-      <ol
-        className="mat-ritual-strip"
-        style={{
-          listStyle: "none",
-          margin: 0,
-          padding: 0,
-          display: "grid",
-          gridTemplateColumns: "repeat(5, 1fr)",
-          gap: 16,
-        }}
-      >
-        {RITUAL_KEYS.map((k, i) => (
-          <li
-            key={k}
-            style={{
-              opacity: vis ? 1 : 0,
-              transform: vis ? "translateY(0)" : "translateY(24px)",
-              transition: `all 1s ${EASE} ${i * 0.08}s`,
-            }}
-          >
-            <div style={{ aspectRatio: "3/4", overflow: "hidden", background: "#0e0e0e", position: "relative" }}>
-              <MatImage image={photos[k]} variant="Polaroid" alt={RITUAL_NAMES[i]} />
-            </div>
-            <div
-              style={{
-                marginTop: 14,
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "baseline",
-                gap: 12,
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: SERIF,
-                  fontStyle: "italic",
-                  fontSize: 22,
-                  fontWeight: 400,
-                }}
-              >
-                {RITUAL_NAMES[i]}
-              </span>
-              <span
-                style={{
-                  fontFamily: SANS,
-                  fontSize: 10,
-                  letterSpacing: "0.32em",
-                  textTransform: "uppercase",
-                  color: T.sage,
-                }}
-              >
-                0{i + 1}
-              </span>
-            </div>
-          </li>
-        ))}
-      </ol>
-      <style>{`
-        @media (max-width: 880px) {
-          .mat-ritual-strip { grid-template-columns: repeat(2, 1fr) !important; gap: 24px !important; }
-        }
-        @media (max-width: 480px) {
-          .mat-ritual-strip { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
-    </section>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────────
-   CLOSING — full-bleed final photo + closing line + return-to-
-   featured CTAs.
+   CLOSING — full-bleed final photo + closing line in proper
+   serif with the Sang Devanagari ligature visible at heading
+   size + return-to-featured CTAs.
    ───────────────────────────────────────────────────────────── */
 function Closing({ couple, story }: { couple: Couple; story: FeaturedStory }) {
   return (
@@ -611,7 +872,7 @@ function Closing({ couple, story }: { couple: Couple; story: FeaturedStory }) {
           background: "#0e0e0e",
         }}
       >
-        <MatImage image={story.photos.closing} variant="Hero" alt="" filter="brightness(0.78)" />
+        <MatImage image={story.photos.closing} variant="Hero" alt="" filter="brightness(0.74)" />
         <div
           aria-hidden
           style={{
@@ -640,8 +901,8 @@ function Closing({ couple, story }: { couple: Couple; story: FeaturedStory }) {
               fontSize: 10,
               letterSpacing: "0.4em",
               textTransform: "uppercase",
-              opacity: 0.8,
-              marginBottom: 32,
+              opacity: 0.82,
+              marginBottom: 28,
             }}
           >
             End of this story
@@ -652,15 +913,19 @@ function Closing({ couple, story }: { couple: Couple; story: FeaturedStory }) {
               fontFamily: SERIF,
               fontWeight: 300,
               fontStyle: "italic",
-              fontSize: "clamp(36px, 5vw, 72px)",
-              lineHeight: 1.05,
-              maxWidth: 880,
+              fontSize: "clamp(34px, 4.6vw, 64px)",
+              lineHeight: 1.08,
+              maxWidth: 980,
+              display: "inline-flex",
+              flexWrap: "wrap",
+              gap: "0.34em",
+              alignItems: "baseline",
+              justifyContent: "center",
             }}
           >
-            And then <span style={{ fontStyle: "normal" }}>{couple.bride}</span>{" "}
-            <span style={{ opacity: 0.78, fontSize: "0.6em" }}>
-              <Sang size={20} latin />
-            </span>{" "}
+            <span>And then</span>
+            <span style={{ fontStyle: "normal" }}>{couple.bride}</span>
+            <Sang size={42} color="#fff" accent={T.cream} />
             <span style={{ fontStyle: "normal" }}>{couple.groom}</span>
             <span style={{ color: T.sage, fontStyle: "normal" }}>.</span>
           </h2>
@@ -725,42 +990,48 @@ export function FeaturedStoryClient({ couple }: { couple: Couple }) {
   const story = couple.story;
   if (!story) return null;
 
-  // Locate the "elegant bride" section (if any) so BridePanel can absorb its
-  // body copy directly — otherwise it would render twice.
   const isBrideSection = (s: StorySection) => /elegant bride/i.test(s.heading);
   const brideSection = story.sections.find(isBrideSection);
   const otherSections = story.sections.filter((s) => !isBrideSection(s));
 
   return (
     <main>
-      <Cover couple={couple} story={story} />
-      <StoryHero couple={couple} story={story} />
+      <CoverHero couple={couple} story={story} />
 
       {otherSections[0] && (
         <StoryBody
           section={otherSections[0]}
-          idx={0}
           imageRight={
-            <MatImage image={story.photos.storyImage1} variant="Grid" alt="" />
+            <MatImage
+              image={story.photos.storyImage1}
+              variant="Grid"
+              alt=""
+            />
           }
         />
       )}
 
       {story.pullQuote && (
-        <PullQuoteFrame pullQuote={story.pullQuote} bgImage={story.photos.intimateBW} />
+        <PullQuoteFrame
+          pullQuote={story.pullQuote}
+          bgImage={story.photos.intimateBW}
+        />
       )}
 
       {otherSections[1] && (
         <StoryBody
           section={otherSections[1]}
-          idx={1}
           imageLeft={
-            <MatImage image={story.photos.storyImage2} variant="Grid" alt="" />
+            <MatImage
+              image={story.photos.storyImage2}
+              variant="Grid"
+              alt=""
+            />
           }
         />
       )}
 
-      <RitualStrip photos={story.photos} />
+      <SegmentedRituals story={story} />
 
       <BridePanel
         bride={couple.bride}
@@ -769,8 +1040,10 @@ export function FeaturedStoryClient({ couple }: { couple: Couple }) {
       />
 
       {otherSections.slice(2).map((s, i) => (
-        <StoryBody key={i} section={s} idx={i + 2} />
+        <StoryBody key={i} section={s} />
       ))}
+
+      <WallOfImages story={story} couple={couple} />
 
       <Closing couple={couple} story={story} />
     </main>

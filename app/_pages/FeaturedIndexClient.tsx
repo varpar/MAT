@@ -4,9 +4,10 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
 import { SERIF, SANS, T } from "../_components/tokens";
-import { useReveal } from "../_components/hooks";
 import { FEATURED, type Couple } from "../_components/data";
 import { MatImage } from "../_components/MatImage";
+import { Sep } from "../_components/Punc";
+import { Sang } from "../_components/Sang";
 
 const EASE = [0.2, 0.7, 0.2, 1] as const;
 
@@ -26,6 +27,7 @@ function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       onClick={go}
+      data-cursor="Read story"
       initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10%" }}
@@ -97,7 +99,7 @@ function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
               marginBottom: 8,
             }}
           >
-            No. {String(idx + 1).padStart(2, "0")} — A story by Mi Amor Tales
+            No. {String(idx + 1).padStart(2, "0")}<Sep />A story by Mi Amor Tales
           </div>
         </div>
 
@@ -126,15 +128,12 @@ function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
           </span>
           <span
             style={{
-              fontFamily: SERIF,
-              fontStyle: "italic",
-              fontWeight: 300,
-              fontSize: "clamp(20px, 2.4vw, 32px)",
-              opacity: 0.85,
-              margin: "8px 0",
+              display: "inline-flex",
+              opacity: 0.92,
+              margin: "10px 0",
             }}
           >
-            sang
+            <Sang size={26} color="#f4f7f7" accent={T.cream} />
           </span>
           <span
             style={{
@@ -172,7 +171,7 @@ function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
               lineHeight: 1.55,
             }}
           >
-            {couple.place} — three days, one quiet sit-down, every frame kept.
+            {couple.place}<Sep />three days, one quiet sit-down, every frame kept.
           </div>
           <motion.span
             animate={{ x: hov ? 6 : 0, opacity: hov ? 1 : 0.78 }}
@@ -196,15 +195,15 @@ function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
 }
 
 export function FeaturedIndexClient() {
-  const [ref, vis] = useReveal<HTMLElement>(0.05);
   return (
     <main>
       <section
-        ref={ref as React.RefObject<HTMLElement>}
         style={{
           padding: "180px 40px 80px",
           background: T.paper,
           textAlign: "center",
+          position: "relative",
+          overflow: "hidden",
         }}
       >
         <div
@@ -215,11 +214,11 @@ export function FeaturedIndexClient() {
             textTransform: "uppercase",
             color: T.sage,
             marginBottom: 32,
-            opacity: vis ? 1 : 0,
-            transition: "opacity 800ms ease",
+            position: "relative",
+            zIndex: 1,
           }}
         >
-          The Featured Index — Twenty-Four Stories
+          The Featured Index<Sep />Twenty-Four Stories
         </div>
         <h1
           style={{
@@ -231,13 +230,15 @@ export function FeaturedIndexClient() {
             letterSpacing: "-0.02em",
             maxWidth: 1080,
             marginInline: "auto",
-            opacity: vis ? 1 : 0,
-            transform: vis ? "translateY(0)" : "translateY(20px)",
-            transition: "all 1.2s cubic-bezier(.2,.7,.2,1)",
+            position: "relative",
+            zIndex: 1,
+            textWrap: "balance",
           }}
         >
           <span style={{ fontStyle: "italic" }}>Stories</span> we have kept
-          <span style={{ color: T.sage }}>,</span> in full
+          <span style={{ color: T.sage }}>,</span>
+          <br />
+          in full
           <span style={{ color: T.sage }}>.</span>
         </h1>
         <p
@@ -249,12 +250,13 @@ export function FeaturedIndexClient() {
             fontWeight: 300,
             fontSize: 19,
             lineHeight: 1.55,
-            opacity: vis ? 0.78 : 0,
-            transition: "opacity 1s ease 0.2s",
+            opacity: 0.78,
+            position: "relative",
+            zIndex: 1,
           }}
         >
           A curated room of weddings we return to often. Each opens into its full
-          cinematic page — mehendi, sindoor, the three days.
+          cinematic page<Sep />mehendi, sindoor, the three days.
         </p>
       </section>
       <section style={{ padding: "40px 40px 160px", background: T.paper }}>

@@ -380,7 +380,7 @@ const ANVESHA_OMKAR_STORY: FeaturedStory = {
       ],
     },
   ],
-  pullQuote: {"word":"THEM","color":"#C41E1E"},
+  pullQuote: {"word":"THEM"},
   vendors: [],
 };
 

@@ -22,6 +22,8 @@ html, body {
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -100,4 +102,38 @@ img[data-mat-image] {
 /* Smaller type ramp on phones so display-1 headlines don't dominate. */
 @media (max-width: 600px) {
   h1 { letter-spacing: -0.01em; }
+}
+
+/* ---------- Heading text-balance
+   Editorial display headings often trail one or two orphan words on the last
+   line. `text-wrap: balance` evens out line lengths across the heading so the
+   shape reads like a wedding-invitation block, not a left-aligned paragraph.
+   Applied broadly to h1/h2/h3 since this is an editorial site. The
+   `.mat-balance` utility is available for non-heading elements (e.g. a pull
+   quote rendered as a <p>) that should opt in. ---------- */
+h1, h2, h3 { text-wrap: balance; }
+.mat-balance { text-wrap: balance; }
+
+/* ---------- Custom sage cursor
+   On hover-capable + fine-pointer devices (desktop with mouse), hide the
+   native cursor everywhere with !important so it overrides inline
+   `cursor: pointer` styles on tiles, buttons, articles, etc. Form fields
+   keep the I-beam because users still need it. Touch devices ignore
+   the whole block. ---------- */
+@media (hover: hover) and (pointer: fine) {
+  *, *::before, *::after {
+    cursor: none !important;
+  }
+  input, textarea, select, [contenteditable="true"] {
+    cursor: text !important;
+  }
+}
+
+body[data-marquee-preview="true"] [data-mat-nav] {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+}
+[data-mat-nav] {
+  transition: opacity 0.3s ease-in-out;
 }

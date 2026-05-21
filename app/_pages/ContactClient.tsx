@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { SERIF, SANS, T } from "../_components/tokens";
+import { Sep, withSeps } from "../_components/Punc";
 
 const STEPS = ["Names", "Date", "Venue", "Package", "Note"] as const;
 
@@ -86,7 +87,7 @@ function FAQRow({ q, a }: { q: string; a: string }) {
           maxWidth: 720,
         }}
       >
-        {a}
+        {withSeps(a)}
       </div>
     </div>
   );
@@ -102,6 +103,8 @@ export function ContactClient() {
           padding: "180px 40px 60px",
           background: T.paper,
           textAlign: "center",
+          position: "relative",
+          overflow: "hidden",
         }}
       >
         <div
@@ -112,9 +115,11 @@ export function ContactClient() {
             textTransform: "uppercase",
             color: T.sage,
             marginBottom: 32,
+            position: "relative",
+            zIndex: 1,
           }}
         >
-          Begin — Six Slots — Season 26 / 27
+          Begin<Sep />Six Slots<Sep />Season 26 / 27
         </div>
         <h1
           style={{
@@ -126,6 +131,9 @@ export function ContactClient() {
             letterSpacing: "-0.02em",
             maxWidth: 1080,
             marginInline: "auto",
+            position: "relative",
+            zIndex: 1,
+            textWrap: "balance",
           }}
         >
           <span style={{ fontStyle: "italic" }}>Tell us</span> about your day
@@ -141,6 +149,8 @@ export function ContactClient() {
             fontSize: 19,
             lineHeight: 1.55,
             opacity: 0.78,
+            position: "relative",
+            zIndex: 1,
           }}
         >
           We answer every enquiry within thirty-six hours. Tell us a little, and we&apos;ll
@@ -190,7 +200,7 @@ export function ContactClient() {
               marginBottom: 20,
             }}
           >
-            01 — The Enquiry Form
+            01<Sep />The Enquiry Form
           </div>
           <h2
             style={{
@@ -216,7 +226,7 @@ export function ContactClient() {
             }}
           >
             Submissions reach Aanya by email and WhatsApp at the same time. She answers
-            personally — never an assistant.
+            personally<Sep />never an assistant.
           </p>
           <div
             style={{
@@ -272,7 +282,7 @@ export function ContactClient() {
               marginBottom: 18,
             }}
           >
-            Step 0{step + 1} — {STEPS[step]}
+            Step 0{step + 1}<Sep />{STEPS[step]}
           </div>
           <div
             style={{
@@ -282,6 +292,7 @@ export function ContactClient() {
               fontWeight: 300,
               lineHeight: 1.35,
               minHeight: 96,
+              textWrap: "balance",
             }}
           >
             {PROMPTS[STEPS[step]]}
@@ -403,7 +414,7 @@ export function ContactClient() {
               color: T.sage,
             }}
           >
-            02 — Frequently
+            02<Sep />Frequently
           </div>
         </header>
         <div style={{ maxWidth: 1100, marginInline: "auto" }}>

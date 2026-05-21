@@ -40,7 +40,7 @@ export function Footer() {
   return (
     <footer
       style={{
-        background: T.ink,
+        background: T.sage,
         color: T.paper,
         padding: "80px 40px 36px",
         fontFamily: SANS,
@@ -73,9 +73,9 @@ export function Footer() {
               textTransform: "uppercase",
             }}
           >
-            Studio<span style={{ color: T.sage, margin: "0 8px" }}>·</span>
-            Jaipur, IN<span style={{ color: T.sage, margin: "0 8px" }}>·</span>
-            est<span style={{ color: T.sage }}>.</span> 2018
+            Studio<span style={{ color: T.cream, margin: "0 8px" }}>·</span>
+            Jaipur, IN<span style={{ color: T.cream, margin: "0 8px" }}>·</span>
+            est<span style={{ color: T.cream }}>.</span> 2018
           </div>
         </div>
         <div
@@ -131,13 +131,13 @@ export function Footer() {
       >
         <span>
           © 2026 Mi Amor Tales
-          <span style={{ color: T.sage, margin: "0 8px" }}>·</span>
+          <span style={{ color: T.cream, margin: "0 8px" }}>·</span>
           All stories held in trust
-          <span style={{ color: T.sage }}>.</span>
+          <span style={{ color: T.cream }}>.</span>
         </span>
         <span>
-          Mi Amor Tales <span style={{ color: T.sage }}>sang</span> their first wedding in 2018
-          <span style={{ color: T.sage }}>.</span>
+          Mi Amor Tales <span style={{ color: T.cream }}>sang</span> their first wedding in 2018
+          <span style={{ color: T.cream }}>.</span>
         </span>
       </div>
     </footer>

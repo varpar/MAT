@@ -10,6 +10,7 @@ import { MehendiSVG } from "../_components/MehendiSVG";
 import { SelectiveColorImage } from "../_components/SelectiveColorImage";
 import { MatImage } from "../_components/MatImage";
 import { VinylIcon } from "../_components/Icons";
+import { Sep } from "../_components/Punc";
 import { FeaturedStoryClient } from "./FeaturedStoryClient";
 
 /* ─────────────────────────────────────────────────────────────
@@ -38,7 +39,7 @@ function FeaturedTitle({ couple, idx }: { couple: Couple; idx: number }) {
           transition: "opacity 800ms ease",
         }}
       >
-        Featured — No. {String(idx).padStart(2, "0")} — {couple.place}, January 2026
+        Featured<Sep />No. {String(idx).padStart(2, "0")}<Sep />{couple.place}, January 2026
       </div>
       <h1
         style={{
@@ -177,7 +178,7 @@ function MehendiSection({ couple }: { couple: Couple }) {
             marginBottom: 24,
           }}
         >
-          One — The Mehendi
+          One<Sep />The Mehendi
         </div>
         <h2
           style={{
@@ -205,7 +206,7 @@ function MehendiSection({ couple }: { couple: Couple }) {
           }}
         >
           {couple.bride}&apos;s mehendi held {couple.groom}&apos;s name folded between
-          paisleys — a tradition that asks the groom to find his name on the wedding
+          paisleys<Sep />a tradition that asks the groom to find his name on the wedding
           night. Scroll, and the pattern draws itself the way it took the henna artist
           nine hours to set.
         </p>
@@ -276,7 +277,7 @@ function SelectiveColorSection() {
             marginBottom: 24,
           }}
         >
-          Two — The Sindoor Series
+          Two<Sep />The Sindoor Series
         </div>
         <h2
           style={{
@@ -377,7 +378,7 @@ function SelectiveColorSection() {
             fontStyle: "normal",
           }}
         >
-          Riya — The Morning After
+          Riya<Sep />The Morning After
         </footer>
       </blockquote>
       <style>{`
@@ -408,7 +409,7 @@ function RitualTimeline() {
             marginBottom: 24,
           }}
         >
-          Three — The Three Days
+          Three<Sep />The Three Days
         </div>
         <h2
           style={{
@@ -493,7 +494,7 @@ function RitualRow({
             marginBottom: 16,
           }}
         >
-          {r.num} — Day {Math.ceil(parseInt(r.num, 10) / 2)}
+          {r.num}<Sep />Day {Math.ceil(parseInt(r.num, 10) / 2)}
         </div>
         <h3
           style={{
@@ -567,7 +568,7 @@ function VendorTags() {
             marginBottom: 18,
           }}
         >
-          Credits — Riya sang Mohit
+          Credits<Sep />Riya sang Mohit
         </div>
         <h3
           style={{
@@ -677,6 +678,7 @@ function PhotographerLetter({ couple }: { couple: Couple }) {
             fontWeight: 300,
             fontSize: "clamp(22px, 2.6vw, 28px)",
             lineHeight: 1.55,
+            textWrap: "balance",
           }}
         >
           Dear {couple.bride} and {couple.groom},
@@ -694,7 +696,7 @@ function PhotographerLetter({ couple }: { couple: Couple }) {
         >
           We sat with you for three days, drank chai with your mothers, and stood at
           the back of the mandap so we wouldn&apos;t be in the way. What we have here
-          is yours — every frame, every laugh in the corner of the room. We are
+          is yours<Sep />every frame, every laugh in the corner of the room. We are
           grateful you let us tell it.
         </p>
         <div
@@ -714,7 +716,7 @@ function PhotographerLetter({ couple }: { couple: Couple }) {
               color: T.ink,
             }}
           >
-            — Aanya
+            <Sep />Aanya
           </span>
           <span
             style={{
@@ -726,7 +728,7 @@ function PhotographerLetter({ couple }: { couple: Couple }) {
               opacity: 0.75,
             }}
           >
-            for Mi Amor Tales — Jaipur, the morning after
+            for Mi Amor Tales<Sep />Jaipur, the morning after
           </span>
         </div>
       </article>

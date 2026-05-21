@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { SERIF, SANS, T } from "../_components/tokens";
 import { MAT_IMAGES } from "../_components/data";
 import { MatImage } from "../_components/MatImage";
+import { Sep, withSeps } from "../_components/Punc";
 import type { MatImageRecord } from "../_lib/mat-image-types";
 
 type Post = {
@@ -98,7 +99,7 @@ function TaleCard({ p }: { p: Post }) {
           color: T.sage,
         }}
       >
-        {p.cat} — {p.date}
+        {p.cat}<Sep />{p.date}
       </div>
       <h3
         style={{
@@ -110,7 +111,7 @@ function TaleCard({ p }: { p: Post }) {
           fontStyle: "italic",
         }}
       >
-        {p.title}
+        {withSeps(p.title)}
       </h3>
       <div
         style={{
@@ -141,6 +142,8 @@ export function TalesClient() {
           padding: "180px 40px 60px",
           background: T.paper,
           textAlign: "center",
+          position: "relative",
+          overflow: "hidden",
         }}
       >
         <div
@@ -151,9 +154,11 @@ export function TalesClient() {
             textTransform: "uppercase",
             color: T.sage,
             marginBottom: 32,
+            position: "relative",
+            zIndex: 1,
           }}
         >
-          The Tales Journal — Issue No. 24
+          The Tales Journal<Sep />Issue No. 24
         </div>
         <h1
           style={{
@@ -165,9 +170,14 @@ export function TalesClient() {
             letterSpacing: "-0.02em",
             maxWidth: 1080,
             marginInline: "auto",
+            position: "relative",
+            zIndex: 1,
+            textWrap: "balance",
           }}
         >
-          <span style={{ fontStyle: "italic" }}>Tales</span> we tell when the camera is down
+          <span style={{ fontStyle: "italic" }}>Tales</span> we tell
+          <br />
+          when the camera is down
           <span style={{ color: T.sage }}>.</span>
         </h1>
       </section>
@@ -210,7 +220,7 @@ export function TalesClient() {
               marginBottom: 18,
             }}
           >
-            Featured Tale — {featured.cat} — {featured.date} — {featured.read}
+            Featured Tale<Sep />{featured.cat}<Sep />{featured.date}<Sep />{featured.read}
           </div>
           <h2
             style={{
@@ -222,7 +232,7 @@ export function TalesClient() {
               fontStyle: "italic",
             }}
           >
-            {featured.title}
+            {withSeps(featured.title)}
           </h2>
           <p
             style={{

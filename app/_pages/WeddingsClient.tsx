@@ -2,6 +2,8 @@
 
 import React, { useMemo, useState } from "react";
 import { SERIF, SANS, T } from "../_components/tokens";
+import { Sep } from "../_components/Punc";
+import { Sang } from "../_components/Sang";
 import { useReveal } from "../_components/hooks";
 import { FEATURED, MAT_IMAGES, type Couple } from "../_components/data";
 import { MatImage } from "../_components/MatImage";
@@ -98,7 +100,7 @@ function FrameTile({
         }}
       >
         {f.couple.bride}{" "}
-        <span style={{ color: T.sage, fontSize: 12 }}>sang</span>{" "}
+        <Sang size={13} />{" "}
         {f.couple.groom}
         <span
           style={{
@@ -111,7 +113,7 @@ function FrameTile({
             fontStyle: "normal",
           }}
         >
-          — {f.couple.place}
+          <Sep />{f.couple.place}
         </span>
       </figcaption>
     </figure>
@@ -134,6 +136,8 @@ export function WeddingsClient() {
           padding: "180px 40px 60px",
           background: T.paper,
           textAlign: "center",
+          position: "relative",
+          overflow: "hidden",
         }}
       >
         <div
@@ -144,9 +148,11 @@ export function WeddingsClient() {
             textTransform: "uppercase",
             color: T.sage,
             marginBottom: 32,
+            position: "relative",
+            zIndex: 1,
           }}
         >
-          The Full Archive — 218 Frames — Eight Years
+          The Full Archive<Sep />218 Frames<Sep />Eight Years
         </div>
         <h1
           style={{
@@ -158,10 +164,15 @@ export function WeddingsClient() {
             letterSpacing: "-0.02em",
             maxWidth: 1080,
             marginInline: "auto",
+            position: "relative",
+            zIndex: 1,
+            textWrap: "balance",
           }}
         >
           <span style={{ fontStyle: "italic" }}>Every wedding</span>
-          <span style={{ color: T.sage }}>,</span> kept whole
+          <span style={{ color: T.sage }}>,</span>
+          <br />
+          kept whole
           <span style={{ color: T.sage }}>.</span>
         </h1>
       </section>
@@ -173,11 +184,9 @@ export function WeddingsClient() {
           top: 72,
           zIndex: 10,
           padding: "20px 40px",
-          background: "rgba(250,250,247,0.92)",
-          backdropFilter: "blur(14px)",
-          WebkitBackdropFilter: "blur(14px)",
-          borderTop: `1px solid ${T.ink}10`,
-          borderBottom: `1px solid ${T.ink}10`,
+          background: T.sage,
+          borderTop: `1px solid rgba(0,0,0,0.18)`,
+          borderBottom: `1px solid rgba(0,0,0,0.18)`,
           display: "flex",
           justifyContent: "center",
           gap: 32,
@@ -200,12 +209,11 @@ export function WeddingsClient() {
                 letterSpacing: "0.32em",
                 textTransform: "uppercase",
                 fontWeight: active ? 500 : 400,
-                color: T.ink,
-                opacity: active ? 1 : 0.55,
+                color: active ? T.paper : "rgba(255,255,255,0.65)",
                 borderBottom: active
-                  ? `1px solid ${T.sage}`
+                  ? `1px solid ${T.paper}`
                   : "1px solid transparent",
-                transition: "opacity 250ms ease, border-color 250ms ease",
+                transition: "color 250ms ease, border-color 250ms ease",
               }}
             >
               {f}
@@ -247,7 +255,7 @@ export function WeddingsClient() {
             opacity: 0.55,
           }}
         >
-          End of selection — 200 more in the archive
+          End of selection<Sep />200 more in the archive
         </div>
         <style>{`
           @media (max-width: 1024px) {
