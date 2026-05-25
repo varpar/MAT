@@ -63,7 +63,6 @@ function FrameTile({
       onMouseLeave={() => setHov(false)}
       style={{
         margin: 0,
-        gridColumn: f.ratio >= 1.2 ? "span 2" : "span 1",
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(20px)",
         transition: `opacity 1s cubic-bezier(.2,.7,.2,1) ${(idx % 8) * 0.05}s, transform 1s cubic-bezier(.2,.7,.2,1) ${(idx % 8) * 0.05}s`,
@@ -71,7 +70,7 @@ function FrameTile({
     >
       <div
         style={{
-          aspectRatio: `${f.ratio}`,
+          aspectRatio: "3/4",
           overflow: "hidden",
           background: "#222",
         }}

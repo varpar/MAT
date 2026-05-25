@@ -358,117 +358,29 @@ function HomeFilmReel() {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   MARQUEE — couple names. Hovering any name:
-     • dims the rest of the page (fixed paper-tinted overlay),
-     • renders eight of that couple's photos as two straight rows
-       (four above, four below the band) — calm, evenly spaced,
-     • pauses the marquee so the user can click,
-     • Click → /featured/[slug].
+   MARQUEE — couple names. Hovering any name dims the rest of the
+   page (fixed paper-tinted overlay) and surfaces a single
+   "View Story" call-to-action. Click anywhere on the name to
+   navigate to /featured/[slug].
    ───────────────────────────────────────────────────────────── */
-function previewPhotos(couple: Couple) {
-  if (couple.story) {
-    const p = couple.story.photos;
-    return [
-      p.hero,
-      p.bride,
-      p.groom,
-      p.haldi,
-      p.mehendi,
-      p.sangeet,
-      p.pheras,
-      p.vidaai,
-    ];
-  }
-  return Array.from({ length: 8 }, () => couple.img);
-}
-
-function CouplePreview({ couple }: { couple: Couple }) {
-  const photos = previewPhotos(couple);
-  const top = photos.slice(0, 4);
-  const bottom = photos.slice(4, 8);
-
-  const TILE_HEIGHT = "26vh"; // photo height — keeps four-up rows from overflowing
-
-  const rowStyle: React.CSSProperties = {
-    position: "fixed",
-    left: 0,
-    right: 0,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: "1.2vw",
-    zIndex: 65,
-    pointerEvents: "none",
-  };
-
-  const tileStyle: React.CSSProperties = {
-    position: "relative",
-    height: TILE_HEIGHT,
-    aspectRatio: "3/4",
-    overflow: "hidden",
-    background: "#0e0e0e",
-    boxShadow: "0 20px 44px rgba(0,0,0,0.14)",
-    willChange: "transform, opacity",
-  };
-
+function CouplePreview() {
   return (
     <>
-      {/* Dimmer — paper tint with mild blur, fades the rest of the page */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 0.4, ease: EASE }}
+        transition={{ duration: 0.3, ease: EASE }}
         style={{
           position: "fixed",
           inset: 0,
           zIndex: 60,
-          background: "rgba(250,250,247,0.88)",
+          background: "rgba(250,250,247,0.86)",
           backdropFilter: "blur(8px)",
           WebkitBackdropFilter: "blur(8px)",
           pointerEvents: "none",
         }}
       />
-
-      {/* Top row — three small photos hugged to the top of the viewport */}
-      <div style={{ ...rowStyle, top: "4vh" }}>
-        {top.map((photo, i) => (
-          <motion.div
-            key={`${couple.slug}-t-${i}`}
-            initial={{ opacity: 0, y: -14 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.55, ease: EASE, delay: i * 0.06 }}
-            style={tileStyle}
-          >
-            <MatImage
-              image={photo}
-              variant="Thumbnail"
-              alt={`${couple.bride} sang ${couple.groom}`}
-            />
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Bottom row — three small photos hugged to the bottom of the viewport */}
-      <div style={{ ...rowStyle, bottom: "4vh" }}>
-        {bottom.map((photo, i) => (
-          <motion.div
-            key={`${couple.slug}-b-${i}`}
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
-            transition={{ duration: 0.55, ease: EASE, delay: 0.18 + i * 0.06 }}
-            style={tileStyle}
-          >
-            <MatImage
-              image={photo}
-              variant="Thumbnail"
-              alt={`${couple.bride} sang ${couple.groom}`}
-            />
-          </motion.div>
-        ))}
-      </div>
     </>
   );
 }
@@ -573,7 +485,7 @@ function HomeMarquee() {
         </div>
       </div>
       <AnimatePresence>
-        {hovered && <CouplePreview key={hovered.slug} couple={hovered} />}
+        {hovered && <CouplePreview key={hovered.slug} />}
       </AnimatePresence>
       <style>{`
         /* Name hover (cursor on a specific link) → freeze so the user can click. */
@@ -598,7 +510,6 @@ function CoupleTile({
   const [hov, setHov] = useState(false);
   const router = useRouter();
   const go = () => router.push(`/featured/${couple.slug ?? "riya-sang-mohit"}`);
-  const offsetPct = step * 20; // 0%, 20%, 40% — staircase descent
 
   return (
     <motion.article
@@ -614,7 +525,6 @@ function CoupleTile({
       style={{
         cursor: "pointer",
         position: "relative",
-        marginTop: `${offsetPct}%`,
         aspectRatio: "3/4",
         overflow: "hidden",
         background: "#0e0e0e",
@@ -791,7 +701,7 @@ function HomeRecent() {
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: 16,
+          gap: "2vw",
         }}
       >
         {rows.map((row, ri) => (
@@ -800,8 +710,7 @@ function HomeRecent() {
             className="mat-stair-row"
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(3, minmax(0, 30%))",
-              justifyContent: "space-between",
+              gridTemplateColumns: "repeat(3, 1fr)",
               alignItems: "flex-start",
               gap: "2vw",
             }}
@@ -903,7 +812,7 @@ function HomeVideoSection() {
       </div>
 
       {/* TOP-LEFT — bleeds across the video's top edge, half on paper,
-          half on the video. mix-blend-difference auto-inverts. */}
+          half on the video. Flat sage colour, no blend. */}
       <div
         className="mat-vidsection-tl"
         style={{
@@ -911,8 +820,7 @@ function HomeVideoSection() {
           top: 140, // aligns to video top edge
           left: "4%",
           transform: "translateY(-50%)",
-          color: "#fff",
-          mixBlendMode: "difference",
+          color: T.ink,
           zIndex: 2,
           maxWidth: "60vw",
           pointerEvents: "none",
@@ -945,7 +853,8 @@ function HomeVideoSection() {
         </h2>
       </div>
 
-      {/* BOTTOM-RIGHT — mirror of the above, bleeds across the bottom edge */}
+      {/* BOTTOM-RIGHT — mirror of the above, bleeds across the bottom edge.
+          Flat sage colour, no blend. */}
       <div
         className="mat-vidsection-br"
         style={{
@@ -953,8 +862,7 @@ function HomeVideoSection() {
           bottom: 140,
           right: "4%",
           transform: "translateY(50%)",
-          color: "#fff",
-          mixBlendMode: "difference",
+          color: T.ink,
           zIndex: 2,
           maxWidth: "60vw",
           textAlign: "right",

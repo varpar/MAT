@@ -3,16 +3,8 @@
 import React, { useState } from "react";
 import { SERIF, SANS, T } from "../_components/tokens";
 import { Sep, withSeps } from "../_components/Punc";
-
-const STEPS = ["Names", "Date", "Venue", "Package", "Note"] as const;
-
-const PROMPTS: Record<(typeof STEPS)[number], string> = {
-  Names: "What should we call you, and your partner?",
-  Date: "When are you thinking? Even a season helps.",
-  Venue: "Where are you imagining? A city is enough.",
-  Package: "Photography only, or film as well?",
-  Note: "Anything else we should know about you both?",
-};
+import { MatImage } from "../_components/MatImage";
+import { MAT_IMAGES } from "../_components/data";
 
 const FAQS: [string, string][] = [
   [
@@ -32,6 +24,223 @@ const FAQS: [string, string][] = [
     "Yes. We don't pose unless asked. The whole point of our work is that you forget we are there.",
   ],
 ];
+
+type FormState = {
+  names: string;
+  email: string;
+  phone: string;
+  date: string;
+  venue: string;
+  pkg: string;
+  message: string;
+};
+
+const INITIAL: FormState = {
+  names: "",
+  email: "",
+  phone: "",
+  date: "",
+  venue: "",
+  pkg: "",
+  message: "",
+};
+
+const PACKAGES = [
+  "Photography only",
+  "Photography + Film",
+  "Photography + Film + Album",
+  "Not sure yet",
+] as const;
+
+/* ─────────────────────────────────────────────────────────────
+   FORM FIELD — uppercase label above, visible sage-light input
+   below with sage focus border. Designed so a glance reads "here
+   is where you write something."
+   ───────────────────────────────────────────────────────────── */
+function Field({
+  label,
+  name,
+  value,
+  onChange,
+  type = "text",
+  placeholder,
+  required = false,
+  span = 1,
+}: {
+  label: string;
+  name: keyof FormState;
+  value: string;
+  onChange: (k: keyof FormState, v: string) => void;
+  type?: "text" | "email" | "tel" | "date";
+  placeholder?: string;
+  required?: boolean;
+  span?: 1 | 2;
+}) {
+  const [focused, setFocused] = useState(false);
+  return (
+    <label
+      style={{
+        display: "block",
+        gridColumn: span === 2 ? "span 2" : "span 1",
+      }}
+    >
+      <div
+        style={{
+          fontFamily: SANS,
+          fontSize: 10,
+          letterSpacing: "0.32em",
+          textTransform: "uppercase",
+          color: T.sage,
+          marginBottom: 10,
+        }}
+      >
+        {label}
+        {required && <span style={{ opacity: 0.6 }}> *</span>}
+      </div>
+      <input
+        type={type}
+        name={name}
+        value={value}
+        onChange={(e) => onChange(name, e.target.value)}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        placeholder={placeholder}
+        required={required}
+        style={{
+          width: "100%",
+          padding: "14px 0",
+          border: "none",
+          borderBottom: `1px solid ${focused ? T.sage : "rgba(26,26,26,0.25)"}`,
+          background: "transparent",
+          fontFamily: SERIF,
+          fontSize: 18,
+          color: T.ink,
+          outline: "none",
+          transition: "border-bottom-color 220ms ease",
+        }}
+      />
+    </label>
+  );
+}
+
+function TextAreaField({
+  label,
+  name,
+  value,
+  onChange,
+  placeholder,
+}: {
+  label: string;
+  name: keyof FormState;
+  value: string;
+  onChange: (k: keyof FormState, v: string) => void;
+  placeholder?: string;
+}) {
+  const [focused, setFocused] = useState(false);
+  return (
+    <label style={{ display: "block", gridColumn: "span 2" }}>
+      <div
+        style={{
+          fontFamily: SANS,
+          fontSize: 10,
+          letterSpacing: "0.32em",
+          textTransform: "uppercase",
+          color: T.sage,
+          marginBottom: 10,
+        }}
+      >
+        {label}
+      </div>
+      <textarea
+        name={name}
+        value={value}
+        onChange={(e) => onChange(name, e.target.value)}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        placeholder={placeholder}
+        rows={5}
+        style={{
+          width: "100%",
+          padding: "14px 16px",
+          border: `1px solid ${focused ? T.sage : "rgba(26,26,26,0.15)"}`,
+          background: "transparent",
+          fontFamily: SERIF,
+          fontSize: 18,
+          color: T.ink,
+          outline: "none",
+          resize: "vertical",
+          minHeight: 140,
+          transition: "border-color 220ms ease",
+          fontStyle: "italic",
+        }}
+      />
+    </label>
+  );
+}
+
+function SelectField({
+  label,
+  name,
+  value,
+  onChange,
+}: {
+  label: string;
+  name: keyof FormState;
+  value: string;
+  onChange: (k: keyof FormState, v: string) => void;
+}) {
+  const [focused, setFocused] = useState(false);
+  return (
+    <label style={{ display: "block", gridColumn: "span 2" }}>
+      <div
+        style={{
+          fontFamily: SANS,
+          fontSize: 10,
+          letterSpacing: "0.32em",
+          textTransform: "uppercase",
+          color: T.sage,
+          marginBottom: 10,
+        }}
+      >
+        {label}
+      </div>
+      <select
+        name={name}
+        value={value}
+        onChange={(e) => onChange(name, e.target.value)}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        style={{
+          width: "100%",
+          padding: "14px 24px 14px 0",
+          border: "none",
+          borderBottom: `1px solid ${focused ? T.sage : "rgba(26,26,26,0.25)"}`,
+          backgroundColor: "transparent",
+          fontFamily: SERIF,
+          fontSize: 18,
+          color: value ? T.ink : "rgba(26,26,26,0.5)",
+          outline: "none",
+          appearance: "none",
+          WebkitAppearance: "none",
+          MozAppearance: "none",
+          backgroundImage: `linear-gradient(45deg, transparent 50%, ${T.sage} 50%), linear-gradient(135deg, ${T.sage} 50%, transparent 50%)`,
+          backgroundPosition:
+            "calc(100% - 12px) center, calc(100% - 6px) center",
+          backgroundSize: "6px 6px, 6px 6px",
+          backgroundRepeat: "no-repeat",
+          transition: "border-bottom-color 220ms ease",
+        }}
+      >
+        <option value="">Choose one…</option>
+        {PACKAGES.map((p) => (
+          <option key={p} value={p}>
+            {p}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+}
 
 function FAQRow({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
@@ -94,77 +303,124 @@ function FAQRow({ q, a }: { q: string; a: string }) {
 }
 
 export function ContactClient() {
-  const [step, setStep] = useState(0);
+  const [form, setForm] = useState<FormState>(INITIAL);
+  const [submitted, setSubmitted] = useState(false);
+
+  const update = (k: keyof FormState, v: string) =>
+    setForm((s) => ({ ...s, [k]: v }));
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
 
   return (
     <main>
+      {/* HERO — text on the left, editorial portrait on the right.
+          Photo doubles as a visual cue that this is a real human studio. */}
       <section
+        className="mat-contact-hero"
         style={{
-          padding: "180px 40px 60px",
+          padding: "160px 40px 80px",
           background: T.paper,
-          textAlign: "center",
+          display: "grid",
+          gridTemplateColumns: "6fr 6fr",
+          gap: 64,
+          alignItems: "center",
           position: "relative",
           overflow: "hidden",
         }}
       >
+        <div style={{ position: "relative", zIndex: 1 }}>
+          <div
+            style={{
+              fontFamily: SANS,
+              fontSize: 10,
+              letterSpacing: "0.4em",
+              textTransform: "uppercase",
+              color: T.sage,
+              marginBottom: 24,
+            }}
+          >
+            Begin<Sep />Six Slots<Sep />Season 26 / 27
+          </div>
+          <h1
+            style={{
+              margin: 0,
+              fontFamily: SERIF,
+              fontWeight: 300,
+              fontSize: "clamp(48px, 7vw, 88px)",
+              lineHeight: 0.98,
+              letterSpacing: "-0.02em",
+              textWrap: "balance",
+            }}
+          >
+            <span style={{ fontStyle: "italic" }}>Tell us</span> about your day
+            <span style={{ color: T.sage }}>.</span>
+          </h1>
+          <p
+            style={{
+              marginTop: 24,
+              maxWidth: 480,
+              fontFamily: SERIF,
+              fontStyle: "italic",
+              fontSize: 18,
+              lineHeight: 1.55,
+              opacity: 0.82,
+            }}
+          >
+            We answer every enquiry within thirty-six hours. Tell us a little, and
+            we&apos;ll send a slow, handwritten reply.
+          </p>
+          <div
+            style={{
+              marginTop: 40,
+              display: "flex",
+              alignItems: "center",
+              gap: 14,
+              fontFamily: SANS,
+              fontSize: 11,
+              letterSpacing: "0.32em",
+              textTransform: "uppercase",
+              color: T.sage,
+            }}
+          >
+            <span
+              aria-hidden
+              style={{
+                display: "inline-block",
+                width: 36,
+                height: 1,
+                background: T.sage,
+              }}
+            />
+            Scroll to the enquiry form
+          </div>
+        </div>
         <div
           style={{
-            fontFamily: SANS,
-            fontSize: 10,
-            letterSpacing: "0.4em",
-            textTransform: "uppercase",
-            color: T.sage,
-            marginBottom: 32,
+            aspectRatio: "4/5",
+            overflow: "hidden",
+            background: "#0e0e0e",
             position: "relative",
-            zIndex: 1,
           }}
         >
-          Begin<Sep />Six Slots<Sep />Season 26 / 27
+          <MatImage
+            image={MAT_IMAGES.couple2}
+            variant="Grid"
+            alt="A couple, quietly photographed"
+          />
         </div>
-        <h1
-          style={{
-            margin: 0,
-            fontFamily: SERIF,
-            fontWeight: 300,
-            fontSize: "clamp(56px, 9vw, 96px)",
-            lineHeight: 0.96,
-            letterSpacing: "-0.02em",
-            maxWidth: 1080,
-            marginInline: "auto",
-            position: "relative",
-            zIndex: 1,
-            textWrap: "balance",
-          }}
-        >
-          <span style={{ fontStyle: "italic" }}>Tell us</span> about your day
-          <span style={{ color: T.sage }}>.</span>
-        </h1>
-        <p
-          style={{
-            marginTop: 28,
-            maxWidth: 580,
-            marginInline: "auto",
-            fontFamily: SERIF,
-            fontStyle: "italic",
-            fontSize: 19,
-            lineHeight: 1.55,
-            opacity: 0.78,
-            position: "relative",
-            zIndex: 1,
-          }}
-        >
-          We answer every enquiry within thirty-six hours. Tell us a little, and we&apos;ll
-          send a slow, handwritten reply.
-        </p>
       </section>
 
-      {/* Availability — single editorial line, no pill grid */}
+      {/* AVAILABILITY STRIP */}
       <section
         style={{
           padding: "32px 40px",
-          background: T.sageLight,
-          borderTop: `1px solid ${T.sage}25`,
-          borderBottom: `1px solid ${T.sage}25`,
+          background: T.sage,
+          color: T.paper,
+          borderTop: "1px solid rgba(0,0,0,0.14)",
+          borderBottom: "1px solid rgba(0,0,0,0.14)",
           textAlign: "center",
           fontFamily: SERIF,
           fontStyle: "italic",
@@ -173,23 +429,40 @@ export function ContactClient() {
         }}
       >
         Four of six dates remain for winter twenty-twenty-six.
-        <span style={{ marginLeft: 16, color: T.sage }}>
+        <span style={{ marginLeft: 16, color: T.cream }}>
           December and February are taken.
         </span>
       </section>
 
-      {/* Stepped form */}
+      {/* FORM — photo column on the left + a clear, single-page form
+          on the right. Every field is labelled and visibly inputtable. */}
       <section
-        className="mat-form"
+        id="enquiry"
+        className="mat-contact-form"
         style={{
           padding: "120px 40px",
           background: T.paper,
           display: "grid",
           gridTemplateColumns: "5fr 7fr",
-          gap: 64,
+          gap: 72,
+          alignItems: "start",
         }}
       >
-        <div>
+        <div style={{ position: "sticky", top: 120 }}>
+          <div
+            style={{
+              aspectRatio: "3/4",
+              overflow: "hidden",
+              background: "#0e0e0e",
+              marginBottom: 32,
+            }}
+          >
+            <MatImage
+              image={MAT_IMAGES.detail2}
+              variant="Grid"
+              alt="A quiet moment from a wedding day"
+            />
+          </div>
           <div
             style={{
               fontFamily: SANS,
@@ -197,7 +470,7 @@ export function ContactClient() {
               letterSpacing: "0.32em",
               textTransform: "uppercase",
               color: T.sage,
-              marginBottom: 20,
+              marginBottom: 16,
             }}
           >
             01<Sep />The Enquiry Form
@@ -208,34 +481,36 @@ export function ContactClient() {
               fontFamily: SERIF,
               fontWeight: 300,
               fontStyle: "italic",
-              fontSize: "clamp(28px, 3.5vw, 40px)",
-              lineHeight: 1.2,
-              maxWidth: 460,
+              fontSize: "clamp(28px, 3.4vw, 40px)",
+              lineHeight: 1.18,
             }}
           >
-            Five short questions, three minutes.
+            Write to us
+            <span style={{ color: T.sage }}>.</span> A few details is enough
+            <span style={{ color: T.sage }}>.</span>
           </h2>
           <p
             style={{
-              marginTop: 22,
+              marginTop: 18,
               fontFamily: SANS,
               fontSize: 14,
               lineHeight: 1.75,
               opacity: 0.78,
-              maxWidth: 380,
+              maxWidth: 360,
             }}
           >
-            Submissions reach Aanya by email and WhatsApp at the same time. She answers
-            personally<Sep />never an assistant.
+            Submissions reach Aanya by email and WhatsApp at the same time. She
+            answers personally<Sep />never an assistant.
           </p>
           <div
             style={{
-              marginTop: 36,
+              marginTop: 32,
               fontFamily: SANS,
               fontSize: 11,
               letterSpacing: "0.28em",
               textTransform: "uppercase",
-              opacity: 0.6,
+              color: T.sage,
+              opacity: 0.85,
             }}
           >
             Or write directly
@@ -245,7 +520,8 @@ export function ContactClient() {
               marginTop: 8,
               fontFamily: SERIF,
               fontStyle: "italic",
-              fontSize: 18,
+              fontSize: 17,
+              lineHeight: 1.55,
             }}
           >
             hello@miamortales.com
@@ -253,123 +529,196 @@ export function ContactClient() {
             +91 99 28 41 21 12
           </div>
         </div>
+
         <div>
-          <div style={{ display: "flex", gap: 8, marginBottom: 32 }}>
-            {STEPS.map((s, i) => (
-              <button
-                key={s}
-                onClick={() => setStep(i)}
-                aria-label={`Go to step ${i + 1}`}
+          {submitted ? (
+            <div
+              style={{
+                padding: "60px 40px",
+                background: T.sageLighter,
+                border: `1px solid ${T.sage}25`,
+                textAlign: "center",
+              }}
+            >
+              <div
                 style={{
-                  flex: 1,
-                  height: 2,
-                  background: i <= step ? T.sage : `${T.ink}15`,
-                  cursor: "pointer",
-                  border: "none",
-                  padding: 0,
-                  transition: "background 320ms ease",
+                  fontFamily: SANS,
+                  fontSize: 10,
+                  letterSpacing: "0.4em",
+                  textTransform: "uppercase",
+                  color: T.sage,
+                  marginBottom: 22,
                 }}
+              >
+                Received
+              </div>
+              <h3
+                style={{
+                  margin: 0,
+                  fontFamily: SERIF,
+                  fontWeight: 300,
+                  fontStyle: "italic",
+                  fontSize: "clamp(28px, 3.4vw, 40px)",
+                  lineHeight: 1.2,
+                  textWrap: "balance",
+                }}
+              >
+                Thank you{", "}
+                <span style={{ color: T.sage }}>{form.names || "friends"}</span>
+                <span style={{ color: T.sage }}>.</span>
+              </h3>
+              <p
+                style={{
+                  marginTop: 18,
+                  fontFamily: SERIF,
+                  fontStyle: "italic",
+                  fontSize: 18,
+                  opacity: 0.82,
+                  maxWidth: 480,
+                  marginInline: "auto",
+                }}
+              >
+                We&apos;ll reply within thirty-six hours. If urgent, WhatsApp Aanya
+                directly at the number on the left.
+              </p>
+            </div>
+          ) : (
+            <form
+              onSubmit={onSubmit}
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "28px 24px",
+              }}
+            >
+              <Field
+                label="Your names"
+                name="names"
+                value={form.names}
+                onChange={update}
+                placeholder="Riya & Mohit"
+                required
+                span={2}
               />
-            ))}
-          </div>
-          <div
-            style={{
-              fontFamily: SANS,
-              fontSize: 10,
-              letterSpacing: "0.32em",
-              textTransform: "uppercase",
-              color: T.sage,
-              marginBottom: 18,
-            }}
-          >
-            Step 0{step + 1}<Sep />{STEPS[step]}
-          </div>
-          <div
-            style={{
-              fontFamily: SERIF,
-              fontStyle: "italic",
-              fontSize: "clamp(22px, 2.6vw, 28px)",
-              fontWeight: 300,
-              lineHeight: 1.35,
-              minHeight: 96,
-              textWrap: "balance",
-            }}
-          >
-            {PROMPTS[STEPS[step]]}
-          </div>
-          <input
-            type="text"
-            placeholder="Type here…"
-            style={{
-              marginTop: 32,
-              width: "100%",
-              padding: "14px 0",
-              border: "none",
-              borderBottom: `1px solid ${T.ink}40`,
-              background: "transparent",
-              fontFamily: SERIF,
-              fontSize: 20,
-              fontStyle: "italic",
-              outline: "none",
-            }}
-          />
-          <div
-            style={{
-              marginTop: 40,
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: 16,
-            }}
-          >
-            <button
-              onClick={() => setStep((s) => Math.max(0, s - 1))}
-              disabled={step === 0}
-              style={{
-                background: "transparent",
-                border: "none",
-                fontFamily: SANS,
-                fontSize: 11,
-                letterSpacing: "0.32em",
-                textTransform: "uppercase",
-                cursor: step > 0 ? "pointer" : "default",
-                opacity: step > 0 ? 0.7 : 0.25,
-                color: T.ink,
-                padding: "10px 0",
-              }}
-            >
-              ← Back
-            </button>
-            <button
-              onClick={() => setStep((s) => Math.min(STEPS.length - 1, s + 1))}
-              style={{
-                padding: "16px 32px",
-                border: `1px solid ${T.ink}`,
-                background: "transparent",
-                color: T.ink,
-                fontFamily: SANS,
-                fontSize: 11,
-                letterSpacing: "0.32em",
-                textTransform: "uppercase",
-                cursor: "pointer",
-                transition: "background 320ms ease, color 320ms ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = T.ink;
-                e.currentTarget.style.color = "#fff";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "transparent";
-                e.currentTarget.style.color = T.ink;
-              }}
-            >
-              {step === STEPS.length - 1 ? "Send →" : "Next →"}
-            </button>
-          </div>
+              <Field
+                label="Email"
+                name="email"
+                type="email"
+                value={form.email}
+                onChange={update}
+                placeholder="you@example.com"
+                required
+              />
+              <Field
+                label="Phone / WhatsApp"
+                name="phone"
+                type="tel"
+                value={form.phone}
+                onChange={update}
+                placeholder="+91"
+              />
+              <Field
+                label="Wedding date (or season)"
+                name="date"
+                value={form.date}
+                onChange={update}
+                placeholder="November 2026, or Winter 26-27"
+              />
+              <Field
+                label="Venue or city"
+                name="venue"
+                value={form.venue}
+                onChange={update}
+                placeholder="Udaipur, Jaipur, Goa…"
+              />
+              <SelectField
+                label="What you&apos;re imagining"
+                name="pkg"
+                value={form.pkg}
+                onChange={update}
+              />
+              <TextAreaField
+                label="Anything else?"
+                name="message"
+                value={form.message}
+                onChange={update}
+                placeholder="Tell us a little about how you two met, what the day will feel like, who&apos;s travelling in…"
+              />
+              <div
+                style={{
+                  gridColumn: "span 2",
+                  marginTop: 12,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap",
+                  gap: 18,
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: SANS,
+                    fontSize: 11,
+                    letterSpacing: "0.24em",
+                    textTransform: "uppercase",
+                    color: T.sage,
+                    opacity: 0.78,
+                  }}
+                >
+                  We reply within 36 hours.
+                </div>
+                <button
+                  type="submit"
+                  data-cursor="Send"
+                  style={{
+                    padding: "18px 40px",
+                    border: "none",
+                    background: T.sage,
+                    color: T.paper,
+                    fontFamily: SANS,
+                    fontSize: 11,
+                    letterSpacing: "0.36em",
+                    textTransform: "uppercase",
+                    cursor: "pointer",
+                    transition: "background 220ms ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = T.ink;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = T.sage;
+                  }}
+                >
+                  Send enquiry →
+                </button>
+              </div>
+            </form>
+          )}
         </div>
+
         <style>{`
           @media (max-width: 880px) {
-            .mat-form { grid-template-columns: 1fr !important; gap: 48px !important; }
+            .mat-contact-hero {
+              grid-template-columns: 1fr !important;
+              gap: 40px !important;
+              padding: 120px 24px 60px !important;
+            }
+            .mat-contact-form {
+              grid-template-columns: 1fr !important;
+              gap: 48px !important;
+              padding: 80px 24px !important;
+            }
+            .mat-contact-form > div:first-child {
+              position: static !important;
+            }
+          }
+          @media (max-width: 640px) {
+            .mat-contact-form form {
+              grid-template-columns: 1fr !important;
+            }
+            .mat-contact-form form > * {
+              grid-column: span 1 !important;
+            }
           }
         `}</style>
       </section>

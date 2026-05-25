@@ -47,11 +47,6 @@ img[data-mat-image] {
     opacity 600ms cubic-bezier(.2, .7, .2, 1);
 }
 
-@keyframes ma-bindu-pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.18); opacity: 0.85; }
-}
-
 @keyframes mg-spin { to { transform: rotate(360deg); } }
 @keyframes mg-breathe {
   0%, 100% { transform: scale(1); }
