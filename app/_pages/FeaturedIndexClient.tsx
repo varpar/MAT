@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "motion/react";
-import { SERIF, SANS, T } from "../_components/tokens";
+import { motion, useReducedMotion } from "motion/react";
+import { SERIF, SANS, BODY, DISPLAY, T } from "../_components/tokens";
 import { FEATURED, type Couple } from "../_components/data";
 import { MatImage } from "../_components/MatImage";
 import { Sep } from "../_components/Punc";
@@ -32,7 +32,7 @@ function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10%" }}
       transition={{ duration: 1, ease: EASE }}
-      className="mat-spread"
+      className={`mat-spread ${reverse ? "mat-spread-reverse" : ""}`}
       style={{
         cursor: "pointer",
         display: "grid",
@@ -64,17 +64,19 @@ function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
       </div>
 
       <div
+        className="mat-spread-pane"
         style={{
           gridColumn: reverse ? 1 : 2,
           gridRow: 1,
           background: T.sage,
           color: "#f1f4f3",
-          padding: "56px 40px",
+          padding: "clamp(36px, 4.5vw, 56px) clamp(24px, 3.6vw, 40px)",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
           position: "relative",
           overflow: "hidden",
+          minHeight: "clamp(420px, 56vw, 640px)",
         }}
       >
         <div
@@ -88,19 +90,28 @@ function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
           }}
         />
 
-        <div style={{ position: "relative", zIndex: 1 }}>
-          <div
-            style={{
-              fontFamily: SANS,
-              fontSize: 10,
-              letterSpacing: "0.4em",
-              textTransform: "uppercase",
-              opacity: 0.78,
-              marginBottom: 8,
-            }}
-          >
-            No. {String(idx + 1).padStart(2, "0")}<Sep />A story by Mi Amor Tales
-          </div>
+        {/* Top eyebrow — sits above the names so the green pane reads
+            balanced top→middle→bottom instead of empty above the title. */}
+        <div
+          style={{
+            position: "relative",
+            zIndex: 1,
+            display: "flex",
+            flexDirection: "column",
+            gap: 8,
+            alignItems: reverse ? "flex-end" : "flex-start",
+            textAlign: reverse ? "right" : "left",
+            fontFamily: SANS,
+            fontSize: 10,
+            letterSpacing: "0.42em",
+            textTransform: "uppercase",
+            color: "#f1f4f3",
+          }}
+        >
+          <span style={{ opacity: 0.92 }}>A Mi Amor Tales Story</span>
+          <span style={{ opacity: 0.7 }}>
+            No. {String(idx + 1).padStart(2, "0")}<Sep />January 2026
+          </span>
         </div>
 
         <div
@@ -150,6 +161,7 @@ function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
         </div>
 
         <div
+          className="mat-spread-foot"
           style={{
             position: "relative",
             zIndex: 1,
@@ -163,9 +175,9 @@ function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
         >
           <div
             style={{
-              fontFamily: SERIF,
+              fontFamily: BODY,
               fontStyle: "italic",
-              fontSize: 15,
+              fontSize: "clamp(14px, 1.4vw, 16px)",
               opacity: 0.85,
               maxWidth: 320,
               lineHeight: 1.55,
@@ -174,6 +186,7 @@ function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
             {couple.place}<Sep />three days, one quiet sit-down, every frame kept.
           </div>
           <motion.span
+            className="mat-spread-cta"
             animate={{ x: hov ? 6 : 0, opacity: hov ? 1 : 0.78 }}
             transition={{ duration: 0.4, ease: EASE }}
             style={{
@@ -184,6 +197,9 @@ function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
               borderBottom: "1px solid rgba(255,255,255,0.55)",
               paddingBottom: 4,
               whiteSpace: "nowrap",
+              minHeight: 44,
+              display: "inline-flex",
+              alignItems: "center",
             }}
           >
             Read the story →
@@ -194,86 +210,208 @@ function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
   );
 }
 
+/* ─────────────────────────────────────────────────────────────
+   Video hero — a looping feature reel with tastefully overlaid
+   billing + title. Lighter and more cohesive with the paper-
+   background rest of the site than the old all-black title card.
+   Reduced-motion users get a static FEATURED cover image instead
+   of the video. White text uses mixBlendMode:"difference" so it
+   stays legible over both light and dark footage; a bottom scrim
+   reinforces the lower billing block.
+   ───────────────────────────────────────────────────────────── */
+/**
+ * Featured hero — just the video and the word FEATURED.
+ *
+ * The video loads first; once it's ready to play, the letters of
+ * "FEATURED" animate in one by one. Under prefers-reduced-motion we
+ * skip the video for a static cover image and the word lands instantly.
+ */
+function VideoHero() {
+  const reduce = useReducedMotion();
+  const cover = FEATURED[0]?.img;
+  const [videoReady, setVideoReady] = useState(false);
+
+  // Under reduced motion there is no video event to wait on — let the
+  // word render immediately. (Effect, not initial state, so the value
+  // tracks the hook even when it resolves after first render.)
+  useEffect(() => {
+    if (reduce) setVideoReady(true);
+  }, [reduce]);
+
+  const word = "FEATURED";
+  const letters = Array.from(word);
+
+  const container = {
+    hidden: { opacity: 1 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: reduce ? 0 : 0.09,
+        delayChildren: reduce ? 0 : 0.18,
+      },
+    },
+  };
+  const letter = reduce
+    ? { hidden: { opacity: 1, y: 0 }, show: { opacity: 1, y: 0 } }
+    : {
+        hidden: { opacity: 0, y: 22 },
+        show: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.55, ease: EASE },
+        },
+      };
+
+  return (
+    <section
+      className="mat-feat-hero"
+      style={{
+        position: "relative",
+        height: "clamp(560px, 80vh, 860px)",
+        background: T.ink,
+        overflow: "hidden",
+      }}
+    >
+      {/* Media — looping video, or a static cover under reduced motion */}
+      <div style={{ position: "absolute", inset: 0 }}>
+        {reduce ? (
+          cover ? (
+            <MatImage
+              image={cover}
+              variant="Hero"
+              alt="Mi Amor Tales — featured weddings"
+            />
+          ) : (
+            <div style={{ position: "absolute", inset: 0, background: T.ink }} />
+          )
+        ) : (
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            onLoadedData={() => setVideoReady(true)}
+            onCanPlay={() => setVideoReady(true)}
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          >
+            <source src="/video/featured-loop.mp4" type="video/mp4" />
+          </video>
+        )}
+      </div>
+
+      {/* Subtle scrim — keeps the letters readable and eases the section
+          into the paper rows below. */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(to bottom, rgba(14,14,14,0.28) 0%, rgba(14,14,14,0.04) 35%, rgba(14,14,14,0.08) 65%, rgba(14,14,14,0.55) 100%)",
+          zIndex: 2,
+        }}
+      />
+
+      {/* FEATURED — letter by letter, after the video is ready */}
+      <motion.h1
+        aria-label="Featured"
+        initial="hidden"
+        animate={videoReady ? "show" : "hidden"}
+        variants={container}
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 4,
+          margin: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: DISPLAY,
+          fontWeight: 400,
+          fontSize: "clamp(64px, 14vw, 220px)",
+          lineHeight: 1,
+          letterSpacing: "0.06em",
+          textTransform: "uppercase",
+          color: "#ffffff",
+          mixBlendMode: "difference",
+          pointerEvents: "none",
+        }}
+      >
+        {letters.map((ch, i) => (
+          <motion.span
+            key={i}
+            aria-hidden
+            variants={letter}
+            style={{
+              display: "inline-block",
+              willChange: "transform, opacity",
+            }}
+          >
+            {ch}
+          </motion.span>
+        ))}
+      </motion.h1>
+    </section>
+  );
+}
+
 export function FeaturedIndexClient() {
   return (
     <main>
+      <VideoHero />
       <section
-        style={{
-          padding: "180px 40px 80px",
-          background: T.paper,
-          textAlign: "center",
-          position: "relative",
-          overflow: "hidden",
-        }}
+        className="mat-feat-list"
+        style={{ padding: "clamp(28px, 4vw, 40px) clamp(16px, 3vw, 24px) clamp(80px, 12vw, 160px)", background: T.paper }}
       >
         <div
-          style={{
-            fontFamily: SANS,
-            fontSize: 10,
-            letterSpacing: "0.4em",
-            textTransform: "uppercase",
-            color: T.sage,
-            marginBottom: 32,
-            position: "relative",
-            zIndex: 1,
-          }}
+          className="mat-feat-list-inner"
+          style={{ display: "flex", flexDirection: "column", gap: "clamp(40px, 6vw, 64px)" }}
         >
-          The Featured Index<Sep />Twenty-Four Stories
-        </div>
-        <h1
-          style={{
-            margin: 0,
-            fontFamily: SERIF,
-            fontWeight: 300,
-            fontSize: "clamp(56px, 9vw, 96px)",
-            lineHeight: 0.96,
-            letterSpacing: "-0.02em",
-            maxWidth: 1080,
-            marginInline: "auto",
-            position: "relative",
-            zIndex: 1,
-            textWrap: "balance",
-          }}
-        >
-          <span style={{ fontStyle: "italic" }}>Stories</span> we have kept
-          <span style={{ color: T.sage }}>,</span>
-          <br />
-          in full
-          <span style={{ color: T.sage }}>.</span>
-        </h1>
-        <p
-          style={{
-            margin: "32px auto 0",
-            maxWidth: 580,
-            fontFamily: SERIF,
-            fontStyle: "italic",
-            fontWeight: 300,
-            fontSize: 19,
-            lineHeight: 1.55,
-            opacity: 0.78,
-            position: "relative",
-            zIndex: 1,
-          }}
-        >
-          A curated room of weddings we return to often. Each opens into its full
-          cinematic page<Sep />mehendi, sindoor, the three days.
-        </p>
-      </section>
-      <section style={{ padding: "40px 40px 160px", background: T.paper }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: 64 }}>
           {FEATURED.map((c, i) => (
             <CoupleSpread key={i} couple={c} idx={i} />
           ))}
         </div>
         <style>{`
+          /* Featured video hero — keep section short on narrow viewports
+             so it doesn't dominate above the fold on mobile. */
+          @media (max-width: 720px) {
+            .mat-feat-hero { height: clamp(320px, 56vh, 520px) !important; }
+          }
+
+          /* CoupleSpread — stacked, image on top, sage pane below.
+             Preserves the top-eyebrow / middle-names / bottom-place rhythm
+             vertically. The reverse variant collapses to the same stack. */
           @media (max-width: 880px) {
             .mat-spread { grid-template-columns: 1fr !important; }
-            .mat-spread > *:first-child { aspect-ratio: 4/5 !important; }
+            .mat-spread > *:first-child {
+              aspect-ratio: 4/5 !important;
+              grid-column: 1 !important;
+              grid-row: 1 !important;
+            }
             .mat-spread > *:nth-child(2) {
               grid-column: 1 !important;
-              grid-row: auto !important;
-              padding: 32px 24px !important;
+              grid-row: 2 !important;
+              min-height: clamp(420px, 90vw, 560px) !important;
             }
+            /* Always align stacked panel content left, regardless of reverse */
+            .mat-spread-pane > div { align-items: flex-start !important; text-align: left !important; }
+            /* Force the read-cta to be visible on touch (no hover) */
+            .mat-spread-cta { opacity: 1 !important; transform: none !important; }
+          }
+          @media (max-width: 540px) {
+            .mat-spread-foot { flex-direction: column !important; align-items: flex-start !important; gap: 18px !important; }
+            .mat-spread-foot > div { max-width: 100% !important; }
+          }
+          /* Touch devices: surface the read-the-story affordance permanently. */
+          @media (hover: none) {
+            .mat-spread-cta { opacity: 1 !important; }
           }
         `}</style>
       </section>

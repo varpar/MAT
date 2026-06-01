@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { SERIF, SANS, SCRIPT, T } from "../_components/tokens";
+import { SERIF, SANS, SCRIPT, BODY, T } from "../_components/tokens";
 import { Sang } from "../_components/Sang";
 import { useReveal, useScrollProgress } from "../_components/hooks";
 import { MAT_IMAGES, RITUALS, type Couple } from "../_components/data";
@@ -21,32 +21,44 @@ function FeaturedTitle({ couple, idx }: { couple: Couple; idx: number }) {
   return (
     <section
       ref={ref as React.RefObject<HTMLElement>}
+      className="mat-ftitle"
       style={{
-        padding: "180px 40px 80px",
+        padding: "clamp(96px, 14vw, 180px) clamp(20px, 4vw, 40px) clamp(48px, 8vw, 80px)",
         background: T.paper,
         textAlign: "center",
       }}
     >
       <div
         style={{
-          fontFamily: SANS,
-          fontSize: 10,
-          letterSpacing: "0.4em",
-          textTransform: "uppercase",
-          color: T.sage,
           marginBottom: 36,
           opacity: vis ? 1 : 0,
-          transition: "opacity 800ms ease",
+          transform: vis ? "translateY(0)" : "translateY(12px)",
+          transition: "all 800ms ease",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 18,
         }}
       >
-        Featured<Sep />No. {String(idx).padStart(2, "0")}<Sep />{couple.place}, January 2026
+        <div
+          style={{
+            fontFamily: SANS,
+            fontSize: 10,
+            letterSpacing: "0.42em",
+            textTransform: "uppercase",
+            color: T.sage,
+            maxWidth: "100%",
+          }}
+        >
+          Featured<Sep />No. {String(idx).padStart(2, "0")}<Sep />{couple.place}<Sep />January 2026
+        </div>
       </div>
       <h1
         style={{
           margin: 0,
           fontFamily: SERIF,
           fontWeight: 300,
-          fontSize: "clamp(56px, 9vw, 104px)",
+          fontSize: "clamp(40px, 9vw, 104px)",
           lineHeight: 0.95,
           letterSpacing: "-0.02em",
           opacity: vis ? 1 : 0,
@@ -55,7 +67,7 @@ function FeaturedTitle({ couple, idx }: { couple: Couple; idx: number }) {
           display: "flex",
           alignItems: "baseline",
           justifyContent: "center",
-          gap: 20,
+          gap: "clamp(10px, 2vw, 20px)",
           flexWrap: "wrap",
         }}
       >
@@ -69,27 +81,26 @@ function FeaturedTitle({ couple, idx }: { couple: Couple; idx: number }) {
           <Sang size={48} color={T.sage} />
         </span>
         <span style={{ fontStyle: "italic" }}>{couple.groom}</span>
-        <span style={{ color: T.sage }}>.</span>
       </h1>
       <div
         style={{
-          marginTop: 36,
+          marginTop: "clamp(20px, 4vw, 36px)",
           fontFamily: SERIF,
           fontStyle: "italic",
-          fontSize: 18,
+          fontSize: "clamp(14px, 1.6vw, 18px)",
           opacity: vis ? 0.7 : 0,
           transition: "opacity 1s ease 0.3s",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          gap: 18,
+          gap: "clamp(10px, 2vw, 18px)",
           flexWrap: "wrap",
         }}
       >
         <span>Three days</span>
-        <span style={{ width: 1, height: 12, background: T.sage, opacity: 0.6 }} />
+        <Sep />
         <span>1,840 frames</span>
-        <span style={{ width: 1, height: 12, background: T.sage, opacity: 0.6 }} />
+        <Sep />
         <span>Lake Pichola</span>
       </div>
     </section>
@@ -102,6 +113,7 @@ function FeaturedTitle({ couple, idx }: { couple: Couple; idx: number }) {
 function FeaturedHero({ couple }: { couple: Couple }) {
   return (
     <div
+      className="mat-feat-slug-hero"
       style={{
         position: "relative",
         height: "90svh",
@@ -117,14 +129,16 @@ function FeaturedHero({ couple }: { couple: Couple }) {
         filter="brightness(0.86)"
       />
       <div
+        className="mat-feat-vinyl"
         style={{
           position: "absolute",
-          top: 32,
-          right: 40,
+          top: "clamp(16px, 3vw, 32px)",
+          right: "clamp(16px, 3vw, 40px)",
           color: "#fff",
           display: "flex",
           alignItems: "center",
           gap: 14,
+          maxWidth: "calc(100% - 32px)",
         }}
       >
         <div
@@ -143,6 +157,11 @@ function FeaturedHero({ couple }: { couple: Couple }) {
         </div>
         <VinylIcon spinning size={36} color="#fff" />
       </div>
+      <style>{`
+        @media (max-width: 720px) {
+          .mat-feat-slug-hero { height: 70svh !important; min-height: 420px !important; }
+        }
+      `}</style>
     </div>
   );
 }
@@ -160,10 +179,10 @@ function MehendiSection({ couple }: { couple: Couple }) {
       className="mat-mehendi"
       style={{
         background: T.paper,
-        padding: "160px 40px",
+        padding: "clamp(80px, 12vw, 160px) clamp(20px, 4vw, 40px)",
         display: "grid",
         gridTemplateColumns: "1fr 1fr",
-        gap: 80,
+        gap: "clamp(40px, 6vw, 80px)",
         alignItems: "center",
       }}
     >
@@ -197,12 +216,12 @@ function MehendiSection({ couple }: { couple: Couple }) {
         <p
           style={{
             marginTop: 28,
-            fontFamily: SERIF,
+            fontFamily: BODY,
             fontStyle: "italic",
             fontSize: 18,
             lineHeight: 1.6,
             maxWidth: 460,
-            opacity: 0.78,
+            opacity: 0.82,
           }}
         >
           {couple.bride}&apos;s mehendi held {couple.groom}&apos;s name folded between
@@ -231,6 +250,7 @@ function MehendiSection({ couple }: { couple: Couple }) {
       <div
         style={{
           aspectRatio: "1/1",
+          width: "100%",
           maxWidth: 480,
           marginInline: "auto",
         }}
@@ -244,7 +264,10 @@ function MehendiSection({ couple }: { couple: Couple }) {
       </div>
       <style>{`
         @media (max-width: 880px) {
-          .mat-mehendi { grid-template-columns: 1fr !important; gap: 48px !important; }
+          .mat-mehendi { grid-template-columns: 1fr !important; gap: 40px !important; }
+        }
+        @media (max-width: 480px) {
+          .mat-mehendi { gap: 32px !important; }
         }
       `}</style>
     </section>
@@ -259,11 +282,11 @@ function SelectiveColorSection() {
   return (
     <section
       ref={ref as React.RefObject<HTMLElement>}
-      style={{ background: T.paperDeep, padding: "160px 40px" }}
+      style={{ background: T.paperDeep, padding: "clamp(80px, 12vw, 160px) clamp(16px, 3vw, 16px)" }}
     >
       <header
         style={{
-          marginBottom: 64,
+          marginBottom: "clamp(36px, 6vw, 64px)",
           maxWidth: 980,
         }}
       >
@@ -353,13 +376,13 @@ function SelectiveColorSection() {
       </div>
       <blockquote
         style={{
-          margin: "100px auto 0",
+          margin: "clamp(56px, 9vw, 100px) auto 0",
           maxWidth: 720,
-          fontFamily: SERIF,
+          fontFamily: BODY,
           fontStyle: "italic",
-          fontSize: 26,
-          lineHeight: 1.4,
-          fontWeight: 300,
+          fontSize: "clamp(20px, 2.6vw, 27px)",
+          lineHeight: 1.45,
+          fontWeight: 400,
           textAlign: "center",
           opacity: vis ? 1 : 0,
           transition: "opacity 1.2s ease 0.6s",
@@ -382,9 +405,17 @@ function SelectiveColorSection() {
         </footer>
       </blockquote>
       <style>{`
-        @media (max-width: 880px) {
-          .mat-sind-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
-          .mat-sind-grid > * { grid-column: 1 / -1 !important; margin-top: 0 !important; }
+        /* Selective color — 12-col → 6-col paired layout on tablet,
+           then single-column on phone. */
+        @media (max-width: 1024px) {
+          .mat-sind-grid { grid-template-columns: repeat(6, 1fr) !important; gap: 12px !important; }
+          .mat-sind-grid > *:nth-child(1) { grid-column: 1 / 4 !important; margin-top: 0 !important; }
+          .mat-sind-grid > *:nth-child(2) { grid-column: 4 / 7 !important; margin-top: 0 !important; }
+          .mat-sind-grid > *:nth-child(3) { grid-column: 1 / -1 !important; margin-top: 0 !important; aspect-ratio: 16/9 !important; }
+        }
+        @media (max-width: 640px) {
+          .mat-sind-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+          .mat-sind-grid > * { grid-column: 1 / -1 !important; margin-top: 0 !important; aspect-ratio: 3/4 !important; }
         }
       `}</style>
     </section>
@@ -397,8 +428,8 @@ function SelectiveColorSection() {
    ───────────────────────────────────────────────────────────── */
 function RitualTimeline() {
   return (
-    <section style={{ padding: "160px 40px", background: T.paper }}>
-      <header style={{ textAlign: "center", marginBottom: 80 }}>
+    <section style={{ padding: "clamp(80px, 12vw, 160px) clamp(20px, 4vw, 40px)", background: T.paper }}>
+      <header style={{ textAlign: "center", marginBottom: "clamp(48px, 7vw, 80px)" }}>
         <div
           style={{
             fontFamily: SANS,
@@ -471,6 +502,7 @@ function RitualRow({
       <div
         style={{
           gridColumn: reverse ? 2 : 1,
+          position: "relative",
           aspectRatio: "4/3",
           overflow: "hidden",
           background: "#222",
@@ -511,11 +543,11 @@ function RitualRow({
         <p
           style={{
             marginTop: 16,
-            fontFamily: SERIF,
+            fontFamily: BODY,
             fontStyle: "italic",
             fontSize: 18,
-            lineHeight: 1.55,
-            opacity: 0.78,
+            lineHeight: 1.6,
+            opacity: 0.82,
             maxWidth: 460,
           }}
         >
@@ -548,12 +580,12 @@ function VendorTags() {
     <section
       style={{
         background: T.paperDeep,
-        padding: "120px 40px",
+        padding: "clamp(72px, 10vw, 120px) clamp(20px, 4vw, 40px)",
       }}
     >
       <header
         style={{
-          marginBottom: 48,
+          marginBottom: "clamp(32px, 5vw, 48px)",
           maxWidth: 980,
           marginInline: "auto",
         }}
@@ -584,6 +616,7 @@ function VendorTags() {
         </h3>
       </header>
       <dl
+        className="mat-vendor-list"
         style={{
           margin: 0,
           maxWidth: 980,
@@ -593,6 +626,7 @@ function VendorTags() {
         {tags.map(([k, v], i) => (
           <div
             key={k}
+            className="mat-vendor-row"
             style={{
               display: "grid",
               gridTemplateColumns: "200px 1fr",
@@ -620,8 +654,9 @@ function VendorTags() {
                 margin: 0,
                 fontFamily: SERIF,
                 fontStyle: "italic",
-                fontSize: 22,
+                fontSize: "clamp(18px, 2.2vw, 22px)",
                 lineHeight: 1.3,
+                wordBreak: "break-word",
               }}
             >
               {v}
@@ -629,6 +664,11 @@ function VendorTags() {
           </div>
         ))}
       </dl>
+      <style>{`
+        @media (max-width: 720px) {
+          .mat-vendor-row { grid-template-columns: 1fr !important; gap: 8px !important; padding: 20px 0 !important; }
+        }
+      `}</style>
     </section>
   );
 }
@@ -643,7 +683,7 @@ function PhotographerLetter({ couple }: { couple: Couple }) {
     <section
       ref={ref as React.RefObject<HTMLElement>}
       style={{
-        padding: "180px 40px",
+        padding: "clamp(96px, 14vw, 180px) clamp(20px, 4vw, 40px)",
         background: T.paperDeep,
         position: "relative",
       }}
@@ -673,9 +713,9 @@ function PhotographerLetter({ couple }: { couple: Couple }) {
         <p
           style={{
             margin: 0,
-            fontFamily: SERIF,
+            fontFamily: BODY,
             fontStyle: "italic",
-            fontWeight: 300,
+            fontWeight: 400,
             fontSize: "clamp(22px, 2.6vw, 28px)",
             lineHeight: 1.55,
             textWrap: "balance",
@@ -686,12 +726,12 @@ function PhotographerLetter({ couple }: { couple: Couple }) {
         <p
           style={{
             marginTop: 24,
-            fontFamily: SERIF,
+            fontFamily: BODY,
             fontStyle: "italic",
-            fontWeight: 300,
+            fontWeight: 400,
             fontSize: "clamp(18px, 2vw, 22px)",
-            lineHeight: 1.7,
-            opacity: 0.85,
+            lineHeight: 1.75,
+            opacity: 0.88,
           }}
         >
           We sat with you for three days, drank chai with your mothers, and stood at
@@ -740,34 +780,36 @@ function PhotographerLetter({ couple }: { couple: Couple }) {
    CLOSING — single line + two text-link CTAs, no marigold halo.
    ───────────────────────────────────────────────────────────── */
 function FeaturedClosing() {
+  const linkStyle: React.CSSProperties = {
+    fontFamily: SANS,
+    fontSize: 11,
+    letterSpacing: "0.32em",
+    textTransform: "uppercase",
+    color: "inherit",
+    textDecoration: "none",
+    paddingBottom: 4,
+    borderBottom: `1px solid ${T.ink}`,
+    minHeight: 44,
+    display: "inline-flex",
+    alignItems: "center",
+  };
   return (
     <section
       style={{
-        padding: "180px 40px",
+        padding: "clamp(96px, 14vw, 180px) clamp(20px, 4vw, 40px)",
         background: T.paper,
         textAlign: "center",
       }}
     >
-      <div
-        style={{
-          fontFamily: SANS,
-          fontSize: 10,
-          letterSpacing: "0.4em",
-          textTransform: "uppercase",
-          color: T.sage,
-          marginBottom: 40,
-        }}
-      >
-        End of Story No. 17
-      </div>
       <h2
         style={{
           margin: 0,
           fontFamily: SERIF,
           fontWeight: 300,
           fontStyle: "italic",
-          fontSize: "clamp(32px, 4.5vw, 56px)",
+          fontSize: "clamp(28px, 4.5vw, 56px)",
           lineHeight: 1.05,
+          textWrap: "balance",
         }}
       >
         And then they were married
@@ -775,41 +817,17 @@ function FeaturedClosing() {
       </h2>
       <div
         style={{
-          marginTop: 56,
+          marginTop: "clamp(32px, 5vw, 56px)",
           display: "flex",
           justifyContent: "center",
-          gap: 48,
+          gap: "clamp(20px, 4vw, 48px)",
           flexWrap: "wrap",
         }}
       >
-        <Link
-          href="/featured"
-          style={{
-            fontFamily: SANS,
-            fontSize: 11,
-            letterSpacing: "0.32em",
-            textTransform: "uppercase",
-            color: "inherit",
-            textDecoration: "none",
-            paddingBottom: 4,
-            borderBottom: `1px solid ${T.ink}`,
-          }}
-        >
+        <Link href="/featured" style={linkStyle}>
           ← Back to featured
         </Link>
-        <Link
-          href="/contact"
-          style={{
-            fontFamily: SANS,
-            fontSize: 11,
-            letterSpacing: "0.32em",
-            textTransform: "uppercase",
-            color: "inherit",
-            textDecoration: "none",
-            paddingBottom: 4,
-            borderBottom: `1px solid ${T.ink}`,
-          }}
-        >
+        <Link href="/contact" style={linkStyle}>
           Begin yours →
         </Link>
       </div>

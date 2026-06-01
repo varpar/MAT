@@ -10,7 +10,7 @@ import {
   useTransform,
   useReducedMotion,
 } from "motion/react";
-import { SERIF, SANS, T } from "../_components/tokens";
+import { SERIF, SANS, BODY, DISPLAY, T } from "../_components/tokens";
 import { Sang } from "../_components/Sang";
 import { FEATURED, MAT_IMAGES, type Couple } from "../_components/data";
 import { AnimatedImage } from "../_components/AnimatedImage";
@@ -38,6 +38,7 @@ function HomeHero() {
   return (
     <section
       ref={ref}
+      className="mat-hero"
       style={{
         position: "relative",
         height: "100svh",
@@ -78,6 +79,7 @@ function HomeHero() {
         }}
       />
       <motion.div
+        className="mat-hero-foot"
         style={{
           position: "absolute",
           left: 40,
@@ -101,14 +103,15 @@ function HomeHero() {
             fontFamily: SERIF,
             fontStyle: "italic",
             fontWeight: 300,
-            fontSize: "clamp(28px, 3.2vw, 40px)",
+            fontSize: "clamp(22px, 3.2vw, 40px)",
             lineHeight: 1.18,
             textWrap: "balance",
           }}
         >
-          Where love meets legacy.
+          Moments that don&apos;t just look good. They feel right.
         </motion.p>
         <motion.div
+          className="mat-hero-scroll"
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.75 }}
           transition={{ duration: 1.2, ease: EASE, delay: 0.9 }}
@@ -121,6 +124,7 @@ function HomeHero() {
             alignItems: "center",
             gap: 14,
             whiteSpace: "nowrap",
+            flexShrink: 0,
           }}
         >
           <span
@@ -135,6 +139,27 @@ function HomeHero() {
           Scroll
         </motion.div>
       </motion.div>
+      <style>{`
+        @media (max-width: 1024px) {
+          .mat-hero-foot { left: 32px !important; right: 32px !important; bottom: 48px !important; gap: 24px !important; }
+        }
+        @media (max-width: 720px) {
+          .mat-hero { min-height: 560px !important; }
+          .mat-hero-foot {
+            left: 24px !important;
+            right: 24px !important;
+            bottom: 40px !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 24px !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .mat-hero { min-height: 520px !important; }
+          .mat-hero-foot { bottom: 32px !important; }
+          .mat-hero-scroll { display: none !important; }
+        }
+      `}</style>
     </section>
   );
 }
@@ -146,6 +171,7 @@ function HomeHero() {
 function HomeTriptych() {
   return (
     <section
+      className="mat-tript-sec"
       style={{
         padding: "120px 40px",
         background: T.paper,
@@ -167,7 +193,6 @@ function HomeTriptych() {
           parallax={40}
           delay={0}
           variant="Grid"
-          style={{ marginTop: 40 }}
         />
         <div
           style={{
@@ -210,8 +235,10 @@ function HomeTriptych() {
               maxWidth: 420,
             }}
           >
-            <span style={{ fontStyle: "italic" }}>Quietly</span> photographed
-            <span style={{ color: T.sage }}>,</span> in the language of light
+            <span style={{ fontStyle: "italic" }}>
+              We don&apos;t direct your day
+            </span>
+            <span style={{ color: T.sage }}>.</span> We follow it like a heartbeat
             <span style={{ color: T.sage }}>.</span>
           </motion.h2>
           <motion.p
@@ -222,14 +249,14 @@ function HomeTriptych() {
             style={{
               margin: "32px 0 0",
               maxWidth: 360,
-              fontFamily: SERIF,
+              fontFamily: BODY,
               fontStyle: "italic",
-              fontSize: 18,
-              lineHeight: 1.55,
+              fontSize: 19,
+              lineHeight: 1.6,
               textWrap: "balance",
             }}
           >
-            We accept six weddings a season<Sep />sat with, photographed, and remembered.
+            Documentary photography<Sep />Cinematic films<Sep />Edited like an album, not a feed.
           </motion.p>
         </div>
         <AnimatedImage
@@ -239,11 +266,11 @@ function HomeTriptych() {
           parallax={40}
           delay={0.15}
           variant="Grid"
-          style={{ marginBottom: 40 }}
         />
       </div>
       <style>{`
         @media (max-width: 1024px) {
+          .mat-tript-sec { padding: 96px 32px !important; }
           .mat-tript { grid-template-columns: 1fr 1fr !important; }
           .mat-tript > :nth-child(2) {
             grid-column: 1 / -1 !important;
@@ -252,9 +279,13 @@ function HomeTriptych() {
             margin-bottom: 40px;
           }
         }
-        @media (max-width: 600px) {
-          .mat-tript { grid-template-columns: 1fr !important; }
+        @media (max-width: 720px) {
+          .mat-tript-sec { padding: 72px 24px !important; }
+          .mat-tript { grid-template-columns: 1fr !important; gap: 32px !important; }
           .mat-tript > * { margin: 0 !important; }
+        }
+        @media (max-width: 480px) {
+          .mat-tript-sec { padding: 56px 24px !important; }
         }
       `}</style>
     </section>
@@ -265,14 +296,80 @@ function HomeTriptych() {
    FILM REEL — horizontal cinematic strip with parallax drift.
    ───────────────────────────────────────────────────────────── */
 function HomeFilmReel() {
+  const [strip, setStrip] = useState<{ heights: number[]; rows: number }>({
+    heights: [320, 260, 300, 240],
+    rows: 4,
+  });
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const update = () => {
+      const w = window.innerWidth;
+      if (w <= 480) setStrip({ heights: [180, 160], rows: 2 });
+      else if (w <= 720) setStrip({ heights: [220, 180, 200], rows: 3 });
+      else if (w <= 1024) setStrip({ heights: [260, 220, 240, 200], rows: 4 });
+      else setStrip({ heights: [320, 260, 300, 240], rows: 4 });
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const allRows = [
+    // Row 1 — wide cinematic frames (left → right)
+    [
+      { image: MAT_IMAGES.reel1, aspect: "16/10" },
+      { image: MAT_IMAGES.couple1, aspect: "4/3" },
+      { image: MAT_IMAGES.reel4, aspect: "16/10" },
+      { image: MAT_IMAGES.haldi, aspect: "4/3" },
+      { image: MAT_IMAGES.reel3, aspect: "16/10" },
+      { image: MAT_IMAGES.couple3, aspect: "4/3" },
+      { image: MAT_IMAGES.detail1, aspect: "16/10" },
+    ],
+    // Row 2 — portraits + details (right → left)
+    [
+      { image: MAT_IMAGES.portrait1, aspect: "3/4" },
+      { image: MAT_IMAGES.bride2, aspect: "3/4" },
+      { image: MAT_IMAGES.detail3, aspect: "1/1" },
+      { image: MAT_IMAGES.portrait3, aspect: "3/4" },
+      { image: MAT_IMAGES.atmos1, aspect: "4/3" },
+      { image: MAT_IMAGES.bride3, aspect: "3/4" },
+      { image: MAT_IMAGES.detail5, aspect: "1/1" },
+      { image: MAT_IMAGES.portrait4, aspect: "3/4" },
+    ],
+    // Row 3 — ceremony moments (left → right)
+    [
+      { image: MAT_IMAGES.mehendi, aspect: "4/3" },
+      { image: MAT_IMAGES.sangeet, aspect: "16/10" },
+      { image: MAT_IMAGES.pheras, aspect: "4/3" },
+      { image: MAT_IMAGES.vidaai, aspect: "16/10" },
+      { image: MAT_IMAGES.haldi, aspect: "4/3" },
+      { image: MAT_IMAGES.reel2, aspect: "3/4" },
+      { image: MAT_IMAGES.atmos3, aspect: "4/3" },
+    ],
+    // Row 4 — atmospherics + couples (right → left)
+    [
+      { image: MAT_IMAGES.atmos2, aspect: "16/10" },
+      { image: MAT_IMAGES.couple2, aspect: "4/3" },
+      { image: MAT_IMAGES.detail7, aspect: "1/1" },
+      { image: MAT_IMAGES.reel5, aspect: "3/4" },
+      { image: MAT_IMAGES.detail4, aspect: "4/3" },
+      { image: MAT_IMAGES.reel6, aspect: "16/10" },
+      { image: MAT_IMAGES.portrait2, aspect: "3/4" },
+      { image: MAT_IMAGES.atmos1, aspect: "4/3" },
+    ],
+  ];
+  const allTravels = [0.55, 0.8, 0.45, 0.95];
+
   return (
     <section
+      className="mat-reel-sec"
       style={{
         background: T.paper,
         padding: "60px 0 120px",
       }}
     >
       <div
+        className="mat-reel-head"
         style={{
           padding: "0 40px",
           marginBottom: 32,
@@ -306,53 +403,23 @@ function HomeFilmReel() {
         </div>
       </div>
       <FilmStrip
-        heights={[320, 260, 300, 240]}
-        travels={[0.55, 0.8, 0.45, 0.95]}
-        rows={[
-          // Row 1 — wide cinematic frames (left → right)
-          [
-            { image: MAT_IMAGES.reel1, aspect: "16/10" },
-            { image: MAT_IMAGES.couple1, aspect: "4/3" },
-            { image: MAT_IMAGES.reel4, aspect: "16/10" },
-            { image: MAT_IMAGES.haldi, aspect: "4/3" },
-            { image: MAT_IMAGES.reel3, aspect: "16/10" },
-            { image: MAT_IMAGES.couple3, aspect: "4/3" },
-            { image: MAT_IMAGES.detail1, aspect: "16/10" },
-          ],
-          // Row 2 — portraits + details (right → left)
-          [
-            { image: MAT_IMAGES.portrait1, aspect: "3/4" },
-            { image: MAT_IMAGES.bride2, aspect: "3/4" },
-            { image: MAT_IMAGES.detail3, aspect: "1/1" },
-            { image: MAT_IMAGES.portrait3, aspect: "3/4" },
-            { image: MAT_IMAGES.atmos1, aspect: "4/3" },
-            { image: MAT_IMAGES.bride3, aspect: "3/4" },
-            { image: MAT_IMAGES.detail5, aspect: "1/1" },
-            { image: MAT_IMAGES.portrait4, aspect: "3/4" },
-          ],
-          // Row 3 — ceremony moments (left → right)
-          [
-            { image: MAT_IMAGES.mehendi, aspect: "4/3" },
-            { image: MAT_IMAGES.sangeet, aspect: "16/10" },
-            { image: MAT_IMAGES.pheras, aspect: "4/3" },
-            { image: MAT_IMAGES.vidaai, aspect: "16/10" },
-            { image: MAT_IMAGES.haldi, aspect: "4/3" },
-            { image: MAT_IMAGES.reel2, aspect: "3/4" },
-            { image: MAT_IMAGES.atmos3, aspect: "4/3" },
-          ],
-          // Row 4 — atmospherics + couples (right → left)
-          [
-            { image: MAT_IMAGES.atmos2, aspect: "16/10" },
-            { image: MAT_IMAGES.couple2, aspect: "4/3" },
-            { image: MAT_IMAGES.detail7, aspect: "1/1" },
-            { image: MAT_IMAGES.reel5, aspect: "3/4" },
-            { image: MAT_IMAGES.detail4, aspect: "4/3" },
-            { image: MAT_IMAGES.reel6, aspect: "16/10" },
-            { image: MAT_IMAGES.portrait2, aspect: "3/4" },
-            { image: MAT_IMAGES.atmos1, aspect: "4/3" },
-          ],
-        ]}
+        heights={strip.heights}
+        travels={allTravels.slice(0, strip.rows)}
+        rows={allRows.slice(0, strip.rows)}
       />
+      <style>{`
+        @media (max-width: 1024px) {
+          .mat-reel-sec { padding: 48px 0 96px !important; }
+          .mat-reel-head { padding: 0 32px !important; }
+        }
+        @media (max-width: 720px) {
+          .mat-reel-sec { padding: 40px 0 72px !important; }
+          .mat-reel-head { padding: 0 24px !important; margin-bottom: 24px !important; }
+        }
+        @media (max-width: 480px) {
+          .mat-reel-sec { padding: 32px 0 56px !important; }
+        }
+      `}</style>
     </section>
   );
 }
@@ -387,8 +454,18 @@ function CouplePreview() {
 
 function HomeMarquee() {
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
+  const [isTouch, setIsTouch] = useState(false);
   const hovered = FEATURED.find((c) => c.slug === hoveredSlug);
   const isAnyHovered = hoveredSlug !== null;
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(hover: none), (pointer: coarse)");
+    const update = () => setIsTouch(mq.matches);
+    update();
+    mq.addEventListener?.("change", update);
+    return () => mq.removeEventListener?.("change", update);
+  }, []);
 
   useEffect(() => {
     if (typeof document === "undefined") return;
@@ -406,6 +483,7 @@ function HomeMarquee() {
 
   return (
     <section
+      className="mat-marquee-sec"
       onMouseLeave={() => setHoveredSlug(null)}
       style={{
         position: "relative",
@@ -453,15 +531,16 @@ function HomeMarquee() {
               <Link
                 key={i}
                 href={`/featured/${slug}`}
-                onMouseEnter={() => setHoveredSlug(slug)}
-                onFocus={() => setHoveredSlug(slug)}
-                onMouseLeave={() => setHoveredSlug(null)}
-                onBlur={() => setHoveredSlug(null)}
+                onMouseEnter={isTouch ? undefined : () => setHoveredSlug(slug)}
+                onFocus={isTouch ? undefined : () => setHoveredSlug(slug)}
+                onMouseLeave={isTouch ? undefined : () => setHoveredSlug(null)}
+                onBlur={isTouch ? undefined : () => setHoveredSlug(null)}
                 aria-label={`${c.bride} sang ${c.groom} — ${c.place}`}
                 data-cursor="View story"
+                className="mat-marquee-link"
                 style={{
                   fontFamily: SERIF,
-                  fontSize: "clamp(36px, 5vw, 56px)",
+                  fontSize: "clamp(32px, 5vw, 56px)",
                   lineHeight: 1,
                   fontWeight: 300,
                   display: "inline-flex",
@@ -472,6 +551,9 @@ function HomeMarquee() {
                   opacity: fadeOther ? 0.28 : 1,
                   transition: "opacity 360ms ease",
                   cursor: "pointer",
+                  paddingTop: 12,
+                  paddingBottom: 12,
+                  minHeight: 44,
                 }}
               >
                 <span style={{ fontStyle: "italic" }}>{c.bride}</span>
@@ -485,11 +567,28 @@ function HomeMarquee() {
         </div>
       </div>
       <AnimatePresence>
-        {hovered && <CouplePreview key={hovered.slug} />}
+        {hovered && !isTouch && <CouplePreview key={hovered.slug} />}
       </AnimatePresence>
       <style>{`
         /* Name hover (cursor on a specific link) → freeze so the user can click. */
         .mat-marquee-track.is-name-hover { animation-play-state: paused !important; }
+        @media (max-width: 1024px) {
+          .mat-marquee-sec { padding: 48px 0 !important; }
+          .mat-marquee-track { gap: 56px !important; padding-left: 56px !important; }
+        }
+        @media (max-width: 720px) {
+          .mat-marquee-sec { padding: 40px 0 !important; }
+          .mat-marquee-track {
+            gap: 40px !important;
+            padding-left: 40px !important;
+            animation-duration: 48s !important;
+          }
+          .mat-marquee-link { gap: 10px !important; }
+        }
+        @media (max-width: 480px) {
+          .mat-marquee-sec { padding: 32px 0 !important; }
+          .mat-marquee-track { gap: 32px !important; padding-left: 32px !important; }
+        }
       `}</style>
     </section>
   );
@@ -508,8 +607,21 @@ function CoupleTile({
   step: 0 | 1 | 2;
 }) {
   const [hov, setHov] = useState(false);
+  const [isTouch, setIsTouch] = useState(false);
   const router = useRouter();
   const go = () => router.push(`/featured/${couple.slug ?? "riya-sang-mohit"}`);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(hover: none), (pointer: coarse)");
+    const update = () => setIsTouch(mq.matches);
+    update();
+    mq.addEventListener?.("change", update);
+    return () => mq.removeEventListener?.("change", update);
+  }, []);
+
+  // On touch devices, the hover veil never appears — surface caption by default
+  const showCaption = hov || isTouch;
 
   return (
     <motion.article
@@ -544,7 +656,7 @@ function CoupleTile({
 
       {/* HOVER VEIL — sage wash + names + CTA */}
       <motion.div
-        animate={{ opacity: hov ? 1 : 0 }}
+        animate={{ opacity: showCaption ? 1 : 0 }}
         transition={{ duration: 0.5, ease: EASE }}
         style={{
           position: "absolute",
@@ -556,7 +668,7 @@ function CoupleTile({
       />
 
       <motion.div
-        animate={{ opacity: hov ? 1 : 0, y: hov ? 0 : 12 }}
+        animate={{ opacity: showCaption ? 1 : 0, y: showCaption ? 0 : 12 }}
         transition={{ duration: 0.6, ease: EASE }}
         style={{
           position: "absolute",
@@ -583,11 +695,11 @@ function CoupleTile({
         <h3
           style={{
             margin: 0,
-            fontFamily: SERIF,
+            fontFamily: DISPLAY,
             fontWeight: 400,
-            fontSize: "clamp(22px, 2.4vw, 32px)",
+            fontSize: "clamp(23px, 2.5vw, 34px)",
             lineHeight: 1.05,
-            letterSpacing: "-0.005em",
+            letterSpacing: "0",
           }}
         >
           {couple.bride}{" "}
@@ -638,15 +750,16 @@ function HomeRecent() {
   for (let i = 0; i < items.length; i += 3) rows.push(items.slice(i, i + 3));
 
   return (
-    <section style={{ padding: "120px 40px 200px", background: T.paper }}>
+    <section className="mat-recent-sec" style={{ padding: "120px 16px 200px", background: T.paper }}>
       <header
+        className="mat-recent-head"
         style={{
           display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-end",
+          flexDirection: "column",
+          alignItems: "center",
+          textAlign: "center",
           marginBottom: 80,
-          gap: 32,
-          flexWrap: "wrap",
+          gap: 28,
         }}
       >
         <div>
@@ -660,7 +773,7 @@ function HomeRecent() {
               marginBottom: 18,
             }}
           >
-            Recent Work<Sep />{String(items.length).padStart(2, "0")} of 24
+            Best Six Couples<Sep />{String(items.length).padStart(2, "0")} of 24
           </div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -669,15 +782,14 @@ function HomeRecent() {
             transition={{ duration: 1, ease: EASE }}
             style={{
               margin: 0,
-              fontFamily: SERIF,
-              fontWeight: 300,
-              fontSize: "clamp(32px, 4vw, 48px)",
-              lineHeight: 1.05,
-              letterSpacing: "-0.01em",
+              fontFamily: DISPLAY,
+              fontWeight: 400,
+              fontSize: "clamp(36px, 4.6vw, 58px)",
+              lineHeight: 1.02,
+              letterSpacing: "-0.005em",
             }}
           >
-            <span style={{ fontStyle: "italic" }}>Stories</span> kept softly
-            <span style={{ color: T.sage }}>.</span>
+            Six we hold closest<span style={{ color: T.sage }}>.</span>
           </motion.h2>
         </div>
         <Link
@@ -689,8 +801,12 @@ function HomeRecent() {
             textTransform: "uppercase",
             color: "inherit",
             textDecoration: "none",
+            paddingTop: 14,
             paddingBottom: 4,
             borderBottom: `1px solid ${T.ink}`,
+            display: "inline-flex",
+            alignItems: "center",
+            minHeight: 44,
           }}
         >
           View archive →
@@ -727,14 +843,30 @@ function HomeRecent() {
       </div>
 
       <style>{`
+        @media (max-width: 1024px) {
+          .mat-recent-sec { padding: 96px 32px 140px !important; }
+          .mat-recent-head { margin-bottom: 64px !important; }
+          .mat-stair-row {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 24px !important;
+          }
+          .mat-stair { margin-top: 0 !important; }
+        }
         @media (max-width: 880px) {
           .mat-stair-row {
             grid-template-columns: 1fr !important;
-            gap: 40px !important;
+            gap: 32px !important;
           }
           .mat-stair {
             margin-top: 0 !important;
           }
+        }
+        @media (max-width: 720px) {
+          .mat-recent-sec { padding: 72px 24px 96px !important; }
+          .mat-recent-head { margin-bottom: 48px !important; gap: 20px !important; }
+        }
+        @media (max-width: 480px) {
+          .mat-recent-sec { padding: 56px 24px 72px !important; }
         }
       `}</style>
     </section>
@@ -764,6 +896,7 @@ function HomeVideoSection() {
       }}
     >
       <div
+        className="mat-vidsection-frame"
         style={{
           position: "relative",
           height: "min(72vh, 720px)",
@@ -811,96 +944,18 @@ function HomeVideoSection() {
         />
       </div>
 
-      {/* TOP-LEFT — bleeds across the video's top edge, half on paper,
-          half on the video. Flat sage colour, no blend. */}
-      <div
-        className="mat-vidsection-tl"
-        style={{
-          position: "absolute",
-          top: 140, // aligns to video top edge
-          left: "4%",
-          transform: "translateY(-50%)",
-          color: T.ink,
-          zIndex: 2,
-          maxWidth: "60vw",
-          pointerEvents: "none",
-        }}
-      >
-        <div
-          style={{
-            fontFamily: SANS,
-            fontSize: 10,
-            letterSpacing: "0.4em",
-            textTransform: "uppercase",
-            marginBottom: 14,
-            opacity: 0.85,
-          }}
-        >
-          A Reel<Sep />The way light moves
-        </div>
-        <h2
-          style={{
-            margin: 0,
-            fontFamily: SERIF,
-            fontWeight: 400,
-            fontStyle: "italic",
-            fontSize: "clamp(56px, 11vw, 168px)",
-            lineHeight: 0.92,
-            letterSpacing: "-0.025em",
-          }}
-        >
-          Cinema
-        </h2>
-      </div>
-
-      {/* BOTTOM-RIGHT — mirror of the above, bleeds across the bottom edge.
-          Flat sage colour, no blend. */}
-      <div
-        className="mat-vidsection-br"
-        style={{
-          position: "absolute",
-          bottom: 140,
-          right: "4%",
-          transform: "translateY(50%)",
-          color: T.ink,
-          zIndex: 2,
-          maxWidth: "60vw",
-          textAlign: "right",
-          pointerEvents: "none",
-        }}
-      >
-        <h2
-          style={{
-            margin: 0,
-            fontFamily: SERIF,
-            fontWeight: 400,
-            fontStyle: "italic",
-            fontSize: "clamp(56px, 11vw, 168px)",
-            lineHeight: 0.92,
-            letterSpacing: "-0.025em",
-          }}
-        >
-          of the unspoken
-        </h2>
-        <div
-          style={{
-            marginTop: 14,
-            fontFamily: SANS,
-            fontSize: 10,
-            letterSpacing: "0.4em",
-            textTransform: "uppercase",
-            opacity: 0.85,
-          }}
-        >
-          Twelve seconds, looped
-        </div>
-      </div>
-
       <style>{`
-        @media (max-width: 880px) {
-          .mat-vidsection { padding: 80px 0 !important; }
-          .mat-vidsection-tl { top: 80px !important; left: 6% !important; }
-          .mat-vidsection-br { bottom: 80px !important; right: 6% !important; }
+        @media (max-width: 1024px) {
+          .mat-vidsection { padding: 96px 0 !important; }
+          .mat-vidsection-frame { height: min(60vh, 560px) !important; min-height: 380px !important; }
+        }
+        @media (max-width: 720px) {
+          .mat-vidsection { padding: 64px 0 !important; }
+          .mat-vidsection-frame { height: min(56vh, 460px) !important; min-height: 320px !important; }
+        }
+        @media (max-width: 480px) {
+          .mat-vidsection { padding: 48px 0 !important; }
+          .mat-vidsection-frame { height: 56vh !important; min-height: 280px !important; }
         }
       `}</style>
     </section>
@@ -922,6 +977,7 @@ function HomeQuoteFrame() {
   return (
     <section
       ref={ref}
+      className="mat-quote-frame"
       style={{
         position: "relative",
         height: "100svh",
@@ -957,6 +1013,7 @@ function HomeQuoteFrame() {
         }}
       />
       <div
+        className="mat-quote-inner"
         style={{
           position: "absolute",
           inset: 0,
@@ -1019,6 +1076,15 @@ function HomeQuoteFrame() {
           <Sang size={11} latin /> Riya & Mohit, Udaipur 2025
         </motion.footer>
       </div>
+      <style>{`
+        @media (max-width: 720px) {
+          .mat-quote-frame { min-height: 520px !important; }
+          .mat-quote-inner { padding: 0 24px !important; }
+        }
+        @media (max-width: 480px) {
+          .mat-quote-frame { min-height: 480px !important; }
+        }
+      `}</style>
     </section>
   );
 }
@@ -1029,8 +1095,8 @@ function HomeQuoteFrame() {
    ───────────────────────────────────────────────────────────── */
 function HomeMosaic() {
   return (
-    <section style={{ padding: "140px 40px", background: T.paper }}>
-      <header style={{ marginBottom: 48, textAlign: "center" }}>
+    <section className="mat-mosaic-sec" style={{ padding: "140px 40px", background: T.paper }}>
+      <header className="mat-mosaic-head" style={{ marginBottom: 48, textAlign: "center" }}>
         <div
           style={{
             fontFamily: SANS,
@@ -1107,6 +1173,11 @@ function HomeMosaic() {
         />
       </div>
       <style>{`
+        @media (max-width: 1024px) {
+          .mat-mosaic-sec { padding: 104px 32px !important; }
+          .mat-mosaic-head { margin-bottom: 40px !important; }
+          .mat-mosaic > :first-child { min-height: 420px !important; }
+        }
         @media (max-width: 880px) {
           .mat-mosaic {
             grid-template-columns: 1fr 1fr !important;
@@ -1117,7 +1188,16 @@ function HomeMosaic() {
             grid-row: auto !important;
             min-height: 0 !important;
           }
-          .mat-mosaic > :first-child { grid-column: span 2 !important; }
+          .mat-mosaic > :first-child { grid-column: span 2 !important; min-height: 360px !important; }
+        }
+        @media (max-width: 720px) {
+          .mat-mosaic-sec { padding: 72px 24px !important; }
+          .mat-mosaic { grid-auto-rows: minmax(180px, auto) !important; gap: 12px !important; }
+        }
+        @media (max-width: 480px) {
+          .mat-mosaic-sec { padding: 56px 24px !important; }
+          .mat-mosaic { grid-template-columns: 1fr !important; }
+          .mat-mosaic > :first-child { grid-column: span 1 !important; min-height: 320px !important; }
         }
       `}</style>
     </section>
@@ -1145,9 +1225,11 @@ function HomeCTA() {
         reveal="wipe-right"
         parallax={50}
         variant="Grid"
+        className="mat-cta-img"
         style={{ minHeight: 520, aspectRatio: "auto" }}
       />
       <div
+        className="mat-cta-copy"
         style={{
           padding: "120px 40px",
           display: "flex",
@@ -1213,6 +1295,8 @@ function HomeCTA() {
               textTransform: "uppercase",
               textDecoration: "none",
               transition: "background 350ms ease, color 350ms ease",
+              minHeight: 44,
+              lineHeight: 1,
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = T.ink;
@@ -1228,9 +1312,21 @@ function HomeCTA() {
         </div>
       </div>
       <style>{`
+        @media (max-width: 1024px) {
+          .mat-cta-copy { padding: 96px 32px !important; }
+        }
         @media (max-width: 880px) {
           .mat-cta { grid-template-columns: 1fr !important; }
-          .mat-cta > div:last-child { padding: 80px 32px !important; }
+          .mat-cta-img { min-height: 400px !important; }
+          .mat-cta-copy { padding: 72px 32px !important; }
+        }
+        @media (max-width: 720px) {
+          .mat-cta-img { min-height: 340px !important; }
+          .mat-cta-copy { padding: 56px 24px !important; }
+        }
+        @media (max-width: 480px) {
+          .mat-cta-img { min-height: 280px !important; }
+          .mat-cta-copy { padding: 48px 24px !important; }
         }
       `}</style>
     </section>

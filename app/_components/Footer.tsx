@@ -19,15 +19,34 @@ function FootCol({ head, links }: { head: string; links: FootLink[] }) {
       >
         {head}
       </div>
-      <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 8 }}>
+      <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 6 }}>
         {links.map(([label, href]) => (
           <li key={label} style={{ opacity: 0.85 }}>
             {href ? (
-              <Link href={href} style={{ color: "inherit", textDecoration: "none" }}>
+              <Link
+                href={href}
+                style={{
+                  color: "inherit",
+                  textDecoration: "none",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  minHeight: 44,
+                  padding: "8px 0",
+                }}
+              >
                 {label}
               </Link>
             ) : (
-              <span>{label}</span>
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  minHeight: 44,
+                  padding: "8px 0",
+                }}
+              >
+                {label}
+              </span>
             )}
           </li>
         ))}
@@ -39,6 +58,7 @@ function FootCol({ head, links }: { head: string; links: FootLink[] }) {
 export function Footer() {
   return (
     <footer
+      className="mat-footer"
       style={{
         background: T.sage,
         color: T.paper,
@@ -47,6 +67,7 @@ export function Footer() {
       }}
     >
       <div
+        className="mat-footer-top"
         style={{
           display: "flex",
           justifyContent: "space-between",
@@ -56,15 +77,17 @@ export function Footer() {
           gap: 40,
         }}
       >
-        <div>
+        <div className="mat-footer-brand">
           <Image
             src="/brand/mat-logo-cream.webp"
             alt="Mi Amor Tales"
             width={220}
             height={68}
+            className="mat-footer-logo"
             style={{ height: 68, width: "auto", display: "block" }}
           />
           <div
+            className="mat-footer-meta"
             style={{
               marginTop: 16,
               fontSize: 11,
@@ -79,6 +102,7 @@ export function Footer() {
           </div>
         </div>
         <div
+          className="mat-footer-cols"
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(3, auto)",
@@ -116,6 +140,7 @@ export function Footer() {
         </div>
       </div>
       <div
+        className="mat-footer-bottom"
         style={{
           borderTop: "1px solid #ffffff20",
           paddingTop: 22,
@@ -140,6 +165,42 @@ export function Footer() {
           <span style={{ color: T.cream }}>.</span>
         </span>
       </div>
+
+      {/* Mobile-only stacking — desktop layout is preserved verbatim. */}
+      <style>{`
+        @media (max-width: 1023px) {
+          .mat-footer { padding: 64px 32px 28px !important; }
+          .mat-footer-cols { gap: 36px !important; }
+        }
+        @media (max-width: 767px) {
+          .mat-footer { padding: 56px 24px 28px !important; }
+          .mat-footer-top {
+            flex-direction: column !important;
+            gap: 44px !important;
+            margin-bottom: 44px !important;
+          }
+          .mat-footer-cols {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            gap: 28px 24px !important;
+            width: 100% !important;
+          }
+          .mat-footer-logo { height: 56px !important; }
+          .mat-footer-bottom {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 10px !important;
+          }
+        }
+        @media (max-width: 414px) {
+          .mat-footer { padding: 48px 20px 24px !important; }
+          .mat-footer-cols {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 24px 20px !important;
+          }
+          .mat-footer-logo { height: 48px !important; }
+          .mat-footer-meta { letter-spacing: 0.18em !important; }
+        }
+      `}</style>
     </footer>
   );
 }

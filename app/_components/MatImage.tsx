@@ -23,21 +23,27 @@ const VARIANTS = {
     priority: true,
     fetchPriority: "high",
   },
-  /** 3-up / 4-up content grids (showcase, ritual timeline, mosaic). */
+  /**
+   * 3-up / 4-up content grids (showcase, ritual timeline, mosaic). Tracks the
+   * real layout: 33vw on desktop (≥1024), 50vw on tablets (≥640), full-bleed
+   * on phones — grid cards now go full-width with ~16px gutters at ≤640.
+   */
   Grid: {
-    sizes: "(min-width: 1024px) 33vw, (min-width: 600px) 50vw, 100vw",
+    sizes:
+      "(min-width: 1280px) 33vw, (min-width: 1024px) 40vw, (min-width: 640px) 50vw, 100vw",
   },
-  /** Weddings-archive polaroid columns. */
+  /** Weddings-archive polaroid columns. 4-up desktop → 2-up tablet → 1-up phone. */
   Polaroid: {
-    sizes: "(min-width: 1024px) 25vw, (min-width: 600px) 50vw, 100vw",
+    sizes:
+      "(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw",
   },
   /** Small portraits — about/team, film-strip frames. */
   Thumbnail: {
-    sizes: "(min-width: 768px) 25vw, 50vw",
+    sizes: "(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw",
   },
   /** Featured-couples marquee preview tiles. */
   Marquee: {
-    sizes: "(min-width: 1024px) 40vw, 80vw",
+    sizes: "(min-width: 1024px) 40vw, (min-width: 640px) 60vw, 85vw",
   },
 } as const satisfies Record<string, VariantPreset>;
 

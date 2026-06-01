@@ -21,13 +21,26 @@ export function MehendiSVG({
   const nameDash = 600;
   const nameOffset = nameDash * (1 - nameProgress);
   return (
-    <svg viewBox="0 0 400 400" style={{ width: "100%", height: "100%", overflow: "visible" }}>
+    <svg
+      viewBox="0 0 400 400"
+      preserveAspectRatio="xMidYMid meet"
+      style={{
+        width: "100%",
+        height: "100%",
+        maxWidth: "100%",
+        display: "block",
+        overflow: "visible",
+      }}
+    >
       <g
         fill="none"
         stroke={color}
         strokeWidth="0.8"
         strokeLinecap="round"
         strokeLinejoin="round"
+        // Non-scaling-stroke keeps the line weight legible when the SVG
+        // shrinks on phones (otherwise 0.8 user units → ~0.5px at 280px).
+        vectorEffect="non-scaling-stroke"
         style={{
           strokeDasharray: dash,
           strokeDashoffset: offset,
@@ -90,6 +103,7 @@ export function MehendiSVG({
           fill="none"
           stroke={color}
           strokeWidth="0.6"
+          vectorEffect="non-scaling-stroke"
         >
           {name}
         </text>

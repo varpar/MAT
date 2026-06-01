@@ -10,7 +10,6 @@ import { T } from "./tokens";
 const MARIGOLD_PATHS = new Set<string>([
   "/about",
   "/weddings",
-  "/featured",
   "/tales",
   "/contact",
 ]);
@@ -47,6 +46,7 @@ export function PageMarigolds() {
     <>
       <motion.div
         aria-hidden
+        className="mat-page-marigold"
         animate={{ opacity: show ? 0.18 : 0 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
         style={{ ...base, left: -260 }}
@@ -55,12 +55,21 @@ export function PageMarigolds() {
       </motion.div>
       <motion.div
         aria-hidden
+        className="mat-page-marigold"
         animate={{ opacity: show ? 0.18 : 0 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
         style={{ ...base, right: -260 }}
       >
         <Marigold size={520} color={T.sage} />
       </motion.div>
+      {/* Decorative — hide on small screens; they dominate the viewport and
+         compete with content. Body is already position:relative so absolute
+         positioning is clipped, but we still want them gone on phones. */}
+      <style>{`
+        @media (max-width: 880px) {
+          .mat-page-marigold { display: none !important; }
+        }
+      `}</style>
     </>
   );
 }

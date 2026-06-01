@@ -12,6 +12,23 @@
   --font-serif: var(--font-cormorant);
   --font-sans: var(--font-inter);
   --font-script: var(--font-caveat);
+  --font-body: "Times New Roman", Times, Georgia, serif;
+  --font-display: "Made Saonara", var(--font-cormorant), serif;
+}
+
+/* MADE Saonara — display face for feature headings. The team adds the font
+   file later; until /public/fonts/made-saonara.woff2 exists this rule simply
+   fails to load and the display stack falls back to Cormorant Garamond.
+   Dropping the file in activates it with no code change. */
+@font-face {
+  font-family: "Made Saonara";
+  src:
+    url("/fonts/made-saonara.woff2") format("woff2"),
+    url("/fonts/made-saonara.woff") format("woff"),
+    url("/fonts/made-saonara.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 html, body {
@@ -19,12 +36,19 @@ html, body {
   padding: 0;
   background: var(--color-paper);
   color: var(--color-ink);
-  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   scroll-behavior: smooth;
   overflow-x: hidden;
   overflow-x: clip;
 }
+
+/* Make <body> the containing block for its absolutely-positioned children
+   (e.g. the decorative PageMarigolds anchored at left/right: -260). Without
+   this, body is `static`, so those bleed-off-edge elements escape body's
+   `overflow-x: clip` and overflow the document — which pushed the whole
+   layout sideways / showed a white band on the right after refresh. */
+body { position: relative; }
 
 *, *::before, *::after { box-sizing: border-box; }
 

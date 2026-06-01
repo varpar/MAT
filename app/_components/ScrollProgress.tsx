@@ -26,6 +26,9 @@ export function ScrollProgress() {
   return (
     <motion.div
       aria-hidden
+      // z-index 55 sits ABOVE the fixed nav (z 50) so the hairline shows on
+      // top of the blurred nav background, but BELOW the mobile menu overlay
+      // (z 60) so opening the menu cleanly covers it.
       style={{
         position: "fixed",
         top: 0,
@@ -35,7 +38,7 @@ export function ScrollProgress() {
         background: T.sage,
         transformOrigin: "0% 50%",
         scaleX: reduceMotion ? scrollYProgress : scaleX,
-        zIndex: 60,
+        zIndex: 55,
         pointerEvents: "none",
         opacity: 0.85,
       }}

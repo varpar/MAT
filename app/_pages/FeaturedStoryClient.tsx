@@ -22,6 +22,7 @@ function CoverHero({ couple, story }: { couple: Couple; story: FeaturedStory }) 
   return (
     <>
       <section
+        className="mat-cover-hero"
         style={{
           position: "relative",
           height: "88svh",
@@ -48,13 +49,13 @@ function CoverHero({ couple, story }: { couple: Couple; story: FeaturedStory }) 
         <div
           style={{
             position: "absolute",
-            bottom: 36,
-            left: 40,
-            right: 40,
+            bottom: "clamp(20px, 3vw, 36px)",
+            left: "clamp(20px, 4vw, 40px)",
+            right: "clamp(20px, 4vw, 40px)",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "flex-end",
-            gap: 24,
+            gap: "clamp(12px, 2vw, 24px)",
             flexWrap: "wrap",
             color: "#fff",
             fontFamily: SANS,
@@ -67,13 +68,18 @@ function CoverHero({ couple, story }: { couple: Couple; story: FeaturedStory }) 
           <div>{withSeps(story.date)}</div>
           <div>{story.detailLine}</div>
         </div>
+        <style>{`
+          @media (max-width: 720px) {
+            .mat-cover-hero { height: 72svh !important; min-height: 460px !important; }
+          }
+        `}</style>
       </section>
 
       <section
         ref={ref as React.RefObject<HTMLElement>}
         style={{
           background: T.paper,
-          padding: "96px 40px 80px",
+          padding: "clamp(64px, 9vw, 96px) clamp(20px, 4vw, 40px) clamp(56px, 8vw, 80px)",
           textAlign: "center",
           opacity: vis ? 1 : 0,
           transform: vis ? "translateY(0)" : "translateY(20px)",
@@ -114,7 +120,6 @@ function CoverHero({ couple, story }: { couple: Couple; story: FeaturedStory }) 
           <span style={{ fontStyle: "italic", fontWeight: 300 }}>
             {couple.groom}
           </span>
-          <span style={{ color: T.sage, fontStyle: "normal" }}>.</span>
         </h1>
         <p
           style={{
@@ -172,10 +177,10 @@ function StoryBody({
       className="mat-story-body"
       style={{
         background: T.paper,
-        padding: "120px 40px",
+        padding: "clamp(80px, 10vw, 120px) clamp(20px, 4vw, 40px)",
         display: hasImage ? "grid" : "block",
         gridTemplateColumns: gridTemplate,
-        gap: 64,
+        gap: "clamp(32px, 5vw, 64px)",
         alignItems: "center",
         opacity: vis ? 1 : 0,
         transform: vis ? "translateY(0)" : "translateY(24px)",
@@ -321,9 +326,12 @@ function StoryBody({
           .mat-story-body {
             grid-template-columns: 1fr !important;
             gap: 32px !important;
-            padding: 80px 24px !important;
+            padding: clamp(64px, 9vw, 80px) clamp(20px, 4vw, 24px) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: stretch !important;
           }
-          .mat-story-body > * { grid-column: 1 !important; }
+          .mat-story-body > * { grid-column: 1 !important; width: 100% !important; }
         }
       `}</style>
     </section>
@@ -344,6 +352,7 @@ function PullQuoteFrame({
 }) {
   return (
     <section
+      className="mat-pullquote"
       style={{
         position: "relative",
         height: "92svh",
@@ -375,15 +384,22 @@ function PullQuoteFrame({
             textTransform: "uppercase",
             letterSpacing: "0.04em",
             color: "#fff",
-            fontSize: "clamp(72px, 18vw, 280px)",
+            fontSize: "clamp(56px, 18vw, 280px)",
             lineHeight: 0.85,
             opacity: 0.86,
             mixBlendMode: "difference",
+            padding: "0 16px",
+            textAlign: "center",
           }}
         >
           {pullQuote.word}
         </span>
       </div>
+      <style>{`
+        @media (max-width: 720px) {
+          .mat-pullquote { height: 60svh !important; min-height: 360px !important; }
+        }
+      `}</style>
     </section>
   );
 }
@@ -466,17 +482,18 @@ function RitualSection({
       ref={ref as React.RefObject<HTMLElement>}
       style={{
         background: T.paper,
-        padding: "100px 40px 60px",
+        padding: "clamp(64px, 8vw, 100px) clamp(12px, 2vw, 16px) clamp(40px, 6vw, 60px)",
       }}
     >
       <header
         style={{
           maxWidth: 1280,
-          margin: "0 auto 56px",
+          margin: "0 auto clamp(36px, 5vw, 56px)",
+          padding: "0 clamp(12px, 3vw, 24px)",
           display: "flex",
           alignItems: "flex-end",
           justifyContent: "space-between",
-          gap: 32,
+          gap: "clamp(20px, 3vw, 32px)",
           flexWrap: "wrap",
         }}
       >
@@ -523,48 +540,47 @@ function RitualSection({
         </p>
       </header>
 
+      {/* Photos go edge-to-edge in a straight 3-up row with tight gutters,
+          matching the Weddings archive feel. No staircase offset. */}
       <div
         className="mat-rit-stair"
         style={{
-          maxWidth: 1280,
-          margin: "0 auto",
           display: "grid",
-          gridTemplateColumns: "repeat(3, minmax(0, 30%))",
-          justifyContent: "space-between",
-          alignItems: "flex-start",
-          gap: "2vw",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          alignItems: "stretch",
+          gap: 12,
         }}
       >
-        {photos.map((p, i) => {
-          const offsetPct = i * 20;
-          return (
-            <div
-              key={`${def.key}-${i}`}
-              style={{
-                marginTop: `${offsetPct}%`,
-                aspectRatio: "3/4",
-                overflow: "hidden",
-                background: "#0e0e0e",
-                position: "relative",
-                opacity: vis ? 1 : 0,
-                transform: vis ? "translateY(0)" : "translateY(36px)",
-                transition: `all 1s ${EASE} ${i * 0.12}s`,
-              }}
-            >
-              <MatImage
-                image={p}
-                variant="Grid"
-                alt={`${def.label} ceremony — photograph ${i + 1}`}
-              />
-            </div>
-          );
-        })}
+        {photos.map((p, i) => (
+          <div
+            key={`${def.key}-${i}`}
+            style={{
+              aspectRatio: "3/4",
+              overflow: "hidden",
+              background: "#0e0e0e",
+              position: "relative",
+              opacity: vis ? 1 : 0,
+              transform: vis ? "translateY(0)" : "translateY(36px)",
+              transition: `all 1s ${EASE} ${i * 0.12}s`,
+            }}
+          >
+            <MatImage
+              image={p}
+              variant="Grid"
+              alt={`${def.label} ceremony — photograph ${i + 1}`}
+            />
+          </div>
+        ))}
       </div>
 
       <style>{`
-        @media (max-width: 880px) {
-          .mat-rit-stair { grid-template-columns: 1fr !important; gap: 32px !important; }
-          .mat-rit-stair > * { margin-top: 0 !important; }
+        @media (max-width: 1024px) {
+          .mat-rit-stair { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
+          .mat-rit-stair > *:nth-child(3) { grid-column: 1 / -1 !important; aspect-ratio: 16/9 !important; }
+        }
+        @media (max-width: 540px) {
+          .mat-rit-stair { grid-template-columns: 1fr !important; gap: 12px !important; }
+          .mat-rit-stair > *:nth-child(3) { grid-column: auto !important; aspect-ratio: 3/4 !important; }
         }
       `}</style>
     </section>
@@ -579,7 +595,7 @@ function SegmentedRituals({ story }: { story: FeaturedStory }) {
         ref={ref as React.RefObject<HTMLElement>}
         style={{
           textAlign: "center",
-          padding: "140px 40px 0",
+          padding: "clamp(80px, 11vw, 140px) clamp(20px, 4vw, 40px) 0",
           opacity: vis ? 1 : 0,
           transform: vis ? "translateY(0)" : "translateY(16px)",
           transition: `all 1s ${EASE}`,
@@ -688,10 +704,10 @@ function WallOfImages({
     <section
       style={{
         background: T.paper,
-        padding: "140px 40px 80px",
+        padding: "clamp(80px, 11vw, 140px) clamp(12px, 2vw, 16px) clamp(56px, 7vw, 80px)",
       }}
     >
-      <header style={{ textAlign: "center", marginBottom: 64 }}>
+      <header style={{ textAlign: "center", marginBottom: "clamp(40px, 6vw, 64px)", padding: "0 clamp(12px, 3vw, 24px)" }}>
         <div
           style={{
             fontFamily: SANS,
@@ -728,11 +744,9 @@ function WallOfImages({
       <div
         className="mat-wall"
         style={{
-          maxWidth: 1400,
-          margin: "0 auto",
           display: "grid",
           gridTemplateColumns: "repeat(3, 1fr)",
-          gap: "1vw",
+          gap: 12,
         }}
       >
         {photos.map((p, i) => (
@@ -777,6 +791,7 @@ function BridePanel({
       }}
     >
       <div
+        className="mat-bride-photo"
         style={{
           position: "relative",
           overflow: "hidden",
@@ -797,7 +812,7 @@ function BridePanel({
       </div>
       <div
         style={{
-          padding: "80px 56px",
+          padding: "clamp(56px, 7vw, 80px) clamp(28px, 4.5vw, 56px)",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -848,7 +863,8 @@ function BridePanel({
       <style>{`
         @media (max-width: 880px) {
           .mat-bride-panel { grid-template-columns: 1fr !important; }
-          .mat-bride-panel > div:last-child { padding: 48px 24px !important; }
+          .mat-bride-panel > div:last-child { padding: clamp(40px, 6vw, 56px) clamp(20px, 4vw, 28px) !important; }
+          .mat-bride-photo { min-height: clamp(360px, 80vw, 520px) !important; aspect-ratio: 3/4; }
         }
       `}</style>
     </section>
@@ -864,6 +880,7 @@ function Closing({ couple, story }: { couple: Couple; story: FeaturedStory }) {
   return (
     <>
       <section
+        className="mat-story-closing-hero"
         style={{
           position: "relative",
           height: "92svh",
@@ -891,7 +908,7 @@ function Closing({ couple, story }: { couple: Couple; story: FeaturedStory }) {
             justifyContent: "center",
             alignItems: "center",
             color: "#fff",
-            padding: "0 40px",
+            padding: "0 clamp(20px, 4vw, 40px)",
             textAlign: "center",
           }}
         >
@@ -913,7 +930,7 @@ function Closing({ couple, story }: { couple: Couple; story: FeaturedStory }) {
               fontFamily: SERIF,
               fontWeight: 300,
               fontStyle: "italic",
-              fontSize: "clamp(34px, 4.6vw, 64px)",
+              fontSize: "clamp(26px, 4.6vw, 64px)",
               lineHeight: 1.08,
               maxWidth: 980,
               display: "inline-flex",
@@ -921,6 +938,7 @@ function Closing({ couple, story }: { couple: Couple; story: FeaturedStory }) {
               gap: "0.34em",
               alignItems: "baseline",
               justifyContent: "center",
+              textWrap: "balance",
             }}
           >
             <span>And then</span>
@@ -930,10 +948,15 @@ function Closing({ couple, story }: { couple: Couple; story: FeaturedStory }) {
             <span style={{ color: T.sage, fontStyle: "normal" }}>.</span>
           </h2>
         </div>
+        <style>{`
+          @media (max-width: 720px) {
+            .mat-story-closing-hero { height: 70svh !important; min-height: 420px !important; }
+          }
+        `}</style>
       </section>
       <section
         style={{
-          padding: "120px 40px",
+          padding: "clamp(72px, 10vw, 120px) clamp(20px, 4vw, 40px)",
           background: T.paper,
           textAlign: "center",
         }}
@@ -942,7 +965,7 @@ function Closing({ couple, story }: { couple: Couple; story: FeaturedStory }) {
           style={{
             display: "flex",
             justifyContent: "center",
-            gap: 48,
+            gap: "clamp(20px, 4vw, 48px)",
             flexWrap: "wrap",
           }}
         >
@@ -957,6 +980,9 @@ function Closing({ couple, story }: { couple: Couple; story: FeaturedStory }) {
               textDecoration: "none",
               paddingBottom: 4,
               borderBottom: `1px solid ${T.ink}`,
+              minHeight: 44,
+              display: "inline-flex",
+              alignItems: "center",
             }}
           >
             ← Back to featured
@@ -972,6 +998,9 @@ function Closing({ couple, story }: { couple: Couple; story: FeaturedStory }) {
               textDecoration: "none",
               paddingBottom: 4,
               borderBottom: `1px solid ${T.ink}`,
+              minHeight: 44,
+              display: "inline-flex",
+              alignItems: "center",
             }}
           >
             Begin yours →

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   motion,
   useScroll,
@@ -50,13 +50,29 @@ export function AnimatedImage({
 }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const reduceMotion = useReducedMotion();
+
+  // On narrow viewports the absolute-pixel parallax is too aggressive and
+  // exaggerates the "black gap pre-offset" relative to content height. Scale
+  // it down to ~55% below 700px. SSR default = 1 so desktop behaviour is
+  // unchanged on first render.
+  const [parallaxScale, setParallaxScale] = useState(1);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(max-width: 700px)");
+    const apply = () => setParallaxScale(mq.matches ? 0.55 : 1);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+  const effParallax = parallax ? Math.round(parallax * parallaxScale) : 0;
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
   });
 
-  const yShift: MotionValue<number> | number = parallax
-    ? useTransform(scrollYProgress, [0, 1], [parallax, -parallax])
+  const yShift: MotionValue<number> | number = effParallax
+    ? useTransform(scrollYProgress, [0, 1], [effParallax, -effParallax])
     : 0;
 
   const wipeFrom =
@@ -109,11 +125,11 @@ export function AnimatedImage({
           // y-shift starts at +parallax (image entering viewport), the image
           // sits flush with the container top — no black gap. The extra
           // height = parallax*2 still gives full parallax travel.
-          top: parallax ? -Math.abs(parallax) : 0,
+          top: effParallax ? -Math.abs(effParallax) : 0,
           left: 0,
           right: 0,
           width: "100%",
-          height: parallax ? `calc(100% + ${Math.abs(parallax) * 2}px)` : "100%",
+          height: effParallax ? `calc(100% + ${Math.abs(effParallax) * 2}px)` : "100%",
           y: yShift,
           willChange: "transform",
         }}
