@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
-import { SERIF, SANS, BODY, DISPLAY, T } from "../_components/tokens";
+import { SERIF, SANS, BODY, T } from "../_components/tokens";
 import { FEATURED, type Couple } from "../_components/data";
 import { MatImage } from "../_components/MatImage";
 import { Sep } from "../_components/Punc";
@@ -220,47 +220,12 @@ function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
    reinforces the lower billing block.
    ───────────────────────────────────────────────────────────── */
 /**
- * Featured hero — just the video and the word FEATURED.
- *
- * The video loads first; once it's ready to play, the letters of
- * "FEATURED" animate in one by one. Under prefers-reduced-motion we
- * skip the video for a static cover image and the word lands instantly.
+ * Featured hero — just the looping video. No overlay text. Reduced-motion
+ * users get a static cover image instead of the video.
  */
 function VideoHero() {
   const reduce = useReducedMotion();
   const cover = FEATURED[0]?.img;
-  const [videoReady, setVideoReady] = useState(false);
-
-  // Under reduced motion there is no video event to wait on — let the
-  // word render immediately. (Effect, not initial state, so the value
-  // tracks the hook even when it resolves after first render.)
-  useEffect(() => {
-    if (reduce) setVideoReady(true);
-  }, [reduce]);
-
-  const word = "FEATURED";
-  const letters = Array.from(word);
-
-  const container = {
-    hidden: { opacity: 1 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: reduce ? 0 : 0.09,
-        delayChildren: reduce ? 0 : 0.18,
-      },
-    },
-  };
-  const letter = reduce
-    ? { hidden: { opacity: 1, y: 0 }, show: { opacity: 1, y: 0 } }
-    : {
-        hidden: { opacity: 0, y: 22 },
-        show: {
-          opacity: 1,
-          y: 0,
-          transition: { duration: 0.55, ease: EASE },
-        },
-      };
 
   return (
     <section
@@ -291,8 +256,6 @@ function VideoHero() {
             muted
             playsInline
             preload="metadata"
-            onLoadedData={() => setVideoReady(true)}
-            onCanPlay={() => setVideoReady(true)}
             style={{
               position: "absolute",
               inset: 0,
@@ -306,58 +269,17 @@ function VideoHero() {
         )}
       </div>
 
-      {/* Subtle scrim — keeps the letters readable and eases the section
-          into the paper rows below. */}
+      {/* Subtle bottom scrim — eases the section into the paper rows below. */}
       <div
         aria-hidden
         style={{
           position: "absolute",
           inset: 0,
           background:
-            "linear-gradient(to bottom, rgba(14,14,14,0.28) 0%, rgba(14,14,14,0.04) 35%, rgba(14,14,14,0.08) 65%, rgba(14,14,14,0.55) 100%)",
+            "linear-gradient(to bottom, rgba(14,14,14,0) 0%, rgba(14,14,14,0) 60%, rgba(14,14,14,0.55) 100%)",
           zIndex: 2,
         }}
       />
-
-      {/* FEATURED — letter by letter, after the video is ready */}
-      <motion.h1
-        aria-label="Featured"
-        initial="hidden"
-        animate={videoReady ? "show" : "hidden"}
-        variants={container}
-        style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 4,
-          margin: 0,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontFamily: DISPLAY,
-          fontWeight: 400,
-          fontSize: "clamp(64px, 14vw, 220px)",
-          lineHeight: 1,
-          letterSpacing: "0.06em",
-          textTransform: "uppercase",
-          color: "#ffffff",
-          mixBlendMode: "difference",
-          pointerEvents: "none",
-        }}
-      >
-        {letters.map((ch, i) => (
-          <motion.span
-            key={i}
-            aria-hidden
-            variants={letter}
-            style={{
-              display: "inline-block",
-              willChange: "transform, opacity",
-            }}
-          >
-            {ch}
-          </motion.span>
-        ))}
-      </motion.h1>
     </section>
   );
 }

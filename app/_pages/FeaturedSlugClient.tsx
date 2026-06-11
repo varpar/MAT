@@ -9,8 +9,10 @@ import { MAT_IMAGES, RITUALS, type Couple } from "../_components/data";
 import { MehendiSVG } from "../_components/MehendiSVG";
 import { SelectiveColorImage } from "../_components/SelectiveColorImage";
 import { MatImage } from "../_components/MatImage";
+import { LightboxProvider } from "../_components/Lightbox";
 import { VinylIcon } from "../_components/Icons";
 import { Sep } from "../_components/Punc";
+import { FilmPlayer } from "../_components/FilmPlayer";
 import { FeaturedStoryClient } from "./FeaturedStoryClient";
 
 /* ─────────────────────────────────────────────────────────────
@@ -111,6 +113,8 @@ function FeaturedTitle({ couple, idx }: { couple: Couple; idx: number }) {
    HERO — clean cinematic full-bleed image, vinyl in corner only.
    ───────────────────────────────────────────────────────────── */
 function FeaturedHero({ couple }: { couple: Couple }) {
+  const heroVideo = couple.heroVideo;
+
   return (
     <div
       className="mat-feat-slug-hero"
@@ -122,41 +126,56 @@ function FeaturedHero({ couple }: { couple: Couple }) {
         overflow: "hidden",
       }}
     >
-      <MatImage
-        image={couple.img}
-        variant="Hero"
-        alt=""
-        filter="brightness(0.86)"
-      />
-      <div
-        className="mat-feat-vinyl"
-        style={{
-          position: "absolute",
-          top: "clamp(16px, 3vw, 32px)",
-          right: "clamp(16px, 3vw, 40px)",
-          color: "#fff",
-          display: "flex",
-          alignItems: "center",
-          gap: 14,
-          maxWidth: "calc(100% - 32px)",
-        }}
-      >
-        <div
-          style={{
-            textAlign: "right",
-            fontFamily: SANS,
-            fontSize: 10,
-            letterSpacing: "0.32em",
-            textTransform: "uppercase",
-            opacity: 0.8,
-          }}
-        >
-          Their Wedding Playlist
-          <br />
-          <span style={{ opacity: 0.7 }}>Thirty-One Songs</span>
-        </div>
-        <VinylIcon spinning size={36} color="#fff" />
-      </div>
+      {heroVideo ? (
+        <FilmPlayer
+          src={heroVideo.src}
+          poster={heroVideo.poster}
+          duration={heroVideo.duration}
+          label={`Play ${couple.bride} sang ${couple.groom} — ${heroVideo.duration}`}
+        />
+      ) : (
+        <>
+          <MatImage
+            image={couple.img}
+            variant="Hero"
+            alt=""
+            filter="brightness(0.86)"
+          />
+          {/* Vinyl + playlist corner — kept for image heroes only. When a
+              playable video already provides the audio experience, the
+              vinyl would be visually redundant. */}
+          <div
+            className="mat-feat-vinyl"
+            style={{
+              position: "absolute",
+              top: "clamp(16px, 3vw, 32px)",
+              right: "clamp(16px, 3vw, 40px)",
+              color: "#fff",
+              display: "flex",
+              alignItems: "center",
+              gap: 14,
+              maxWidth: "calc(100% - 32px)",
+            }}
+          >
+            <div
+              style={{
+                textAlign: "right",
+                fontFamily: SANS,
+                fontSize: 10,
+                letterSpacing: "0.32em",
+                textTransform: "uppercase",
+                opacity: 0.8,
+              }}
+            >
+              Their Wedding Playlist
+              <br />
+              <span style={{ opacity: 0.7 }}>Thirty-One Songs</span>
+            </div>
+            <VinylIcon spinning size={36} color="#fff" />
+          </div>
+        </>
+      )}
+
       <style>{`
         @media (max-width: 720px) {
           .mat-feat-slug-hero { height: 70svh !important; min-height: 420px !important; }
@@ -847,15 +866,17 @@ export function FeaturedSlugClient({
   if (couple.story) return <FeaturedStoryClient couple={couple} />;
 
   return (
-    <main>
-      <FeaturedTitle couple={couple} idx={index + 1} />
-      <FeaturedHero couple={couple} />
-      <MehendiSection couple={couple} />
-      <SelectiveColorSection />
-      <RitualTimeline />
-      <VendorTags />
-      <PhotographerLetter couple={couple} />
-      <FeaturedClosing />
-    </main>
+    <LightboxProvider>
+      <main>
+        <FeaturedTitle couple={couple} idx={index + 1} />
+        <FeaturedHero couple={couple} />
+        <MehendiSection couple={couple} />
+        <SelectiveColorSection />
+        <RitualTimeline />
+        <VendorTags />
+        <PhotographerLetter couple={couple} />
+        <FeaturedClosing />
+      </main>
+    </LightboxProvider>
   );
 }

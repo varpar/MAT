@@ -6,6 +6,8 @@ import { SERIF, SANS, SCRIPT, T } from "../_components/tokens";
 import { Sang } from "../_components/Sang";
 import { useReveal } from "../_components/hooks";
 import { MatImage } from "../_components/MatImage";
+import { FilmPlayer } from "../_components/FilmPlayer";
+import { LightboxProvider } from "../_components/Lightbox";
 import { withSeps } from "../_components/Punc";
 import { type Couple, MAT_IMAGES } from "../_components/data";
 import type { FeaturedStory, StorySection } from "../_lib/featured-story";
@@ -31,43 +33,61 @@ function CoverHero({ couple, story }: { couple: Couple; story: FeaturedStory }) 
           background: "#0e0e0e",
         }}
       >
-        <MatImage
-          image={story.photos.hero}
-          variant="Hero"
-          alt={`${couple.bride} sang ${couple.groom} — ${couple.place}`}
-          filter="brightness(0.94)"
-        />
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(180deg, rgba(0,0,0,0.0) 55%, rgba(0,0,0,0.55) 100%)",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: "clamp(20px, 3vw, 36px)",
-            left: "clamp(20px, 4vw, 40px)",
-            right: "clamp(20px, 4vw, 40px)",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-end",
-            gap: "clamp(12px, 2vw, 24px)",
-            flexWrap: "wrap",
-            color: "#fff",
-            fontFamily: SANS,
-            fontSize: 10,
-            letterSpacing: "0.32em",
-            textTransform: "uppercase",
-            opacity: 0.88,
-          }}
-        >
-          <div>{withSeps(story.date)}</div>
-          <div>{story.detailLine}</div>
-        </div>
+        {couple.heroVideo ? (
+          <FilmPlayer
+            src={couple.heroVideo.src}
+            poster={couple.heroVideo.poster}
+            duration={couple.heroVideo.duration}
+            label={`Play ${couple.bride} sang ${couple.groom} — ${couple.heroVideo.duration}`}
+          />
+        ) : (
+          <>
+            <MatImage
+              image={story.photos.hero}
+              variant="Hero"
+              alt={`${couple.bride} sang ${couple.groom} — ${couple.place}`}
+              filter="brightness(0.94)"
+            />
+            <div
+              aria-hidden
+              style={{
+                position: "absolute",
+                inset: 0,
+                background:
+                  "linear-gradient(180deg, rgba(0,0,0,0.0) 55%, rgba(0,0,0,0.55) 100%)",
+                pointerEvents: "none",
+              }}
+            />
+            {/* Bottom date / detail overlay — only on the image hero. When a
+                video is playing the FilmPlayer's controls own the bottom, so
+                this would collide. The same info already lives on the paper
+                panel below. pointer-events:none so clicks pass through to the
+                image (lightbox click-to-zoom). */}
+            <div
+              style={{
+                position: "absolute",
+                bottom: "clamp(20px, 3vw, 36px)",
+                left: "clamp(20px, 4vw, 40px)",
+                right: "clamp(20px, 4vw, 40px)",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-end",
+                gap: "clamp(12px, 2vw, 24px)",
+                flexWrap: "wrap",
+                color: "#fff",
+                fontFamily: SANS,
+                fontSize: 10,
+                letterSpacing: "0.32em",
+                textTransform: "uppercase",
+                opacity: 0.88,
+                pointerEvents: "none",
+              }}
+            >
+              <div>{withSeps(story.date)}</div>
+              <div>{story.detailLine}</div>
+            </div>
+          </>
+        )}
         <style>{`
           @media (max-width: 720px) {
             .mat-cover-hero { height: 72svh !important; min-height: 460px !important; }
@@ -453,12 +473,34 @@ const RITUAL_DEFS: {
   },
 ];
 
+/** Order matters: used to index into `story.extras` so each ritual gets
+ *  two distinct extras (cycling if the extras run out). */
+const RITUAL_ORDER: (typeof RITUAL_DEFS)[number]["key"][] = [
+  "haldi",
+  "mehendi",
+  "sangeet",
+  "pheras",
+  "vidaai",
+];
+
 function ritualPhotosFor(
   story: FeaturedStory,
   k: (typeof RITUAL_DEFS)[number]["key"],
 ): MatImageRecord[] {
-  // 3 photos: the dedicated ritual photo + two supporting from the broader pool.
   const main = story.photos[k];
+
+  // If the story provides its own extras, build the 3-up from THIS couple's
+  // photos only — no leakage from the generic MAT_IMAGES pool.
+  if (story.extras && story.extras.length > 0) {
+    const idx = RITUAL_ORDER.indexOf(k);
+    const start = idx * 2;
+    const len = story.extras.length;
+    const a = story.extras[start % len];
+    const b = story.extras[(start + 1) % len];
+    return [main, a, b].filter(Boolean);
+  }
+
+  // Legacy: 3 photos = the dedicated ritual photo + two from the broader pool.
   const pools: Record<typeof k, MatImageRecord[]> = {
     haldi: [main, MAT_IMAGES.atmos1, MAT_IMAGES.detail1],
     mehendi: [main, MAT_IMAGES.detail2, MAT_IMAGES.detail3],
@@ -647,22 +689,26 @@ function SegmentedRituals({ story }: { story: FeaturedStory }) {
    image fades up on scroll into view.
    ───────────────────────────────────────────────────────────── */
 function buildWall(story: FeaturedStory): MatImageRecord[] {
-  // Pull every story photo + a slice of the broader pool. Deduped.
   const fromStory = Object.values(story.photos);
-  const fromPool: MatImageRecord[] = [
-    MAT_IMAGES.detail6,
-    MAT_IMAGES.detail7,
-    MAT_IMAGES.detail8,
-    MAT_IMAGES.reel3,
-    MAT_IMAGES.reel4,
-    MAT_IMAGES.reel5,
-    MAT_IMAGES.reel6,
-    MAT_IMAGES.portrait3,
-    MAT_IMAGES.portrait4,
-  ].filter(Boolean);
+  const fromExtras = story.extras ?? [];
+  // When the story provides its own extras, do NOT fall back to the generic
+  // MAT_IMAGES pool — the wall stays entirely this couple's photos.
+  const fromPool: MatImageRecord[] = story.extras
+    ? []
+    : [
+        MAT_IMAGES.detail6,
+        MAT_IMAGES.detail7,
+        MAT_IMAGES.detail8,
+        MAT_IMAGES.reel3,
+        MAT_IMAGES.reel4,
+        MAT_IMAGES.reel5,
+        MAT_IMAGES.reel6,
+        MAT_IMAGES.portrait3,
+        MAT_IMAGES.portrait4,
+      ].filter(Boolean);
   const seen = new Set<string>();
   const out: MatImageRecord[] = [];
-  for (const p of [...fromStory, ...fromPool]) {
+  for (const p of [...fromStory, ...fromExtras, ...fromPool]) {
     if (!p || seen.has(p.publicId)) continue;
     seen.add(p.publicId);
     out.push(p);
@@ -897,6 +943,7 @@ function Closing({ couple, story }: { couple: Couple; story: FeaturedStory }) {
             inset: 0,
             background:
               "radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 100%)",
+            pointerEvents: "none",
           }}
         />
         <div
@@ -910,6 +957,7 @@ function Closing({ couple, story }: { couple: Couple; story: FeaturedStory }) {
             color: "#fff",
             padding: "0 clamp(20px, 4vw, 40px)",
             textAlign: "center",
+            pointerEvents: "none",
           }}
         >
           <div
@@ -1024,6 +1072,7 @@ export function FeaturedStoryClient({ couple }: { couple: Couple }) {
   const otherSections = story.sections.filter((s) => !isBrideSection(s));
 
   return (
+    <LightboxProvider>
     <main>
       <CoverHero couple={couple} story={story} />
 
@@ -1076,5 +1125,6 @@ export function FeaturedStoryClient({ couple }: { couple: Couple }) {
 
       <Closing couple={couple} story={story} />
     </main>
+    </LightboxProvider>
   );
 }

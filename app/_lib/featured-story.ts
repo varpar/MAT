@@ -39,4 +39,11 @@ export type FeaturedStory = {
   pullQuote?: { word: string; color?: string };
   /** Optional vendor credits — rendered as a hairline table. */
   vendors?: [string, string][];
+  /** Extra photos of THIS couple, used for:
+   *    • the secondary tiles in each ritual section (so a couple's
+   *      Haldi/Mehendi/… grids stay entirely their own photos), and
+   *    • the photo wall.
+   *  When present, the generic MAT_IMAGES backfill pool is NOT used for
+   *  this couple — only their own photos appear on their page. */
+  extras?: MatImageRecord[];
 };

@@ -6,6 +6,10 @@
 - Synthesis stays in the main thread — never delegate the *decision* of how to wire results together. Agents gather and report; the main thread plans and edits the code.
 - Use the Plan agent for multi-step implementations that span >3 files or introduce a new pattern.
 
+## Source-of-truth assets (local, NOT committed)
+
+- **`MAT_MAG.pdf`** at the repo root — the printed Mi Amor Tales magazine. 106 MB, 76 pages, **10 couple feature spreads** (Anvesha+Omkar, Pooja+Harsh, Varun+Vanya, Harsh+Joyeeta, Shrenik+Ishika, Mohit+Riya, Monika+Aniket, Abhinav+Priyal, Shubham+Aishwarya, Swapnil+Aditi). The website's Featured couples should be **a subset of the couples in this PDF** — never invent or keep placeholder couples that aren't in the magazine. Already in `.gitignore` (do not commit). Read it with the Read tool's `pages` parameter (max 20 per call) when picking / verifying who should be featured.
+
 # Mi Amor Tales — Website Redesign
 
 ## Who is MAT?

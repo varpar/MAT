@@ -3,6 +3,7 @@
 import React from "react";
 import Image, { type ImageProps } from "next/image";
 import type { MatImageRecord } from "../_lib/mat-image-types";
+import { useLightbox } from "./Lightbox";
 
 type VariantPreset = {
   sizes: string;
@@ -64,6 +65,10 @@ type Props = Omit<ImageProps, "src" | "loader" | "placeholder" | "blurDataURL" |
   sizesOverride?: string;
   /** Pass a CSS filter (e.g. selective-color grayscale). */
   filter?: string;
+  /** Opt out of lightbox click-to-zoom even when a <LightboxProvider> is
+   *  mounted above. Use for hero backgrounds and similar atmospheric images
+   *  where clicking shouldn't open a full-screen viewer. */
+  noLightbox?: boolean;
 };
 
 /**
@@ -83,23 +88,45 @@ export function MatImage({
   height,
   sizesOverride,
   filter,
+  noLightbox,
   style,
   className,
   ...rest
 }: Props) {
   const preset: VariantPreset = VARIANTS[variant];
   const isHero = variant === "Hero";
+  const lightbox = useLightbox();
+  const lbActive = lightbox && !noLightbox;
 
   const commonStyle: React.CSSProperties = {
     objectFit: "cover",
     filter,
+    ...(lbActive ? { cursor: "zoom-in" } : null),
     ...style,
   };
+
+  const lbHandlers = lbActive
+    ? {
+        onClick: () => lightbox.open(image, alt ?? image.alt),
+        onKeyDown: (e: React.KeyboardEvent<HTMLImageElement>) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            lightbox.open(image, alt ?? image.alt);
+          }
+        },
+        role: "button" as const,
+        tabIndex: 0,
+        "aria-label": `Open photograph — ${alt ?? image.alt ?? "untitled"}`,
+        // Brand sage cursor reads data-cursor — show "View" on hover.
+        "data-cursor": "View",
+      }
+    : null;
 
   if (fill) {
     return (
       <Image
         {...rest}
+        {...lbHandlers}
         src={image.publicId}
         alt={alt ?? image.alt ?? ""}
         fill
@@ -118,6 +145,7 @@ export function MatImage({
   return (
     <Image
       {...rest}
+      {...lbHandlers}
       src={image.publicId}
       alt={alt ?? image.alt ?? ""}
       width={width ?? image.width}
