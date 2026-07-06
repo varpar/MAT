@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { SERIF, SANS, T } from "../_components/tokens";
+import { SERIF, SANS, DISPLAY, T, LAYOUT } from "../_components/tokens";
 import { Sep, withSeps } from "../_components/Punc";
 import { MatImage } from "../_components/MatImage";
 import { MAT_IMAGES } from "../_components/data";
@@ -9,19 +9,19 @@ import { MAT_IMAGES } from "../_components/data";
 const FAQS: [string, string][] = [
   [
     "How early should we book?",
-    "Six to ten months before the date is comfortable. We hold one slot per month — December and February usually go first.",
+    "Six to ten months ahead is comfortable. We take one wedding a month — December and February go first.",
   ],
   [
     "Do you travel?",
-    "Yes, anywhere in India and worldwide. Travel and stay are billed at cost, with no markup.",
+    "Anywhere in India and worldwide. Travel and stay are billed at cost, never marked up.",
   ],
   [
     "What is the turnaround?",
-    "A teaser within seven days. The full edit and album within twelve weeks.",
+    "A teaser within seven days. Your full gallery and album within twelve weeks.",
   ],
   [
-    "Will you photograph us in a documentary style?",
-    "Yes. We don't pose unless asked. The whole point of our work is that you forget we are there.",
+    "Is your work documentary?",
+    "Yes. We pose only when asked — the rest of the day, you forget we're there.",
   ],
 ];
 
@@ -394,7 +394,7 @@ function FAQRow({ q, a }: { q: string; a: string }) {
           style={{
             margin: 0,
             fontFamily: SERIF,
-            fontWeight: 300,
+            fontWeight: 500,
             fontStyle: "italic",
             fontSize: "clamp(18px, 2.4vw, 24px)",
             lineHeight: 1.25,
@@ -429,7 +429,7 @@ function FAQRow({ q, a }: { q: string; a: string }) {
           lineHeight: 1.7,
           opacity: 0.78,
           paddingBottom: open ? 28 : 0,
-          maxWidth: 720,
+          maxWidth: LAYOUT.maxText,
         }}
       >
         {withSeps(a)}
@@ -457,7 +457,7 @@ export function ContactClient() {
       <section
         className="mat-contact-hero"
         style={{
-          padding: "180px 40px 80px",
+          padding: `180px ${LAYOUT.gutter} ${LAYOUT.sectionTight}`,
           background: T.paper,
           textAlign: "center",
           position: "relative",
@@ -476,13 +476,13 @@ export function ContactClient() {
             zIndex: 1,
           }}
         >
-          Begin<Sep />Six Slots<Sep />Season 26 / 27
+          Enquire<Sep />Six Dates<Sep />Season 26 / 27
         </div>
         <h1
           className="mat-contact-hero-title"
           style={{
             margin: 0,
-            fontFamily: SERIF,
+            fontFamily: DISPLAY,
             fontWeight: 300,
             fontSize: "clamp(36px, 7.6vw, 96px)",
             lineHeight: 0.98,
@@ -494,10 +494,7 @@ export function ContactClient() {
             textWrap: "balance",
           }}
         >
-          <span style={{ fontStyle: "italic" }}>How</span> a story begins
-          <span style={{ color: T.sage }}>,</span>
-          <br />
-          matters as much as how it&apos;s told
+          <span>Let&apos;s begin</span> your story
           <span style={{ color: T.sage }}>.</span>
         </h1>
         <p
@@ -515,8 +512,8 @@ export function ContactClient() {
             textWrap: "balance",
           }}
         >
-          We answer every enquiry within thirty-six hours. Tell us a little about
-          your day, and we&apos;ll write back personally.
+          Tell us a little about your day. We read every enquiry ourselves and
+          reply within thirty-six hours.
         </p>
       </section>
 
@@ -524,7 +521,7 @@ export function ContactClient() {
       <section
         className="mat-contact-availability"
         style={{
-          padding: "32px 40px",
+          padding: `${LAYOUT.gutterTight} ${LAYOUT.gutter}`,
           background: T.sage,
           color: T.paper,
           borderTop: "1px solid rgba(0,0,0,0.14)",
@@ -537,7 +534,7 @@ export function ContactClient() {
           opacity: 0.85,
         }}
       >
-        Four of six dates remain for winter twenty-twenty-six.
+        Four dates open for winter twenty-twenty-six.
         <span className="mat-availability-tail" style={{ marginLeft: 16, color: T.cream }}>
           December and February are taken.
         </span>
@@ -549,12 +546,14 @@ export function ContactClient() {
         id="enquiry"
         className="mat-contact-form"
         style={{
-          padding: "120px 40px",
+          padding: `${LAYOUT.section} ${LAYOUT.gutter}`,
           background: T.paper,
           display: "grid",
           gridTemplateColumns: "5fr 7fr",
-          gap: 72,
+          gap: "clamp(40px, 5vw, 72px)",
           alignItems: "start",
+          maxWidth: 1120,
+          marginInline: "auto",
         }}
       >
         <div className="mat-contact-info">
@@ -584,20 +583,19 @@ export function ContactClient() {
               marginBottom: 16,
             }}
           >
-            01<Sep />The Enquiry Form
+            01<Sep />Enquiry
           </div>
           <h2
             style={{
               margin: 0,
-              fontFamily: SERIF,
+              fontFamily: DISPLAY,
               fontWeight: 300,
-              fontStyle: "italic",
               fontSize: "clamp(28px, 3.4vw, 40px)",
               lineHeight: 1.18,
             }}
           >
-            Write to us
-            <span style={{ color: T.sage }}>.</span> A few details is enough
+            Tell us about your day
+            <span style={{ color: T.sage }}>.</span> A few details is plenty
             <span style={{ color: T.sage }}>.</span>
           </h2>
           <p
@@ -610,8 +608,8 @@ export function ContactClient() {
               maxWidth: 360,
             }}
           >
-            Submissions reach Aanya by email and WhatsApp at the same time. She
-            answers personally<Sep />never an assistant.
+            Your enquiry reaches Aanya by email and WhatsApp at once. She replies
+            herself<Sep />never an assistant.
           </p>
           <div
             style={{
@@ -624,7 +622,7 @@ export function ContactClient() {
               opacity: 0.85,
             }}
           >
-            Or write directly
+            Or reach us directly
           </div>
           <div
             style={{
@@ -662,14 +660,13 @@ export function ContactClient() {
                   marginBottom: 22,
                 }}
               >
-                Received
+                Enquiry received
               </div>
               <h3
                 style={{
                   margin: 0,
-                  fontFamily: SERIF,
+                  fontFamily: DISPLAY,
                   fontWeight: 300,
-                  fontStyle: "italic",
                   fontSize: "clamp(28px, 3.4vw, 40px)",
                   lineHeight: 1.2,
                   textWrap: "balance",
@@ -690,8 +687,8 @@ export function ContactClient() {
                   marginInline: "auto",
                 }}
               >
-                We&apos;ll reply within thirty-six hours. If urgent, WhatsApp Aanya
-                directly at the number on the left.
+                Aanya will write back within thirty-six hours. In a hurry? WhatsApp
+                her on the number to the left.
               </p>
             </div>
           ) : (
@@ -700,7 +697,7 @@ export function ContactClient() {
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr",
-                gap: "28px 24px",
+                gap: "24px 24px",
               }}
             >
               <Field
@@ -727,14 +724,14 @@ export function ContactClient() {
                 type="tel"
                 value={form.phone}
                 onChange={update}
-                placeholder="+91"
+                placeholder="+91 …"
               />
               <Field
-                label="Wedding date (or season)"
+                label="Wedding date or season"
                 name="date"
                 value={form.date}
                 onChange={update}
-                placeholder="November 2026, or Winter 26-27"
+                placeholder="Nov 2026, or Winter 26–27"
               />
               <Field
                 label="Venue or city"
@@ -744,7 +741,7 @@ export function ContactClient() {
                 placeholder="Udaipur, Jaipur, Goa…"
               />
               <SelectField
-                label="What you&apos;re imagining"
+                label="What you’re imagining"
                 name="pkg"
                 value={form.pkg}
                 onChange={update}
@@ -754,7 +751,7 @@ export function ContactClient() {
                 name="message"
                 value={form.message}
                 onChange={update}
-                placeholder="Tell us a little about how you two met, what the day will feel like, who&apos;s travelling in…"
+                placeholder="How you two met, what the day will feel like, who’s travelling in…"
               />
               <div
                 className="mat-contact-send"
@@ -778,11 +775,11 @@ export function ContactClient() {
                     opacity: 0.78,
                   }}
                 >
-                  We reply within 36 hours.
+                  A reply within 36 hours.
                 </div>
                 <button
                   type="submit"
-                  data-cursor="Send"
+                  data-cursor="Check"
                   className="mat-contact-submit"
                   style={{
                     padding: "18px 40px",
@@ -804,7 +801,7 @@ export function ContactClient() {
                     e.currentTarget.style.background = T.sage;
                   }}
                 >
-                  Send enquiry →
+                  Check availability →
                 </button>
               </div>
             </form>
@@ -812,43 +809,29 @@ export function ContactClient() {
         </div>
 
         <style>{`
-          /* Avoid iOS auto-zoom: never let the form's actual input/textarea/
-             button font-size drop below 16px on touch widths. We keep the
-             VISUAL 18px on desktop and just clamp the rendered font at the
-             input level for narrow screens. */
-          @media (max-width: 1024px) {
-            .mat-contact-hero {
-              padding: 150px 32px 70px !important;
-            }
-            .mat-contact-availability {
-              padding: 28px 32px !important;
-            }
-            .mat-contact-form {
-              padding: 96px 32px !important;
-              gap: 56px !important;
-            }
-          }
+          /* Section paddings/gaps now come from the LAYOUT clamps, so the
+             only responsive work left is the hero's nav clearance, layout
+             reflow + touch ergonomics. The hero keeps a fixed top inset
+             (matching the other pages) so the fixed nav never clips it. */
           @media (max-width: 880px) {
-            .mat-contact-hero {
-              padding: 140px 24px 60px !important;
-            }
-            .mat-contact-availability {
-              padding: 24px 24px !important;
-            }
+            .mat-contact-hero { padding-top: 140px !important; }
+          }
+          @media (max-width: 414px) {
+            .mat-contact-hero { padding-top: 120px !important; }
+          }
+
+          /* Collapse the photo + form into one column, and keep the 3:4 info
+             photo editorial-sized (not full-bleed-wide) on phones. */
+          @media (max-width: 880px) {
             .mat-contact-form {
               grid-template-columns: 1fr !important;
-              gap: 48px !important;
-              padding: 80px 24px !important;
-              align-items: start !important;
             }
-            /* Stop the 3:4 info photo from being the full width of the
-               viewport on phones — keep it editorial-sized and centered. */
             .mat-contact-info-image {
               max-width: 460px !important;
               margin-inline: auto !important;
-              margin-bottom: 28px !important;
             }
           }
+          /* Stack the availability sentence's tail on narrow screens. */
           @media (max-width: 720px) {
             .mat-availability-tail {
               display: block !important;
@@ -859,35 +842,18 @@ export function ContactClient() {
           @media (max-width: 640px) {
             .mat-contact-form form {
               grid-template-columns: 1fr !important;
-              gap: 24px !important;
             }
             .mat-contact-form form > * {
               grid-column: span 1 !important;
             }
-            .mat-contact-success {
-              padding: 48px 24px !important;
-            }
-            /* iOS zoom-on-focus avoidance + bigger tap targets. */
+            /* iOS zoom-on-focus avoidance — keep rendered input text ≥16px. */
             .mat-contact-form input,
             .mat-contact-form textarea,
             .mat-contact-form .mat-select-trigger,
             .mat-contact-form .mat-select-option {
               font-size: 16px !important;
             }
-            .mat-contact-form .mat-field-input {
-              min-height: 48px !important;
-              padding: 14px 0 !important;
-            }
-            .mat-contact-form .mat-field-textarea {
-              min-height: 160px !important;
-              padding: 14px 14px !important;
-            }
-            .mat-contact-form .mat-select-trigger {
-              min-height: 48px !important;
-            }
-            .mat-contact-form .mat-select-option {
-              min-height: 48px !important;
-            }
+            /* Full-width send button + stacked helper on phones. */
             .mat-contact-send {
               flex-direction: column !important;
               align-items: stretch !important;
@@ -896,19 +862,6 @@ export function ContactClient() {
             .mat-contact-submit {
               width: 100% !important;
               padding: 18px 24px !important;
-              min-height: 52px !important;
-            }
-          }
-          @media (max-width: 414px) {
-            .mat-contact-hero {
-              padding: 120px 20px 52px !important;
-            }
-            .mat-contact-availability {
-              padding: 22px 20px !important;
-            }
-            .mat-contact-form {
-              padding: 64px 20px !important;
-              gap: 40px !important;
             }
           }
         `}</style>
@@ -918,7 +871,7 @@ export function ContactClient() {
       <section
         className="mat-contact-faq"
         style={{
-          padding: "120px 40px",
+          padding: `${LAYOUT.section} ${LAYOUT.gutter}`,
           background: T.paper,
         }}
       >
@@ -937,13 +890,13 @@ export function ContactClient() {
           <h2
             style={{
               margin: 0,
-              fontFamily: SERIF,
+              fontFamily: DISPLAY,
               fontWeight: 300,
               fontSize: "clamp(28px, 4vw, 48px)",
               lineHeight: 1.05,
             }}
           >
-            <span style={{ fontStyle: "italic" }}>Questions</span> couples ask
+            <span>Questions</span> couples ask
             <span style={{ color: T.sage }}>.</span>
           </h2>
           <div
@@ -955,7 +908,7 @@ export function ContactClient() {
               color: T.sage,
             }}
           >
-            02<Sep />Frequently
+            02<Sep />Good to Know
           </div>
         </header>
         <div style={{ maxWidth: 1100, marginInline: "auto" }}>
@@ -965,11 +918,9 @@ export function ContactClient() {
           <div style={{ borderTop: `1px solid ${T.ink}15` }} />
         </div>
         <style>{`
-          @media (max-width: 1024px) {
-            .mat-contact-faq { padding: 96px 32px !important; }
-          }
+          /* Padding comes from the LAYOUT clamps; only tighten the accordion
+             rows on small screens. */
           @media (max-width: 720px) {
-            .mat-contact-faq { padding: 80px 24px !important; }
             .mat-contact-faq .mat-faq-head {
               padding: 22px 0 !important;
               min-height: 64px !important;
@@ -977,9 +928,6 @@ export function ContactClient() {
             .mat-contact-faq .mat-faq-body {
               font-size: 14px !important;
             }
-          }
-          @media (max-width: 414px) {
-            .mat-contact-faq { padding: 64px 20px !important; }
           }
         `}</style>
       </section>

@@ -10,9 +10,10 @@ import {
   useTransform,
   useReducedMotion,
 } from "motion/react";
-import { SERIF, SANS, BODY, DISPLAY, T } from "../_components/tokens";
+import { SERIF, SANS, BODY, DISPLAY, T, LAYOUT } from "../_components/tokens";
 import { Sang } from "../_components/Sang";
 import { FEATURED, MAT_IMAGES, type Couple } from "../_components/data";
+import type { MatImageRecord } from "../_lib/mat-image-types";
 import { AnimatedImage } from "../_components/AnimatedImage";
 import { FilmStrip } from "../_components/FilmStrip";
 import { MatImage } from "../_components/MatImage";
@@ -82,8 +83,8 @@ function HomeHero() {
         className="mat-hero-foot"
         style={{
           position: "absolute",
-          left: 40,
-          right: 40,
+          left: LAYOUT.gutter,
+          right: LAYOUT.gutter,
           bottom: 56,
           color: "#fff",
           display: "flex",
@@ -141,13 +142,11 @@ function HomeHero() {
       </motion.div>
       <style>{`
         @media (max-width: 1024px) {
-          .mat-hero-foot { left: 32px !important; right: 32px !important; bottom: 48px !important; gap: 24px !important; }
+          .mat-hero-foot { bottom: 48px !important; gap: 24px !important; }
         }
         @media (max-width: 720px) {
           .mat-hero { min-height: 560px !important; }
           .mat-hero-foot {
-            left: 24px !important;
-            right: 24px !important;
             bottom: 40px !important;
             flex-direction: column !important;
             align-items: flex-start !important;
@@ -173,7 +172,7 @@ function HomeTriptych() {
     <section
       className="mat-tript-sec"
       style={{
-        padding: "120px 40px",
+        padding: `${LAYOUT.section} 0`,
         background: T.paper,
       }}
     >
@@ -182,12 +181,12 @@ function HomeTriptych() {
         style={{
           display: "grid",
           gridTemplateColumns: "1fr 1fr 1fr",
-          gap: 24,
+          gap: LAYOUT.gap,
           alignItems: "stretch",
         }}
       >
         <AnimatedImage
-          image={MAT_IMAGES.portrait1}
+          image={MAT_IMAGES.collage1}
           aspect="3/4"
           reveal="wipe-up"
           parallax={40}
@@ -195,13 +194,14 @@ function HomeTriptych() {
           variant="Grid"
         />
         <div
+          className="mat-tript-copy"
           style={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
             textAlign: "center",
-            padding: "40px 8px",
+            padding: `40px ${LAYOUT.gutterTight}`,
           }}
         >
           <motion.div
@@ -227,7 +227,7 @@ function HomeTriptych() {
             transition={{ duration: 1.2, ease: EASE, delay: 0.1 }}
             style={{
               margin: 0,
-              fontFamily: SERIF,
+              fontFamily: DISPLAY,
               fontWeight: 300,
               fontSize: "clamp(32px, 4.2vw, 56px)",
               lineHeight: 1.05,
@@ -235,7 +235,7 @@ function HomeTriptych() {
               maxWidth: 420,
             }}
           >
-            <span style={{ fontStyle: "italic" }}>
+            <span>
               We don&apos;t direct your day
             </span>
             <span style={{ color: T.sage }}>.</span> We follow it like a heartbeat
@@ -270,22 +270,18 @@ function HomeTriptych() {
       </div>
       <style>{`
         @media (max-width: 1024px) {
-          .mat-tript-sec { padding: 96px 32px !important; }
           .mat-tript { grid-template-columns: 1fr 1fr !important; }
-          .mat-tript > :nth-child(2) {
+          .mat-tript-copy {
             grid-column: 1 / -1 !important;
             order: -1;
-            padding: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
             margin-bottom: 40px;
           }
         }
         @media (max-width: 720px) {
-          .mat-tript-sec { padding: 72px 24px !important; }
-          .mat-tript { grid-template-columns: 1fr !important; gap: 32px !important; }
+          .mat-tript { grid-template-columns: 1fr !important; gap: ${LAYOUT.gap} !important; }
           .mat-tript > * { margin: 0 !important; }
-        }
-        @media (max-width: 480px) {
-          .mat-tript-sec { padding: 56px 24px !important; }
         }
       `}</style>
     </section>
@@ -318,8 +314,8 @@ function HomeFilmReel() {
     // Row 1 — wide cinematic frames (left → right)
     [
       { image: MAT_IMAGES.reel1, aspect: "16/10" },
-      { image: MAT_IMAGES.couple1, aspect: "4/3" },
-      { image: MAT_IMAGES.reel4, aspect: "16/10" },
+      { image: MAT_IMAGES.collage2, aspect: "4/3" },
+      { image: MAT_IMAGES.collage4, aspect: "16/10" },
       { image: MAT_IMAGES.haldi, aspect: "4/3" },
       { image: MAT_IMAGES.reel3, aspect: "16/10" },
       { image: MAT_IMAGES.couple3, aspect: "4/3" },
@@ -327,7 +323,7 @@ function HomeFilmReel() {
     ],
     // Row 2 — portraits + details (right → left)
     [
-      { image: MAT_IMAGES.portrait1, aspect: "3/4" },
+      { image: MAT_IMAGES.collage1, aspect: "3/4" },
       { image: MAT_IMAGES.bride2, aspect: "3/4" },
       { image: MAT_IMAGES.detail3, aspect: "1/1" },
       { image: MAT_IMAGES.portrait3, aspect: "3/4" },
@@ -338,8 +334,8 @@ function HomeFilmReel() {
     ],
     // Row 3 — ceremony moments (left → right)
     [
-      { image: MAT_IMAGES.mehendi, aspect: "4/3" },
-      { image: MAT_IMAGES.sangeet, aspect: "16/10" },
+      { image: MAT_IMAGES.collage5, aspect: "4/3" },
+      { image: MAT_IMAGES.collage6, aspect: "16/10" },
       { image: MAT_IMAGES.pheras, aspect: "4/3" },
       { image: MAT_IMAGES.vidaai, aspect: "16/10" },
       { image: MAT_IMAGES.haldi, aspect: "4/3" },
@@ -350,7 +346,7 @@ function HomeFilmReel() {
     [
       { image: MAT_IMAGES.atmos2, aspect: "16/10" },
       { image: MAT_IMAGES.couple2, aspect: "4/3" },
-      { image: MAT_IMAGES.detail7, aspect: "1/1" },
+      { image: MAT_IMAGES.collage3, aspect: "1/1" },
       { image: MAT_IMAGES.reel5, aspect: "3/4" },
       { image: MAT_IMAGES.detail4, aspect: "4/3" },
       { image: MAT_IMAGES.reel6, aspect: "16/10" },
@@ -365,13 +361,13 @@ function HomeFilmReel() {
       className="mat-reel-sec"
       style={{
         background: T.paper,
-        padding: "60px 0 120px",
+        padding: `${LAYOUT.sectionTight} 0 ${LAYOUT.section}`,
       }}
     >
       <div
         className="mat-reel-head"
         style={{
-          padding: "0 40px",
+          padding: `0 ${LAYOUT.gutter}`,
           marginBottom: 32,
           display: "flex",
           justifyContent: "space-between",
@@ -399,7 +395,7 @@ function HomeFilmReel() {
             opacity: 0.65,
           }}
         >
-          a quiet loop, four reels deep
+          a few frames from the last two seasons
         </div>
       </div>
       <FilmStrip
@@ -408,16 +404,8 @@ function HomeFilmReel() {
         rows={allRows.slice(0, strip.rows)}
       />
       <style>{`
-        @media (max-width: 1024px) {
-          .mat-reel-sec { padding: 48px 0 96px !important; }
-          .mat-reel-head { padding: 0 32px !important; }
-        }
         @media (max-width: 720px) {
-          .mat-reel-sec { padding: 40px 0 72px !important; }
-          .mat-reel-head { padding: 0 24px !important; margin-bottom: 24px !important; }
-        }
-        @media (max-width: 480px) {
-          .mat-reel-sec { padding: 32px 0 56px !important; }
+          .mat-reel-head { margin-bottom: 24px !important; }
         }
       `}</style>
     </section>
@@ -488,7 +476,7 @@ function HomeMarquee() {
       style={{
         position: "relative",
         zIndex: isAnyHovered ? 70 : "auto",
-        padding: "60px 0",
+        padding: `${LAYOUT.sectionTight} 0`,
         background: T.paper,
         borderTop: `1px solid ${T.ink}10`,
         borderBottom: `1px solid ${T.ink}10`,
@@ -539,7 +527,8 @@ function HomeMarquee() {
                 data-cursor="View story"
                 className="mat-marquee-link"
                 style={{
-                  fontFamily: SERIF,
+                  fontFamily: DISPLAY,
+                  textTransform: "uppercase",
                   fontSize: "clamp(32px, 5vw, 56px)",
                   lineHeight: 1,
                   fontWeight: 300,
@@ -556,11 +545,11 @@ function HomeMarquee() {
                   minHeight: 44,
                 }}
               >
-                <span style={{ fontStyle: "italic" }}>{c.bride}</span>
+                <span>{c.bride}</span>
                 <span style={{ alignSelf: "center", display: "inline-flex" }}>
                   <Sang size={22} />
                 </span>
-                <span style={{ fontStyle: "italic" }}>{c.groom}</span>
+                <span>{c.groom}</span>
               </Link>
             );
           })}
@@ -573,11 +562,9 @@ function HomeMarquee() {
         /* Name hover (cursor on a specific link) → freeze so the user can click. */
         .mat-marquee-track.is-name-hover { animation-play-state: paused !important; }
         @media (max-width: 1024px) {
-          .mat-marquee-sec { padding: 48px 0 !important; }
           .mat-marquee-track { gap: 56px !important; padding-left: 56px !important; }
         }
         @media (max-width: 720px) {
-          .mat-marquee-sec { padding: 40px 0 !important; }
           .mat-marquee-track {
             gap: 40px !important;
             padding-left: 40px !important;
@@ -586,7 +573,6 @@ function HomeMarquee() {
           .mat-marquee-link { gap: 10px !important; }
         }
         @media (max-width: 480px) {
-          .mat-marquee-sec { padding: 32px 0 !important; }
           .mat-marquee-track { gap: 32px !important; padding-left: 32px !important; }
         }
       `}</style>
@@ -697,6 +683,7 @@ function CoupleTile({
             margin: 0,
             fontFamily: DISPLAY,
             fontWeight: 400,
+            textTransform: "uppercase",
             fontSize: "clamp(23px, 2.5vw, 34px)",
             lineHeight: 1.05,
             letterSpacing: "0",
@@ -750,7 +737,7 @@ function HomeRecent() {
   for (let i = 0; i < items.length; i += 3) rows.push(items.slice(i, i + 3));
 
   return (
-    <section className="mat-recent-sec" style={{ padding: "120px 16px 200px", background: T.paper }}>
+    <section className="mat-recent-sec" style={{ padding: `${LAYOUT.section} 0`, background: T.paper }}>
       <header
         className="mat-recent-head"
         style={{
@@ -759,6 +746,7 @@ function HomeRecent() {
           alignItems: "center",
           textAlign: "center",
           marginBottom: 80,
+          padding: `0 ${LAYOUT.gutter}`,
           gap: 28,
         }}
       >
@@ -817,7 +805,7 @@ function HomeRecent() {
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "2vw",
+          gap: LAYOUT.gap,
         }}
       >
         {rows.map((row, ri) => (
@@ -828,7 +816,7 @@ function HomeRecent() {
               display: "grid",
               gridTemplateColumns: "repeat(3, 1fr)",
               alignItems: "flex-start",
-              gap: "2vw",
+              gap: LAYOUT.gap,
             }}
           >
             {row.map((c, ci) => (
@@ -844,29 +832,16 @@ function HomeRecent() {
 
       <style>{`
         @media (max-width: 1024px) {
-          .mat-recent-sec { padding: 96px 32px 140px !important; }
           .mat-recent-head { margin-bottom: 64px !important; }
-          .mat-stair-row {
-            grid-template-columns: 1fr 1fr !important;
-            gap: 24px !important;
-          }
+          .mat-stair-row { grid-template-columns: 1fr 1fr !important; }
           .mat-stair { margin-top: 0 !important; }
         }
         @media (max-width: 880px) {
-          .mat-stair-row {
-            grid-template-columns: 1fr !important;
-            gap: 32px !important;
-          }
-          .mat-stair {
-            margin-top: 0 !important;
-          }
+          .mat-stair-row { grid-template-columns: 1fr !important; }
+          .mat-stair { margin-top: 0 !important; }
         }
         @media (max-width: 720px) {
-          .mat-recent-sec { padding: 72px 24px 96px !important; }
           .mat-recent-head { margin-bottom: 48px !important; gap: 20px !important; }
-        }
-        @media (max-width: 480px) {
-          .mat-recent-sec { padding: 56px 24px 72px !important; }
         }
       `}</style>
     </section>
@@ -891,7 +866,7 @@ function HomeVideoSection() {
       style={{
         position: "relative",
         background: T.paper,
-        padding: "140px 0",
+        padding: `${LAYOUT.section} 0`,
         overflow: "visible",
       }}
     >
@@ -946,15 +921,12 @@ function HomeVideoSection() {
 
       <style>{`
         @media (max-width: 1024px) {
-          .mat-vidsection { padding: 96px 0 !important; }
           .mat-vidsection-frame { height: min(60vh, 560px) !important; min-height: 380px !important; }
         }
         @media (max-width: 720px) {
-          .mat-vidsection { padding: 64px 0 !important; }
           .mat-vidsection-frame { height: min(56vh, 460px) !important; min-height: 320px !important; }
         }
         @media (max-width: 480px) {
-          .mat-vidsection { padding: 48px 0 !important; }
           .mat-vidsection-frame { height: 56vh !important; min-height: 280px !important; }
         }
       `}</style>
@@ -1095,8 +1067,8 @@ function HomeQuoteFrame() {
    ───────────────────────────────────────────────────────────── */
 function HomeMosaic() {
   return (
-    <section className="mat-mosaic-sec" style={{ padding: "140px 40px", background: T.paper }}>
-      <header className="mat-mosaic-head" style={{ marginBottom: 48, textAlign: "center" }}>
+    <section className="mat-mosaic-sec" style={{ padding: `${LAYOUT.section} 0`, background: T.paper }}>
+      <header className="mat-mosaic-head" style={{ marginBottom: 48, padding: `0 ${LAYOUT.gutter}`, textAlign: "center" }}>
         <div
           style={{
             fontFamily: SANS,
@@ -1116,13 +1088,13 @@ function HomeMosaic() {
           transition={{ duration: 1, ease: EASE }}
           style={{
             margin: 0,
-            fontFamily: SERIF,
+            fontFamily: DISPLAY,
             fontWeight: 300,
             fontSize: "clamp(32px, 4vw, 48px)",
             lineHeight: 1.1,
           }}
         >
-          <span style={{ fontStyle: "italic" }}>Three days</span>, told in light, dust, and
+          <span>Three days</span>, told in light, dust, and
           marigold
           <span style={{ color: T.sage }}>.</span>
         </motion.h2>
@@ -1133,7 +1105,7 @@ function HomeMosaic() {
           display: "grid",
           gridTemplateColumns: "repeat(12, 1fr)",
           gridAutoRows: "minmax(260px, auto)",
-          gap: 16,
+          gap: LAYOUT.gap,
         }}
       >
         <AnimatedImage
@@ -1174,7 +1146,6 @@ function HomeMosaic() {
       </div>
       <style>{`
         @media (max-width: 1024px) {
-          .mat-mosaic-sec { padding: 104px 32px !important; }
           .mat-mosaic-head { margin-bottom: 40px !important; }
           .mat-mosaic > :first-child { min-height: 420px !important; }
         }
@@ -1191,13 +1162,297 @@ function HomeMosaic() {
           .mat-mosaic > :first-child { grid-column: span 2 !important; min-height: 360px !important; }
         }
         @media (max-width: 720px) {
-          .mat-mosaic-sec { padding: 72px 24px !important; }
-          .mat-mosaic { grid-auto-rows: minmax(180px, auto) !important; gap: 12px !important; }
+          .mat-mosaic { grid-auto-rows: minmax(180px, auto) !important; }
         }
         @media (max-width: 480px) {
-          .mat-mosaic-sec { padding: 56px 24px !important; }
           .mat-mosaic { grid-template-columns: 1fr !important; }
           .mat-mosaic > :first-child { grid-column: span 1 !important; min-height: 320px !important; }
+        }
+      `}</style>
+    </section>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────
+   LOCATIONS — five wedding venues told as an editorial spread.
+   Each venue is a full alternating image/text row: an image-forward
+   reveal on one side, the venue name (DISPLAY), a city label and the
+   complete write-up in BODY on the other. Rows mirror left/right
+   down the page so it reads like flipping a magazine.
+
+   NOTE: the photos below are STAND-INS drawn from existing wedding
+   image records — they are venue/architecture-evocative frames, not
+   official venue press shots. Swap each `image` for a real photo of
+   the named venue when the client supplies them.
+
+   Image mapping (existing MAT_IMAGES slots only — no new data.ts slots):
+     • Fairmont Jaipur     → aoWall1  (Anvesha sang Omkar — wedding was at
+                                       Fairmont; candle-lit colonnade walkway)
+     • ITC Mementos Udaipur→ atmos1   (B&W aerial courtyard — scenic stand-in,
+                                       no couple tied to this venue yet)
+     • Ananta              → atmos3   (036-…ananta — fog-lit chhatri stage)
+     • ITC Agra            → reel1    (Harsh sang Pooja — wedding was at ITC
+                                       Mughal, Agra; B&W Mughal colonnade)
+     • Anantara            → vvHero   (Varun sang Vanya — wedding was at
+                                       Anantara, Jaipur; chandelier ballroom)
+   ───────────────────────────────────────────────────────────── */
+type Venue = {
+  name: string;
+  city: string;
+  image: MatImageRecord;
+  body: string;
+};
+
+const HOME_VENUES: Venue[] = [
+  {
+    name: "Fairmont Jaipur",
+    city: "Jaipur, Rajasthan",
+    image: MAT_IMAGES.aoWall1,
+    body:
+      "Fairmont Jaipur has been the backdrop to some of the most unforgettable stories we've had the privilege of documenting. Grand in scale yet remarkably intimate in experience, it has a way of holding celebration and emotion in equal measure. Across its courtyards, gardens, and sweeping architecture, we've witnessed quiet moments before ceremonies, laughter carried across generations, and dance floors that seemed to keep going long after the music ended. Every wedding feels different here, yet the atmosphere remains unmistakable — a sense of occasion, warmth, and grandeur that allows every story to unfold with remarkable ease. For us, Fairmont is not simply a venue. It is a place where memories seem larger, emotions linger longer, and every chapter feels worthy of being remembered.",
+  },
+  {
+    name: "ITC Mementos, Udaipur",
+    city: "Udaipur, Rajasthan",
+    image: MAT_IMAGES.atmos1,
+    body:
+      "Set against the lakes, hills, and open landscapes of Udaipur, ITC Mementos offers a setting that feels beautifully removed from the pace of everyday life. The celebrations we've documented here have always carried a sense of ease where conversations linger a little longer, sunsets become part of the experience, and every moment seems to unfold at its own rhythm. Surrounded by nature yet elevated in every detail, the venue creates space for both intimacy and grandeur to exist together. What remains most memorable, however, is not the view or the architecture, but the way stories seem to settle into the landscape itself, becoming part of the place long after the celebrations have ended.",
+  },
+  {
+    name: "Ananta",
+    city: "Pushkar, Rajasthan",
+    image: MAT_IMAGES.atmos3,
+    body:
+      "By the time a celebration reaches its final evening, Ananta rarely feels like a venue anymore. It begins to feel like a world built entirely around the people gathered within it. Over the years, we've documented weddings here that unfolded with remarkable freedom, where laughter travelled easily, emotions surfaced naturally, and every chapter seemed connected to the next. The result is not simply a collection of events, but a story that feels immersive from beginning to end, shaped as much by the people as the place itself.",
+  },
+  {
+    name: "ITC Agra",
+    city: "Agra, Uttar Pradesh",
+    image: MAT_IMAGES.reel1,
+    body:
+      "ITC Agra has a way of making a celebration feel larger than the moments themselves. The weddings we've documented here are remembered not only for their beauty, but for the feeling they leave behind — the feeling of being completely present with the people who matter most. Across every gathering, every conversation, and every quiet pause between events, the venue creates an atmosphere that allows memories to form naturally and linger long after the celebrations have ended. And just beyond it all, the Taj Mahal appears on the horizon, adding a quiet reminder that the stories we carry forward are often the ones rooted in love, connection, and time. Together, they create an experience that feels both deeply personal and impossible to forget.",
+  },
+  {
+    name: "Anantara",
+    city: "Jaipur, Rajasthan",
+    image: MAT_IMAGES.vvHero,
+    body:
+      "Anantara invites people to slow down and experience a celebration fully. The weddings we've documented here have always felt deeply immersive, where every detail contributes to a larger story and every moment has space to unfold naturally. There is an effortless balance between intimacy and luxury that shapes the experience, allowing guests to feel connected not only to the celebration, but to one another. Long after the festivities end, what remains is not simply the memory of a beautiful venue, but the feeling of having been part of something meaningful, personal, and unforgettable.",
+  },
+];
+
+function VenueRow({ venue, index }: { venue: Venue; index: number }) {
+  const reduceMotion = useReducedMotion();
+  const flipped = index % 2 === 1;
+  const num = String(index + 1).padStart(2, "0");
+
+  return (
+    <div className={`mat-venue-row${flipped ? " is-flipped" : ""}`}>
+      <div className="mat-venue-img">
+        <AnimatedImage
+          image={venue.image}
+          aspect="auto"
+          reveal={flipped ? "wipe-left" : "wipe-right"}
+          parallax={40}
+          variant="Grid"
+          alt={`${venue.name} — ${venue.city}`}
+          style={{ minHeight: 520, aspectRatio: "auto", height: "100%" }}
+        />
+      </div>
+      <div className="mat-venue-copy">
+        <motion.div
+          initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-12%" }}
+          transition={{ duration: 0.9, ease: EASE }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 14,
+            fontFamily: SANS,
+            fontSize: 10,
+            letterSpacing: "0.4em",
+            textTransform: "uppercase",
+            color: T.sage,
+            marginBottom: 24,
+          }}
+        >
+          <span>{num}</span>
+          <span
+            aria-hidden
+            style={{ width: 36, height: 1, background: `${T.sage}66` }}
+          />
+          <span>Venue</span>
+        </motion.div>
+        <motion.h3
+          initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-12%" }}
+          transition={{ duration: 1, ease: EASE, delay: 0.06 }}
+          style={{
+            margin: 0,
+            fontFamily: DISPLAY,
+            fontWeight: 400,
+            fontSize: "clamp(30px, 3.6vw, 48px)",
+            lineHeight: 1.04,
+            letterSpacing: "-0.01em",
+          }}
+        >
+          {venue.name}
+          <span style={{ color: T.sage }}>.</span>
+        </motion.h3>
+        <motion.div
+          initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-12%" }}
+          transition={{ duration: 1, ease: EASE, delay: 0.12 }}
+          style={{
+            marginTop: 14,
+            fontFamily: SERIF,
+            fontStyle: "italic",
+            fontSize: 16,
+            opacity: 0.7,
+          }}
+        >
+          {venue.city}
+        </motion.div>
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 0.82 }}
+          viewport={{ once: true, margin: "-12%" }}
+          transition={{ duration: 1.1, ease: EASE, delay: 0.18 }}
+          style={{
+            margin: "28px 0 0",
+            maxWidth: 540,
+            fontFamily: BODY,
+            fontSize: 17,
+            lineHeight: 1.7,
+            textWrap: "pretty",
+          }}
+        >
+          {venue.body}
+        </motion.p>
+      </div>
+
+      <style>{`
+        .mat-venue-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          align-items: stretch;
+          gap: clamp(32px, 4vw, 64px);
+        }
+        .mat-venue-row.is-flipped .mat-venue-img { order: 2; }
+        .mat-venue-row.is-flipped .mat-venue-copy { order: 1; }
+        .mat-venue-img { min-height: 520px; }
+        /* Photo bleeds to the viewport edge; copy carries the text gutter so
+           reading copy never touches the edge. Flipped rows mirror the side. */
+        .mat-venue-copy {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding-right: ${LAYOUT.gutter};
+        }
+        .mat-venue-row.is-flipped .mat-venue-copy {
+          padding-right: 0;
+          padding-left: ${LAYOUT.gutter};
+        }
+        @media (max-width: 1024px) {
+          .mat-venue-img { min-height: 460px; }
+        }
+        @media (max-width: 880px) {
+          .mat-venue-row {
+            grid-template-columns: 1fr;
+          }
+          .mat-venue-row.is-flipped .mat-venue-img { order: 0; }
+          .mat-venue-row.is-flipped .mat-venue-copy { order: 0; }
+          .mat-venue-img { min-height: 380px; }
+          /* Stacked: copy gets a symmetric gutter, photo still bleeds full-width. */
+          .mat-venue-copy,
+          .mat-venue-row.is-flipped .mat-venue-copy {
+            padding: 0 ${LAYOUT.gutter};
+          }
+        }
+        @media (max-width: 480px) {
+          .mat-venue-img { min-height: 320px; }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+function HomeLocations() {
+  return (
+    <section
+      className="mat-loc-sec"
+      style={{ padding: `${LAYOUT.section} 0`, background: T.paper }}
+    >
+      <header
+        className="mat-loc-head"
+        style={{ marginBottom: 80, padding: `0 ${LAYOUT.gutter}`, textAlign: "center" }}
+      >
+        <div
+          style={{
+            fontFamily: SANS,
+            fontSize: 10,
+            letterSpacing: "0.4em",
+            textTransform: "uppercase",
+            color: T.sage,
+            marginBottom: 24,
+          }}
+        >
+          Locations<Sep />Five we return to
+        </div>
+        <motion.h2
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 1, ease: EASE }}
+          style={{
+            margin: 0,
+            fontFamily: DISPLAY,
+            fontWeight: 400,
+            fontSize: "clamp(36px, 4.6vw, 58px)",
+            lineHeight: 1.02,
+            letterSpacing: "-0.005em",
+          }}
+        >
+          Where the stories unfold<span style={{ color: T.sage }}>.</span>
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 0.75 }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 1.1, ease: EASE, delay: 0.12 }}
+          style={{
+            margin: "26px auto 0",
+            maxWidth: 540,
+            fontFamily: SERIF,
+            fontStyle: "italic",
+            fontSize: 19,
+            lineHeight: 1.6,
+            textWrap: "balance",
+          }}
+        >
+          The palaces, courtyards and ballrooms that have held our couples&apos;
+          closest moments.
+        </motion.p>
+      </header>
+
+      <div
+        className="mat-loc-list"
+        style={{ display: "flex", flexDirection: "column", gap: LAYOUT.section }}
+      >
+        {HOME_VENUES.map((v, i) => (
+          <VenueRow key={v.name} venue={v} index={i} />
+        ))}
+      </div>
+
+      <style>{`
+        @media (max-width: 1024px) {
+          .mat-loc-head { margin-bottom: 64px !important; }
+        }
+        @media (max-width: 720px) {
+          .mat-loc-head { margin-bottom: 48px !important; }
         }
       `}</style>
     </section>
@@ -1231,7 +1486,7 @@ function HomeCTA() {
       <div
         className="mat-cta-copy"
         style={{
-          padding: "120px 40px",
+          padding: `${LAYOUT.section} ${LAYOUT.gutter}`,
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -1256,14 +1511,14 @@ function HomeCTA() {
           transition={{ duration: 1, ease: EASE }}
           style={{
             margin: 0,
-            fontFamily: SERIF,
+            fontFamily: DISPLAY,
             fontWeight: 300,
             fontSize: "clamp(40px, 6vw, 72px)",
             lineHeight: 1.05,
             letterSpacing: "-0.015em",
           }}
         >
-          <span style={{ fontStyle: "italic" }}>Tell us</span> about your day
+          <span>Tell us</span> about your day
           <span style={{ color: T.sage }}>.</span>
         </motion.h2>
         <p
@@ -1312,21 +1567,15 @@ function HomeCTA() {
         </div>
       </div>
       <style>{`
-        @media (max-width: 1024px) {
-          .mat-cta-copy { padding: 96px 32px !important; }
-        }
         @media (max-width: 880px) {
           .mat-cta { grid-template-columns: 1fr !important; }
           .mat-cta-img { min-height: 400px !important; }
-          .mat-cta-copy { padding: 72px 32px !important; }
         }
         @media (max-width: 720px) {
           .mat-cta-img { min-height: 340px !important; }
-          .mat-cta-copy { padding: 56px 24px !important; }
         }
         @media (max-width: 480px) {
           .mat-cta-img { min-height: 280px !important; }
-          .mat-cta-copy { padding: 48px 24px !important; }
         }
       `}</style>
     </section>
@@ -1343,6 +1592,7 @@ export function HomeClient() {
       <HomeRecent />
       <HomeVideoSection />
       <HomeMosaic />
+      <HomeLocations />
       <HomeCTA />
     </main>
   );

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
-import { SERIF, SANS, BODY, T } from "../_components/tokens";
+import { SANS, BODY, DISPLAY, T, LAYOUT } from "../_components/tokens";
 import { FEATURED, type Couple } from "../_components/data";
 import { MatImage } from "../_components/MatImage";
 import { Sep } from "../_components/Punc";
@@ -27,7 +27,7 @@ function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       onClick={go}
-      data-cursor="Read story"
+      data-cursor="Read their story"
       initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10%" }}
@@ -70,7 +70,7 @@ function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
           gridRow: 1,
           background: T.sage,
           color: "#f1f4f3",
-          padding: "clamp(36px, 4.5vw, 56px) clamp(24px, 3.6vw, 40px)",
+          padding: `${LAYOUT.sectionTight} ${LAYOUT.gutter}`,
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -127,7 +127,7 @@ function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
         >
           <span
             style={{
-              fontFamily: SERIF,
+              fontFamily: DISPLAY,
               fontWeight: 400,
               fontSize: "clamp(48px, 7.2vw, 124px)",
               lineHeight: 0.92,
@@ -148,7 +148,7 @@ function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
           </span>
           <span
             style={{
-              fontFamily: SERIF,
+              fontFamily: DISPLAY,
               fontWeight: 400,
               fontSize: "clamp(48px, 7.2vw, 124px)",
               lineHeight: 0.92,
@@ -183,7 +183,7 @@ function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
               lineHeight: 1.55,
             }}
           >
-            {couple.place}<Sep />three days, one quiet sit-down, every frame kept.
+            {couple.place}<Sep />three days, every frame kept.
           </div>
           <motion.span
             className="mat-spread-cta"
@@ -202,7 +202,7 @@ function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
               alignItems: "center",
             }}
           >
-            Read the story →
+            Read their story →
           </motion.span>
         </div>
       </div>
@@ -290,11 +290,11 @@ export function FeaturedIndexClient() {
       <VideoHero />
       <section
         className="mat-feat-list"
-        style={{ padding: "clamp(28px, 4vw, 40px) clamp(16px, 3vw, 24px) clamp(80px, 12vw, 160px)", background: T.paper }}
+        style={{ padding: `${LAYOUT.sectionTight} 0 ${LAYOUT.section}`, background: T.paper }}
       >
         <div
           className="mat-feat-list-inner"
-          style={{ display: "flex", flexDirection: "column", gap: "clamp(40px, 6vw, 64px)" }}
+          style={{ display: "flex", flexDirection: "column", gap: LAYOUT.sectionTight }}
         >
           {FEATURED.map((c, i) => (
             <CoupleSpread key={i} couple={c} idx={i} />

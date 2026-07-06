@@ -293,16 +293,16 @@ export const MAT_IMAGES: Record<string, MatImageRecord> = {
   },
   teamDakshSharma: {
     publicId: "/images/team/daksh-sharma.jpg",
-    blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAgQFBv/EAB8QAAEEAgIDAAAAAAAAAAAAAAEAAgMRBBIhMQYjgf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwAvH8oxB7T1dp3OyhJDJobIGw+G1nsKfSRzQaLhwqQ9cdS281yQe0H/2Q==",
-    width: 999,
-    height: 1498,
+    blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAEF/8QAIhAAAQQBAwUBAAAAAAAAAAAAAQIDBBEAEyFBBRIxQnGB/8QAFQEBAQAAAAAAAAAAAAAAAAAAAgP/xAAWEQEBAQAAAAAAAAAAAAAAAAABABH/2gAMAwEAAhEDEQA/AJIlNtwX0POJBL10TudxxhOmOIEh5OqAVFPagquxfGFENE2OHEaaHyfUUP3M+TDfjG1gAA7G/PzCZUTL/9k=",
+    width: 1080,
+    height: 1350,
     source: "cloudinary",
   },
   teamHarshitMorwani: {
     publicId: "/images/team/harshit-morwani.jpg",
-    blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAwX/xAAhEAACAQQBBQEAAAAAAAAAAAABAgMABBEhQQUSExRRsf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwChdTdkWCmQ2snih9oyWZZlCgOoBJ0Rkbo+rK4sCVLKQ67B+nB/aOwhDxT20uX8UxXZ44oP/9k=",
-    width: 432,
-    height: 656,
+    blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwAF/8QAIBAAAgEEAQUAAAAAAAAAAAAAAQMCABESIQQFE0Fhgf/EABUBAQEAAAAAAAAAAAAAAAAAAAAC/8QAGBEBAQADAAAAAAAAAAAAAAAAAQARIUH/2gAMAwEAAhEDEQA/AM3tTQrNkQMRc7GqfjdXao2RecdDBm9+qnsgESONyR4oOPGK+MyONyJfaDrLUnC//9k=",
+    width: 1836,
+    height: 2400,
     source: "cloudinary",
   },
 
@@ -643,6 +643,76 @@ export const MAT_IMAGES: Record<string, MatImageRecord> = {
   vvExtra2:     { publicId: "/images/varun-sang-vanya/extra2.jpg",      blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAwQFBv/EACAQAAIBAwQDAAAAAAAAAAAAAAEDAgAEERITFCExYbH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFxEBAAMAAAAAAAAAAAAAAAAAAAERIf/aAAwDAQACEQMRAD8A1rMxVIjzihWJ1Kl6nL7UpD7sxjzbkL3BgLwMk03yJIt2LSQXEExEuu6QXj//2Q==", width: 1920, height: 1280, source: "cloudinary" },
   vvExtra3:     { publicId: "/images/varun-sang-vanya/extra3.jpg",      blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAwQFBv/EACAQAAIBAwQDAAAAAAAAAAAAAAEDAgAEERITFCExYbH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFxEBAAMAAAAAAAAAAAAAAAAAAAERIf/aAAwDAQACEQMRAD8A1rMxVIjzihWJ1Kl6nL7UpD7sxjzbkL3BgLwMk03yJIt2LSQXEExEuu6QXj//2Q==", width: 1920, height: 1280, source: "cloudinary" },
   vvExtra4:     { publicId: "/images/varun-sang-vanya/extra4.jpg",      blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAwQFBv/EACAQAAIBAwQDAAAAAAAAAAAAAAEDAgAEERITFCExYbH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFxEBAAMAAAAAAAAAAAAAAAAAAAERIf/aAAwDAQACEQMRAD8A1rMxVIjzihWJ1Kl6nL7UpD7sxjzbkL3BgLwMk03yJIt2LSQXEExEuu6QXj//2Q==", width: 1920, height: 1315, source: "cloudinary" },
+
+  // ── Homepage collage refresh (Jun 2026 client round) ─────────────
+  // Editorial replacements for the 6 event/stage shots in the triptych +
+  // film reel. Dedicated slots so the shared pool (About team, Weddings
+  // archive, Featured stories) is untouched. Hand-maintained — write-data-ts.ts
+  // is stale; do not regenerate.
+  collage1: {
+    publicId: "/images/collage/a6a1052-copy.jpg",
+    blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwQG/8QAIBABAAMAAgEFAQAAAAAAAAAAAQIDEQAEIRITMUFRcf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDK09aNpE19UoqGfKbxJ9So0rslJ9snHTN/eXU029SuEiVSkWO+DBdfP3wqer2bKbNnVAwBk6gOn84H/9k=",
+    width: 1627,
+    height: 2400,
+    source: "cloudinary",
+  },
+  collage2: {
+    publicId: "/images/collage/aks06033.jpg",
+    blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABQD/xAAgEAACAgIBBQEAAAAAAAAAAAABAgMEABEiBRMUMUHR/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AIPQ8UdyAmf0UUE6P5hNuNDYQRKqCQAorEbOI1eoValZI4yzEDlxO2Jwe4Fe2ZIVITex8wP/2Q==",
+    width: 1600,
+    height: 2400,
+    source: "cloudinary",
+  },
+  collage3: {
+    publicId: "/images/collage/aks03162.jpg",
+    blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwAE/8QAIRAAAwABBAEFAAAAAAAAAAAAAQIDEQAEEiEFEzFBYaH/xAAUAQEAAAAAAAAAAAAAAAAAAAAE/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAERIf/aAAwDAQACEQMRAD8ALe+VdN20/QjQYHFmHZGNW/3cxCTVjOuS3Q6wRjWtJNOWKTYke31oBVC7LSbU5HIZf340eCdj1H//2Q==",
+    width: 1600,
+    height: 2400,
+    source: "cloudinary",
+  },
+  collage4: {
+    publicId: "/images/collage/aks09821-2.jpg",
+    blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQIG/8QAIRAAAgAGAgMBAAAAAAAAAAAAAQIAAwQREiEFEzFBUXH/xAAVAQEBAAAAAAAAAAAAAAAAAAABAv/EABURAQEAAAAAAAAAAAAAAAAAAAAh/9oADAMBAAIRAxEAPwDLql4ReiC0klhLRsxlmCcr/Le4Q43iEljsqQGe3g7CxdXN7cpdIL6s85joD9iTH//Z",
+    width: 1708,
+    height: 2400,
+    source: "cloudinary",
+  },
+  collage5: {
+    publicId: "/images/collage/aks07141-2.jpg",
+    blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAwT/xAAhEAACAQQBBQEAAAAAAAAAAAABAgMABBEhFCIxQVFhsf/EABUBAQEAAAAAAAAAAAAAAAAAAAIE/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAERQf/aAAwDAQACEQMRAD8Ae2aCZDySRIoGNnYNUQy29nPGIizEnqUk+dCghtFZJiyvvKg9iPX5Sz268qLMbYCAFh8zvNSKpUeH/9k=",
+    width: 2400,
+    height: 1709,
+    source: "cloudinary",
+  },
+  collage6: {
+    publicId: "/images/collage/aks02142.jpg",
+    blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAIG/8QAIhAAAgEDAgcAAAAAAAAAAAAAAQIDAAQRE0EFEhQhIjKR/8QAFAEBAAAAAAAAAAAAAAAAAAAABP/EABgRAQEBAQEAAAAAAAAAAAAAAAECAAMj/9oADAMBAAIRAxEAPwDOQ2bEK7DK7g70iPh7ytmJRgj1A702wlWbTDFfGRVVTvVXVxoXDdPJyOHJVQMD7R/RzmuBLIb/2Q==",
+    width: 2400,
+    height: 1600,
+    source: "cloudinary",
+  },
+
+  // ── Shubham & Aishwarya (Chokhi Dhani) — replaces Monika in Best Six ──
+  saHero: { publicId: "/images/shubham-sang-aishwarya/aks09326-copy.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABAX/xAAhEAACAgEEAgMAAAAAAAAAAAABAgMEAAUSEzERISNBcf/EABQBAQAAAAAAAAAAAAAAAAAAAAP/xAAYEQADAQEAAAAAAAAAAAAAAAAAAQIhMv/aAAwDAQACEQMRAD8AiRWQumy1po1Ys4ZW+1OAmO2Vdp/cqaXBHLbieyAkSnyWPXrrDX6xbULHGPj5CQcKcbGrlH//2Q==", width: 2400, height: 1633, source: "cloudinary" },
+  saBride: { publicId: "/images/shubham-sang-aishwarya/aks01761-2.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAQIDBf/EACEQAAIBAwMFAAAAAAAAAAAAAAECAwAEERIhMRMUIkFR/8QAFAEBAAAAAAAAAAAAAAAAAAAAA//EABgRAQADAQAAAAAAAAAAAAAAAAEAAhEh/9oADAMBAAIRAxEAPwDJg6bhEgiAdiQSRxUpbh45DGQDjbmjYKQvOM/fQpb6Fu4yvlqGdqIOxbGVGf/Z", width: 1624, height: 2400, source: "cloudinary" },
+  saGroom: { publicId: "/images/shubham-sang-aishwarya/aks01765.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwQG/8QAHxAAAgEEAgMAAAAAAAAAAAAAAQIRAAMEExJhBRQx/8QAFAEBAAAAAAAAAAAAAAAAAAAAA//EABgRAQEAAwAAAAAAAAAAAAAAAAEAAhEx/9oADAMBAAIRAxEAPwDOY2Nud1J4lULDsilyNJwrT6ilxiYYAQaPCI9tGZuMGZq7yj232BViYJEfG6o3pJibG//Z", width: 1600, height: 2400, source: "cloudinary" },
+  saStory1: { publicId: "/images/shubham-sang-aishwarya/aks09493-2.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAwX/xAAhEAADAAICAgIDAAAAAAAAAAABAgMEEQAhBRITFDFBof/EABUBAQEAAAAAAAAAAAAAAAAAAAME/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEhEiMf/aAAwDAQACEQMRAD8ApYP0sSjUlYB2GjsHvvj5J8dmOta0BdOgexrR5J8fS2Qa/MZq0qeoVUH5/fFrXKURmkps709VVta62T/OBWXMlDq9j//Z", width: 1600, height: 2400, source: "cloudinary" },
+  saStory2: { publicId: "/images/shubham-sang-aishwarya/dsw01481.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQEE/8QAIBAAAgEDBAMAAAAAAAAAAAAAAQIDABEhBBIiMQVx0f/EABQBAQAAAAAAAAAAAAAAAAAAAAP/xAAXEQADAQAAAAAAAAAAAAAAAAAAASEC/9oADAMBAAIRAxEAPwAEad3soU3foDvFSJFPBsE5vTHh1jfWhnax2kL7It9rJEqrNMz8drEAEd0LcEWaf//Z", width: 2400, height: 1802, source: "cloudinary" },
+  saHaldi: { publicId: "/images/shubham-sang-aishwarya/dscf4073.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAwT/xAAhEAACAgEDBQEAAAAAAAAAAAABAgMRAAQSEyExQVFhsf/EABQBAQAAAAAAAAAAAAAAAAAAAAT/xAAZEQACAwEAAAAAAAAAAAAAAAAAAQMRIUL/2gAMAwEAAhEDEQA/AEg5o2RCw4yaJ+X+5fp0SKBtg3X0s+BeDpZ3kaKNUVgxogjtjCVVnYWAm416rCyp4J5s/9k=", width: 2400, height: 1600, source: "cloudinary" },
+  saMehendi: { publicId: "/images/shubham-sang-aishwarya/aks09484.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwIE/8QAIBAAAgEEAQUAAAAAAAAAAAAAAQIDAAQRMSESIjJhgf/EABUBAQEAAAAAAAAAAAAAAAAAAAME/8QAGREAAgMBAAAAAAAAAAAAAAAAAREAAhIh/9oADAMBAAIRAxEAPwBLsmaTs1GobeASTqqspZry6lWSBkPSpGTwKZHDXgjkCMAMkAeP33W2SeMoY1VVUcYAxQitV2UHTQn/2Q==", width: 1600, height: 2400, source: "cloudinary" },
+  saSangeet: { publicId: "/images/shubham-sang-aishwarya/dscf3658.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABgID/8QAIBAAAQQBBAMAAAAAAAAAAAAAAQIDBBEAEjFhcQUiQf/EABUBAQEAAAAAAAAAAAAAAAAAAAID/8QAFxEBAQEBAAAAAAAAAAAAAAAAAQARIf/aAAwDAQACEQMRAD8APGJTRcNBA+1vx3mK2A2kKcSaULHIxTCabchsx/U7XeX5SE25HKSpCtKaTYrT1gXK4D0v/9k=", width: 1600, height: 2400, source: "cloudinary" },
+  saPheras: { publicId: "/images/shubham-sang-aishwarya/aks01725.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAgEF/8QAHhAAAgICAgMAAAAAAAAAAAAAAQIDBAASETEFEyH/xAAUAQEAAAAAAAAAAAAAAAAAAAAD/8QAFxEAAwEAAAAAAAAAAAAAAAAAABEhEv/aAAwDAQACEQMRAD8Aw6daJijShnB+6gYrVSLgtCrJx2GyVJdp1JPGq4/IzD3Pr0yqcGsWZP/Z", width: 1600, height: 2400, source: "cloudinary" },
+  saVidaai: { publicId: "/images/shubham-sang-aishwarya/aks01760.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAQIEBv/EAB4QAAMAAQQDAAAAAAAAAAAAAAECAwAEERIxITJB/8QAFQEBAQAAAAAAAAAAAAAAAAAAAgP/xAAWEQEBAQAAAAAAAAAAAAAAAAABABH/2gAMAwEAAhEDEQA/AM0IlmCggk9AYyxHLjR1Ug7EEecv0ujnCy0pZXA+b4WnAWpVtiHPr3k1nhl//9k=", width: 1600, height: 2400, source: "cloudinary" },
+  saIntimateBW: { publicId: "/images/shubham-sang-aishwarya/dsw01436.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABgH/xAAeEAACAwEAAgMAAAAAAAAAAAABAgMEEQAFQRIhMf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwA1XqNOMjVfkBpBbM6Wa8UUaskySk/qj1yOnUqjxUsdiIPI0e6x+wc9cTY4gA4P/9k=", width: 1802, height: 2400, source: "cloudinary" },
+  saClosing: { publicId: "/images/shubham-sang-aishwarya/aks01779.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAgMG/8QAHxAAAgICAQUAAAAAAAAAAAAAAQIDBAARIQUxQUKR/8QAFAEBAAAAAAAAAAAAAAAAAAAAAv/EABcRAAMBAAAAAAAAAAAAAAAAAAARIQH/2gAMAwEAAhEDEQA/AMzBUE9hYlZQT7eMjZgavIFbuQG+46EpitpIDyvIx9QnWeQFBpRvW8NYotP/2Q==", width: 1683, height: 2400, source: "cloudinary" },
+  saExtra1: { publicId: "/images/shubham-sang-aishwarya/aks01769.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAQIDBf/EACEQAAIBBAICAwAAAAAAAAAAAAECAwAEBREhQRMxIjJh/8QAFAEBAAAAAAAAAAAAAAAAAAAAA//EABgRAAMBAQAAAAAAAAAAAAAAAAABEQIx/9oADAMBAAIRAxEAPwDDS2jXGSXB35Q4ABHHvr9o5B3a1tzJGn14YHkbq2EbxzF2Px1or0afILEiSxRsGRiGXXtCeqJ9ouVVD//Z", width: 1599, height: 2400, source: "cloudinary" },
+  saExtra2: { publicId: "/images/shubham-sang-aishwarya/dscf4084.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAAC/8QAIBAAAgICAgIDAAAAAAAAAAAAAQIDEQQSADETcSFBUf/EABQBAQAAAAAAAAAAAAAAAAAAAAT/xAAbEQABBAMAAAAAAAAAAAAAAAACAAEREgMxQf/aAAwDAQACEQMRAD8A1grl6gUyhlJZ6OxBP1+cYusZB8TK0Zoi++r98sWIGVMiZ5I01o69H2b+OMyMaSfySxlCSbUA9jhsoFVq8SzMXeZ2v//Z", width: 1600, height: 2400, source: "cloudinary" },
+  saExtra3: { publicId: "/images/shubham-sang-aishwarya/dsw03042.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAQMEBf/EAB4QAAICAgMBAQAAAAAAAAAAAAECAxEABBJBURQx/8QAFAEBAAAAAAAAAAAAAAAAAAAAA//EABcRAAMBAAAAAAAAAAAAAAAAAAABAhH/2gAMAwEAAhEDEQA/AMtNdGRHkJCgUa96xM0EMRbmGZTXEg1laSD5itAiu8G8Q+hErrRjCvYP77hoeoyUz//Z", width: 2400, height: 1600, source: "cloudinary" },
+  saExtra4: { publicId: "/images/shubham-sang-aishwarya/dsw03061.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAQMEBf/EAB4QAAIBBQEBAQAAAAAAAAAAAAECEgADBBEhMRMU/8QAFAEBAAAAAAAAAAAAAAAAAAAAA//EABYRAQEBAAAAAAAAAAAAAAAAAAEAAv/aAAwDAQACEQMRAD8AzjjXLViSwY8426Xc/QqBj8FQgmYQkCgMp2x+HR30kmrGylFiMgyQ6p8Ox5Rk+8Bf/9k=", width: 1600, height: 2400, source: "cloudinary" },
+  saExtra5: { publicId: "/images/shubham-sang-aishwarya/dsw03109.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQAD/8QAIhAAAgEDAwUBAAAAAAAAAAAAAQIRAAMhBRJBBBMiMVHR/8QAFQEBAQAAAAAAAAAAAAAAAAAAAgP/xAAXEQADAQAAAAAAAAAAAAAAAAAAARES/9oADAMBAAIRAxEAPwAZdPY9Ml3cG3RgL9qOnE2g8hfILBWOR+1tp6MXTuq0KIk8UldWw6ZiUyufWZoFMqU//9k=", width: 1728, height: 2400, source: "cloudinary" },
+  saExtra6: { publicId: "/images/shubham-sang-aishwarya/dsw08402-copy.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAgUG/8QAIhAAAQIFBAMAAAAAAAAAAAAAAQIEAAMREjEFEyFBIkNh/8QAFAEBAAAAAAAAAAAAAAAAAAAAAv/EABYRAQEBAAAAAAAAAAAAAAAAAAABEf/aAAwDAQACEQMRAD8AvjUgZgTtGw4VXqA/1WVIbLXJVesfDGfaup3tJABNqlAY65huXBDdSUnzpxUZMG0sf//Z", width: 1801, height: 2400, source: "cloudinary" },
+  saExtra7: { publicId: "/images/shubham-sang-aishwarya/dsw08446-copy.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQME/8QAIxAAAQMDAgcAAAAAAAAAAAAAAQIDEQAEEiFBBRMxUWGB4f/EABQBAQAAAAAAAAAAAAAAAAAAAAL/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwBGyuhZsShPMSskgTBHqrvcVcAVg3jAk7miG3isQ65OKwVJ66dvFaVOw2pGQ132T9om/9k=", width: 1802, height: 2400, source: "cloudinary" },
+  saExtra8: { publicId: "/images/shubham-sang-aishwarya/dsw08474-copy.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAMF/8QAIBAAAgIDAAEFAAAAAAAAAAAAAQIDEQAEIRMFEjFBgf/EABQBAQAAAAAAAAAAAAAAAAAAAAP/xAAYEQEAAwEAAAAAAAAAAAAAAAABABEhAv/aAAwDAQACEQMRAD8AZHK4j8pf3R/Iaz+ZT1PckaINrSeNgLpuXeY21uJaRqwEY7QNgH6xjuk0cVlQas0R3ncNbwjPOWz/2Q==", width: 1775, height: 2400, source: "cloudinary" },
 };
 
 export type Couple = {
@@ -970,72 +1040,60 @@ const ADITI_SWAPNIL_STORY: FeaturedStory = {
   ],
 };
 
-const MONIKA_ANIKET_STORY: FeaturedStory = {
+const SHUBHAM_AISHWARYA_STORY: FeaturedStory = {
   coverIntro:
-    "MONIKA AND ANIKET'S WEDDING WAS A QUIET KIND OF GRAND — A PALACE BACKDROP, GOLDEN-HOUR LIGHT, AND TWO PEOPLE WHO HAD CLEARLY DONE THE WORK OF LOVING EACH OTHER BEFORE THE FIRST GUEST EVER ARRIVED. NOTHING ABOUT THEM ASKED FOR ATTENTION; EVERYTHING ABOUT THEM HELD IT. WE STAYED CLOSE, KEPT THE LIGHT, AND LET THE PALACE DO THE REST.",
-  date: "A palace wedding — sangeet at sunset, pheras under flowers",
-  detailLine: "Stone arches · Rainbow-smoke varmala · 1,860 frames",
+    "SHUBHAM AND AISHWARYA'S JOURNEY REFLECTS A BOND BUILT ON COMFORT AND QUIET UNDERSTANDING — WHERE LOVE FEELS NATURAL, UNFORCED, AND DEEPLY ROOTED. EFFORTLESS IN ITS PRESENCE AND STEADY IN ITS GROWTH, THEIR CONNECTION CARRIES WARMTH AND SINCERITY, MAKING THEIR STORY FEEL BOTH GENUINE AND TIMELESS.",
+  date: "Chokhi Dhani, Jaipur — from colleagues to companions",
+  detailLine: "Rustic folk textures · Petal-shower haldi · Four years in the making",
   photos: {
-    hero: MAT_IMAGES.maHero,
-    bride: MAT_IMAGES.maBride,
-    groom: MAT_IMAGES.maGroom,
-    storyImage1: MAT_IMAGES.maStory1,
-    storyImage2: MAT_IMAGES.maStory2,
-    haldi: MAT_IMAGES.maHaldi,
-    mehendi: MAT_IMAGES.maMehendi,
-    sangeet: MAT_IMAGES.maSangeet,
-    pheras: MAT_IMAGES.maPheras,
-    vidaai: MAT_IMAGES.maVidaai,
-    intimateBW: MAT_IMAGES.maIntimateBW,
-    closing: MAT_IMAGES.maClosing,
+    hero: MAT_IMAGES.saHero,
+    bride: MAT_IMAGES.saBride,
+    groom: MAT_IMAGES.saGroom,
+    storyImage1: MAT_IMAGES.saStory1,
+    storyImage2: MAT_IMAGES.saStory2,
+    haldi: MAT_IMAGES.saHaldi,
+    mehendi: MAT_IMAGES.saMehendi,
+    sangeet: MAT_IMAGES.saSangeet,
+    pheras: MAT_IMAGES.saPheras,
+    vidaai: MAT_IMAGES.saVidaai,
+    intimateBW: MAT_IMAGES.saIntimateBW,
+    closing: MAT_IMAGES.saClosing,
   },
   sections: [
     {
-      heading: "Found, Of Together",
+      heading: "From colleagues, to companions",
       style: "script",
       paragraphs: [
-        "Monika and Aniket arrived at this wedding the way some people arrive at a Sunday morning — easy, unhurried, already glad to be there. The years before had done the convincing. The vows were the punctuation. What we got to photograph was the ease that comes after the long talk: the held hand, the look across the courtyard, the way one of them always knew exactly where the other was standing.",
-        "We shot it the way it felt — close, calm, in the language they were already speaking. There were no setups they didn't already pose for themselves. The palace stones helped; the light helped; mostly they helped, by being so obviously each other's.",
+        "Shubham and Aishwarya's story began in the most familiar of spaces — their workplace. What started as casual conversations slowly turned into something more meaningful, where comfort came easily and connection felt natural. With time, those small moments grew into something deeper. Their bond wasn't built overnight — it was shaped through everyday interactions, shared laughter, quiet understanding, and the kind of presence that becomes constant without even realizing it. Over four to five years, their relationship evolved into a space of trust, patience, and unwavering support.",
+        "There's a rare ease in the way they are with each other — a sense of belonging that doesn't need explanation. Their chemistry isn't loud or performative; it's felt in the little things — in the way they listen, the way they smile, and the way they simply exist together. Through every phase, they chose each other — not just in big moments, but in the quiet ones that truly define a relationship. And in that choice, their love found its depth. From colleagues to companions, and now to partners for life — their journey feels steady, sincere, and beautifully real. A love that grew with time, and stayed just as true.",
       ],
     },
     {
-      heading: "A palace, sized for two",
+      heading: "What's felt underneath",
       style: "serif",
       paragraphs: [
-        "Big weddings are not always loud. Monika and Aniket chose a palace for the quiet of it — for the long stone corridors that hold sound the way old buildings do, for the soft east-facing windows in the morning, for the jharokhas that frame a bride the way only old craftsmen knew to. We followed the light through those rooms, and they followed it too, looking like the place had been waiting for them.",
-        "The sangeet was set on a terrace at golden hour. The pheras came the next day, under a floral mandap, with rainbow smoke cannons going off when the varmalas exchanged hands. Two events, one palace, one couple. Everything in its own register, all of it the same love.",
+        "Shubham's story was shaped through the voices of his family, where emotions were expressed not loudly, but with depth and sincerity. The focus stayed on a beautiful sentiment—his family welcoming the bride with warmth and reminding him to take care of her, not as a formality but as a responsibility filled with love. One of the most powerful layers came from his elder brother, someone who isn't expressive and rarely speaks much. Convincing him for an interview wasn't easy—it took time, patience, and trust. But when he finally opened up, even in few words, it carried a weight that couldn't be staged. His silence, his pauses, and the effort it took to speak made those moments even more real. We didn't push for more—we let it be exactly as it was. This story became less about conversations and more about what's felt underneath them—quiet emotions, strong bonds, and a family expressing love in their own way.",
       ],
     },
     {
-      heading: "Under stone, and under smoke",
+      heading: "At Chokhi Dhani",
       style: "serif",
       paragraphs: [
-        "The fire was the same fire it has always been. The mantras were the same mantras. Monika walked down an aisle her brothers stood at the head of; Aniket stood at the mandap looking like a man who had been waiting a long time to do this exactly. When the smoke cannons went off and the colours fell over them, the room laughed at the same instant. The pheras were quiet by comparison. The vow held.",
-      ],
-    },
-    {
-      heading: "The Elegant Bride",
-      style: "serif",
-      paragraphs: [
-        "MONIKA WALKS INTO LIGHT THE WAY SOME PEOPLE WALK INTO MUSIC — LIKE THEY HAVE BEEN LISTENING FOR IT. THE GOLD CATCHES, THE JEWELS SETTLE, THE LEHENGA FALLS HOW IT WAS MEANT TO. SHE HAS THE KIND OF STILLNESS YOU CAN PHOTOGRAPH WITHOUT ASKING FOR — A QUIET THAT DOES NOT DEMAND THE FRAME BUT FILLS IT ANYWAY. WE DID NOT POSE HER. WE WATCHED THE LIGHT FIND HER.",
+        "Set against the vibrant charm of Chokhi Dhani, Shubham and Aishwarya's wedding unfolded with warmth, culture, and a sense of joyful authenticity. Surrounded by rustic textures, folk elements, and a lively atmosphere, the setting brought a distinct character to their celebration. The earthy tones, traditional details, and cultural richness created a space that felt both festive and intimate — where every moment carried a sense of familiarity and belonging. From the energy of the surroundings to the rhythm of the celebrations, everything felt alive, immersive, and deeply rooted in tradition. It was a celebration that didn't rely on grandeur, but on feeling — where simplicity met vibrance, and every moment felt real, unfiltered, and full of life.",
       ],
     },
   ],
-  pullQuote: { word: "QUIETLY" },
+  pullQuote: { word: "TRUE" },
   vendors: [],
   extras: [
-    MAT_IMAGES.maExtra1,
-    MAT_IMAGES.maExtra2,
-    MAT_IMAGES.maExtra3,
-    MAT_IMAGES.maExtra4,
-    MAT_IMAGES.maExtra5,
-    MAT_IMAGES.maExtra6,
-    MAT_IMAGES.maExtra7,
-    MAT_IMAGES.maExtra8,
-    MAT_IMAGES.maExtra9,
-    MAT_IMAGES.maExtra10,
-    MAT_IMAGES.maExtra11,
-    MAT_IMAGES.maExtra12,
+    MAT_IMAGES.saExtra1,
+    MAT_IMAGES.saExtra2,
+    MAT_IMAGES.saExtra3,
+    MAT_IMAGES.saExtra4,
+    MAT_IMAGES.saExtra5,
+    MAT_IMAGES.saExtra6,
+    MAT_IMAGES.saExtra7,
+    MAT_IMAGES.saExtra8,
   ],
 };
 
@@ -1221,12 +1279,12 @@ export const FEATURED: Couple[] = [
     story: JOYEETA_HARSH_STORY,
   },
   {
-    bride: "Monika",
-    groom: "Aniket",
-    place: "A palace wedding",
-    img: MONIKA_ANIKET_STORY.photos.hero,
-    slug: "aniket-sang-monika",
-    story: MONIKA_ANIKET_STORY,
+    bride: "Aishwarya",
+    groom: "Shubham",
+    place: "Chokhi Dhani, Jaipur",
+    img: SHUBHAM_AISHWARYA_STORY.photos.hero,
+    slug: "shubham-sang-aishwarya",
+    story: SHUBHAM_AISHWARYA_STORY,
   },
   {
     bride: "Vanya",

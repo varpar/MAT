@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { SERIF, SANS, T } from "./tokens";
+import { SERIF, SANS, T, LAYOUT } from "./tokens";
 
 const LOGO_W = 156;
 const LOGO_H = 48; // logo file is ~3.24:1; height of 48 gives a width of ~156
@@ -83,7 +83,7 @@ export function Nav() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          padding: "0 40px",
+          padding: `0 ${LAYOUT.gutter}`,
           height: 72,
           background: scrolled ? "rgba(250,250,247,0.85)" : "transparent",
           backdropFilter: scrolled ? "blur(14px)" : "none",
@@ -146,17 +146,21 @@ export function Nav() {
                   color: "inherit",
                   textDecoration: "none",
                   position: "relative",
-                  paddingBottom: 2,
-                  borderBottom: a
-                    ? `1px solid ${T.sage}`
-                    : "1px solid transparent",
-                  transition: "border-color 250ms ease",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  // ≥44px touch target; the underline sits flush via boxShadow,
+                  // so vertical padding doesn't push the rule away from the text.
+                  minHeight: 44,
+                  boxShadow: a
+                    ? `inset 0 -1px 0 0 ${T.sage}`
+                    : "inset 0 -1px 0 0 transparent",
+                  transition: "box-shadow 250ms ease",
                 }}
                 onMouseEnter={(e) => {
-                  if (!a) e.currentTarget.style.borderBottomColor = T.ink;
+                  if (!a) e.currentTarget.style.boxShadow = `inset 0 -1px 0 0 ${T.ink}`;
                 }}
                 onMouseLeave={(e) => {
-                  if (!a) e.currentTarget.style.borderBottomColor = "transparent";
+                  if (!a) e.currentTarget.style.boxShadow = "inset 0 -1px 0 0 transparent";
                 }}
               >
                 {label}
@@ -223,11 +227,8 @@ export function Nav() {
         @media (max-width: 1023px) {
           .mat-nav-links { display: none !important; }
           .mat-nav-menu-toggle { display: inline-flex !important; }
-          .mat-nav-bar { padding: 0 24px !important; height: 64px !important; }
+          .mat-nav-bar { height: 64px !important; }
           .mat-nav-logo { height: ${LOGO_H_MOBILE}px !important; }
-        }
-        @media (max-width: 414px) {
-          .mat-nav-bar { padding: 0 18px !important; }
         }
         @media (prefers-reduced-motion: reduce) {
           .mat-nav-menu-toggle .mat-nav-menu-toggle-rule { transition: none !important; }
@@ -278,7 +279,7 @@ function MobileDrawer({
             zIndex: 60,
             display: "flex",
             flexDirection: "column",
-            padding: "0 24px",
+            padding: `0 ${LAYOUT.gutter}`,
             overflowY: "auto",
             WebkitOverflowScrolling: "touch",
           }}

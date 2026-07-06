@@ -76,8 +76,9 @@ export default async function OG({ params }: { params: Promise<{ slug: string }>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div
               style={{
-                fontFamily: "serif",
+                fontFamily: "'Made Saonara', 'Cormorant Garamond', serif",
                 fontStyle: "italic",
+                textTransform: "uppercase",
                 fontWeight: 300,
                 fontSize: 132,
                 lineHeight: 1,
@@ -89,7 +90,7 @@ export default async function OG({ params }: { params: Promise<{ slug: string }>
               }}
             >
               <span>{bride}</span>
-              <span style={{ fontSize: 56, color: "#a8c4c0" }}>sang</span>
+              <span style={{ fontSize: 56, color: "#a8c4c0", textTransform: "none" }}>sang</span>
               <span>{groom}</span>
               <span style={{ color: "#a8c4c0" }}>.</span>
             </div>

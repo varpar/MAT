@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { SERIF, SANS, SCRIPT, T } from "../_components/tokens";
+import { SERIF, SANS, SCRIPT, DISPLAY, T, LAYOUT } from "../_components/tokens";
 import { Sang } from "../_components/Sang";
 import { useReveal } from "../_components/hooks";
 import { MatImage } from "../_components/MatImage";
@@ -66,9 +66,9 @@ function CoverHero({ couple, story }: { couple: Couple; story: FeaturedStory }) 
             <div
               style={{
                 position: "absolute",
-                bottom: "clamp(20px, 3vw, 36px)",
-                left: "clamp(20px, 4vw, 40px)",
-                right: "clamp(20px, 4vw, 40px)",
+                bottom: LAYOUT.gutter,
+                left: LAYOUT.gutter,
+                right: LAYOUT.gutter,
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "flex-end",
@@ -99,7 +99,7 @@ function CoverHero({ couple, story }: { couple: Couple; story: FeaturedStory }) 
         ref={ref as React.RefObject<HTMLElement>}
         style={{
           background: T.paper,
-          padding: "clamp(64px, 9vw, 96px) clamp(20px, 4vw, 40px) clamp(56px, 8vw, 80px)",
+          padding: `${LAYOUT.section} ${LAYOUT.gutter}`,
           textAlign: "center",
           opacity: vis ? 1 : 0,
           transform: vis ? "translateY(0)" : "translateY(20px)",
@@ -116,16 +116,17 @@ function CoverHero({ couple, story }: { couple: Couple; story: FeaturedStory }) 
             marginBottom: 28,
           }}
         >
-          A story by Mi Amor Tales
+          A Mi Amor Tales story
         </div>
         <h1
           style={{
             margin: 0,
-            fontFamily: SERIF,
+            fontFamily: DISPLAY,
             fontWeight: 400,
             fontSize: "clamp(40px, 6.4vw, 88px)",
             lineHeight: 1.0,
             letterSpacing: "-0.015em",
+            textTransform: "uppercase",
             display: "inline-flex",
             alignItems: "baseline",
             justifyContent: "center",
@@ -133,18 +134,18 @@ function CoverHero({ couple, story }: { couple: Couple; story: FeaturedStory }) 
             flexWrap: "wrap",
           }}
         >
-          <span style={{ fontStyle: "italic", fontWeight: 300 }}>
+          <span style={{ fontWeight: 300 }}>
             {couple.bride}
           </span>
           <Sang size={32} />
-          <span style={{ fontStyle: "italic", fontWeight: 300 }}>
+          <span style={{ fontWeight: 300 }}>
             {couple.groom}
           </span>
         </h1>
         <p
           style={{
             margin: "40px auto 0",
-            maxWidth: 640,
+            maxWidth: LAYOUT.maxText,
             fontFamily: SANS,
             fontSize: 11,
             lineHeight: 1.85,
@@ -168,28 +169,17 @@ function CoverHero({ couple, story }: { couple: Couple; story: FeaturedStory }) 
    ───────────────────────────────────────────────────────────── */
 function StoryBody({
   section,
-  imageLeft,
-  imageRight,
+  image,
 }: {
   section: StorySection;
-  imageLeft?: React.ReactNode;
-  imageRight?: React.ReactNode;
+  image?: React.ReactNode;
 }) {
   const [ref, vis] = useReveal<HTMLElement>(0.1);
-  const hasImage = Boolean(imageLeft || imageRight);
-  const imageOnLeft = Boolean(imageLeft);
+  const hasImage = Boolean(image);
 
   const isAllCaps = section.paragraphs.every(
     (p) => p === p.toUpperCase() && p.length < 600,
   );
-
-  // When the image is on the left → grid 5fr 7fr → image col 1, text col 2.
-  // When the image is on the right → grid 7fr 5fr → text col 1, image col 2.
-  const gridTemplate = !hasImage
-    ? undefined
-    : imageOnLeft
-      ? "5fr 7fr"
-      : "7fr 5fr";
 
   return (
     <section
@@ -197,35 +187,35 @@ function StoryBody({
       className="mat-story-body"
       style={{
         background: T.paper,
-        padding: "clamp(80px, 10vw, 120px) clamp(20px, 4vw, 40px)",
-        display: hasImage ? "grid" : "block",
-        gridTemplateColumns: gridTemplate,
-        gap: "clamp(32px, 5vw, 64px)",
-        alignItems: "center",
+        // Image runs full-bleed (padding 0); only the text column below
+        // carries the gutter + maxText reading width.
+        paddingTop: hasImage ? 0 : LAYOUT.section,
+        paddingBottom: LAYOUT.section,
         opacity: vis ? 1 : 0,
         transform: vis ? "translateY(0)" : "translateY(24px)",
         transition: `all 1.2s ${EASE}`,
       }}
     >
-      {imageLeft && (
+      {image && (
         <div
           style={{
-            gridColumn: 1,
-            aspectRatio: "4/5",
+            width: "100%",
+            aspectRatio: "16/9",
             overflow: "hidden",
             position: "relative",
+            marginBottom: LAYOUT.section,
           }}
         >
-          {imageLeft}
+          {image}
         </div>
       )}
 
       <div
         style={{
-          gridColumn: hasImage ? (imageOnLeft ? 2 : 1) : undefined,
-          maxWidth: hasImage ? undefined : 720,
-          marginInline: hasImage ? undefined : "auto",
-          textAlign: isAllCaps && !hasImage ? "center" : "left",
+          maxWidth: LAYOUT.maxText,
+          marginInline: "auto",
+          paddingInline: LAYOUT.gutter,
+          textAlign: isAllCaps ? "center" : "left",
         }}
       >
         {section.style === "script" ? (
@@ -269,14 +259,13 @@ function StoryBody({
           <h2
             style={{
               margin: 0,
-              fontFamily: SERIF,
+              fontFamily: DISPLAY,
               fontWeight: 300,
-              fontStyle: "italic",
               fontSize: "clamp(28px, 3.6vw, 44px)",
               lineHeight: 1.08,
               letterSpacing: "-0.01em",
               color: T.ink,
-              textAlign: isAllCaps && !hasImage ? "center" : "left",
+              textAlign: isAllCaps ? "center" : "left",
             }}
           >
             {section.heading}
@@ -303,8 +292,7 @@ function StoryBody({
                   letterSpacing: "0.2em",
                   textTransform: "uppercase",
                   opacity: 0.78,
-                  maxWidth: 680,
-                  marginInline: hasImage ? undefined : "auto",
+                  marginInline: "auto",
                 }}
               >
                 {withSeps(p)}
@@ -318,7 +306,6 @@ function StoryBody({
                   fontSize: 16,
                   lineHeight: 1.72,
                   opacity: 0.84,
-                  maxWidth: 620,
                 }}
               >
                 {withSeps(p)}
@@ -328,30 +315,9 @@ function StoryBody({
         </div>
       </div>
 
-      {imageRight && (
-        <div
-          style={{
-            gridColumn: 2,
-            aspectRatio: "4/5",
-            overflow: "hidden",
-            position: "relative",
-          }}
-        >
-          {imageRight}
-        </div>
-      )}
-
       <style>{`
-        @media (max-width: 880px) {
-          .mat-story-body {
-            grid-template-columns: 1fr !important;
-            gap: 32px !important;
-            padding: clamp(64px, 9vw, 80px) clamp(20px, 4vw, 24px) !important;
-            display: flex !important;
-            flex-direction: column !important;
-            align-items: stretch !important;
-          }
-          .mat-story-body > * { grid-column: 1 !important; width: 100% !important; }
+        @media (max-width: 720px) {
+          .mat-story-body > div:first-child { aspect-ratio: 4/5 !important; }
         }
       `}</style>
     </section>
@@ -399,7 +365,7 @@ function PullQuoteFrame({
       >
         <span
           style={{
-            fontFamily: SERIF,
+            fontFamily: DISPLAY,
             fontWeight: 400,
             textTransform: "uppercase",
             letterSpacing: "0.04em",
@@ -524,14 +490,16 @@ function RitualSection({
       ref={ref as React.RefObject<HTMLElement>}
       style={{
         background: T.paper,
-        padding: "clamp(64px, 8vw, 100px) clamp(12px, 2vw, 16px) clamp(40px, 6vw, 60px)",
+        // Full-bleed photo row: no horizontal padding. The header below
+        // carries the text gutter.
+        paddingTop: LAYOUT.sectionTight,
+        paddingBottom: LAYOUT.sectionTight,
       }}
     >
       <header
         style={{
-          maxWidth: 1280,
-          margin: "0 auto clamp(36px, 5vw, 56px)",
-          padding: "0 clamp(12px, 3vw, 24px)",
+          margin: `0 auto ${LAYOUT.sectionTight}`,
+          padding: `0 ${LAYOUT.gutter}`,
           display: "flex",
           alignItems: "flex-end",
           justifyContent: "space-between",
@@ -555,9 +523,8 @@ function RitualSection({
           <h3
             style={{
               margin: 0,
-              fontFamily: SERIF,
+              fontFamily: DISPLAY,
               fontWeight: 300,
-              fontStyle: "italic",
               fontSize: "clamp(32px, 4.2vw, 56px)",
               lineHeight: 1.04,
               letterSpacing: "-0.01em",
@@ -582,15 +549,15 @@ function RitualSection({
         </p>
       </header>
 
-      {/* Photos go edge-to-edge in a straight 3-up row with tight gutters,
-          matching the Weddings archive feel. No staircase offset. */}
+      {/* Photos go edge-to-edge in a straight full-bleed 3-up row with tight
+          gutters, matching the Weddings archive feel. No staircase offset. */}
       <div
         className="mat-rit-stair"
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(3, 1fr)",
           alignItems: "stretch",
-          gap: 12,
+          gap: LAYOUT.gap,
         }}
       >
         {photos.map((p, i) => (
@@ -617,11 +584,11 @@ function RitualSection({
 
       <style>{`
         @media (max-width: 1024px) {
-          .mat-rit-stair { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
-          .mat-rit-stair > *:nth-child(3) { grid-column: 1 / -1 !important; aspect-ratio: 16/9 !important; }
+          .mat-rit-stair { grid-template-columns: repeat(2, 1fr) !important; }
+          .mat-rit-stair > *:nth-child(3) { grid-column: 1 / -1 !important; aspect-ratio: 3/2 !important; }
         }
         @media (max-width: 540px) {
-          .mat-rit-stair { grid-template-columns: 1fr !important; gap: 12px !important; }
+          .mat-rit-stair { grid-template-columns: 1fr !important; }
           .mat-rit-stair > *:nth-child(3) { grid-column: auto !important; aspect-ratio: 3/4 !important; }
         }
       `}</style>
@@ -637,7 +604,7 @@ function SegmentedRituals({ story }: { story: FeaturedStory }) {
         ref={ref as React.RefObject<HTMLElement>}
         style={{
           textAlign: "center",
-          padding: "clamp(80px, 11vw, 140px) clamp(20px, 4vw, 40px) 0",
+          padding: `${LAYOUT.section} ${LAYOUT.gutter} 0`,
           opacity: vis ? 1 : 0,
           transform: vis ? "translateY(0)" : "translateY(16px)",
           transition: `all 1s ${EASE}`,
@@ -653,21 +620,20 @@ function SegmentedRituals({ story }: { story: FeaturedStory }) {
             marginBottom: 22,
           }}
         >
-          The Three Days
+          The Ceremonies
         </div>
         <h2
           style={{
             margin: 0,
-            fontFamily: SERIF,
+            fontFamily: DISPLAY,
             fontWeight: 300,
-            fontStyle: "italic",
             fontSize: "clamp(28px, 3.6vw, 44px)",
             lineHeight: 1.1,
-            maxWidth: 760,
+            maxWidth: LAYOUT.maxText,
             marginInline: "auto",
           }}
         >
-          Five ceremonies, in the order they happened
+          Five rituals, in the order they unfolded
           <span style={{ color: T.sage, fontStyle: "normal" }}>.</span>
         </h2>
       </header>
@@ -750,10 +716,12 @@ function WallOfImages({
     <section
       style={{
         background: T.paper,
-        padding: "clamp(80px, 11vw, 140px) clamp(12px, 2vw, 16px) clamp(56px, 7vw, 80px)",
+        // Full-bleed photo wall: no horizontal padding on the section.
+        paddingTop: LAYOUT.section,
+        paddingBottom: LAYOUT.section,
       }}
     >
-      <header style={{ textAlign: "center", marginBottom: "clamp(40px, 6vw, 64px)", padding: "0 clamp(12px, 3vw, 24px)" }}>
+      <header style={{ textAlign: "center", marginBottom: LAYOUT.sectionTight, padding: `0 ${LAYOUT.gutter}` }}>
         <div
           style={{
             fontFamily: SANS,
@@ -764,17 +732,16 @@ function WallOfImages({
             marginBottom: 22,
           }}
         >
-          Every frame held
+          The Full Gallery
         </div>
         <h2
           style={{
             margin: 0,
-            fontFamily: SERIF,
+            fontFamily: DISPLAY,
             fontWeight: 300,
-            fontStyle: "italic",
             fontSize: "clamp(28px, 3.6vw, 44px)",
             lineHeight: 1.1,
-            maxWidth: 760,
+            maxWidth: LAYOUT.maxText,
             marginInline: "auto",
           }}
         >
@@ -782,7 +749,7 @@ function WallOfImages({
           <Sang size={20} />{" "}
           {couple.groom}
           <span style={{ color: T.sage, fontStyle: "normal" }}>
-            {" "}— a complete archive.
+            {" "}— every frame.
           </span>
         </h2>
       </header>
@@ -792,7 +759,7 @@ function WallOfImages({
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(3, 1fr)",
-          gap: 12,
+          gap: LAYOUT.gap,
         }}
       >
         {photos.map((p, i) => (
@@ -858,7 +825,7 @@ function BridePanel({
       </div>
       <div
         style={{
-          padding: "clamp(56px, 7vw, 80px) clamp(28px, 4.5vw, 56px)",
+          padding: `${LAYOUT.section} ${LAYOUT.gutter}`,
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -874,14 +841,13 @@ function BridePanel({
             marginBottom: 32,
           }}
         >
-          The Elegant Bride
+          The Bride
         </div>
         <h3
           style={{
             margin: 0,
-            fontFamily: SERIF,
+            fontFamily: DISPLAY,
             fontWeight: 300,
-            fontStyle: "italic",
             fontSize: "clamp(32px, 4.2vw, 56px)",
             lineHeight: 1.06,
           }}
@@ -909,7 +875,6 @@ function BridePanel({
       <style>{`
         @media (max-width: 880px) {
           .mat-bride-panel { grid-template-columns: 1fr !important; }
-          .mat-bride-panel > div:last-child { padding: clamp(40px, 6vw, 56px) clamp(20px, 4vw, 28px) !important; }
           .mat-bride-photo { min-height: clamp(360px, 80vw, 520px) !important; aspect-ratio: 3/4; }
         }
       `}</style>
@@ -955,7 +920,7 @@ function Closing({ couple, story }: { couple: Couple; story: FeaturedStory }) {
             justifyContent: "center",
             alignItems: "center",
             color: "#fff",
-            padding: "0 clamp(20px, 4vw, 40px)",
+            padding: `0 ${LAYOUT.gutter}`,
             textAlign: "center",
             pointerEvents: "none",
           }}
@@ -970,14 +935,13 @@ function Closing({ couple, story }: { couple: Couple; story: FeaturedStory }) {
               marginBottom: 28,
             }}
           >
-            End of this story
+            Their forever
           </div>
           <h2
             style={{
               margin: 0,
-              fontFamily: SERIF,
+              fontFamily: DISPLAY,
               fontWeight: 300,
-              fontStyle: "italic",
               fontSize: "clamp(26px, 4.6vw, 64px)",
               lineHeight: 1.08,
               maxWidth: 980,
@@ -1004,7 +968,7 @@ function Closing({ couple, story }: { couple: Couple; story: FeaturedStory }) {
       </section>
       <section
         style={{
-          padding: "clamp(72px, 10vw, 120px) clamp(20px, 4vw, 40px)",
+          padding: `${LAYOUT.section} ${LAYOUT.gutter}`,
           background: T.paper,
           textAlign: "center",
         }}
@@ -1033,7 +997,7 @@ function Closing({ couple, story }: { couple: Couple; story: FeaturedStory }) {
               alignItems: "center",
             }}
           >
-            ← Back to featured
+            ← See more stories
           </Link>
           <Link
             href="/contact"
@@ -1051,7 +1015,7 @@ function Closing({ couple, story }: { couple: Couple; story: FeaturedStory }) {
               alignItems: "center",
             }}
           >
-            Begin yours →
+            Begin your story →
           </Link>
         </div>
       </section>
@@ -1079,10 +1043,10 @@ export function FeaturedStoryClient({ couple }: { couple: Couple }) {
       {otherSections[0] && (
         <StoryBody
           section={otherSections[0]}
-          imageRight={
+          image={
             <MatImage
               image={story.photos.storyImage1}
-              variant="Grid"
+              variant="Hero"
               alt=""
             />
           }
@@ -1099,10 +1063,10 @@ export function FeaturedStoryClient({ couple }: { couple: Couple }) {
       {otherSections[1] && (
         <StoryBody
           section={otherSections[1]}
-          imageLeft={
+          image={
             <MatImage
               image={story.photos.storyImage2}
-              variant="Grid"
+              variant="Hero"
               alt=""
             />
           }

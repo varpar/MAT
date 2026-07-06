@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { SANS, T } from "./tokens";
+import { SANS, T, LAYOUT } from "./tokens";
 
 type FootLink = [label: string, href: string | null];
 
@@ -62,7 +62,7 @@ export function Footer() {
       style={{
         background: T.sage,
         color: T.paper,
-        padding: "80px 40px 36px",
+        padding: `${LAYOUT.section} ${LAYOUT.gutter} ${LAYOUT.sectionTight}`,
         fontFamily: SANS,
       }}
     >
@@ -125,7 +125,7 @@ export function Footer() {
               ["hello@miamortales.com", null],
               ["+91 99 28 41 21 12", null],
               ["WhatsApp", null],
-              ["Booking 26 / 27", "/contact"],
+              ["Check availability", "/contact"],
             ]}
           />
           <FootCol
@@ -166,14 +166,14 @@ export function Footer() {
         </span>
       </div>
 
-      {/* Mobile-only stacking — desktop layout is preserved verbatim. */}
+      {/* Mobile-only stacking — horizontal/vertical padding stays on the
+          shared LAYOUT clamps (matches the page gutter site-wide); only the
+          column structure restacks here. */}
       <style>{`
         @media (max-width: 1023px) {
-          .mat-footer { padding: 64px 32px 28px !important; }
           .mat-footer-cols { gap: 36px !important; }
         }
         @media (max-width: 767px) {
-          .mat-footer { padding: 56px 24px 28px !important; }
           .mat-footer-top {
             flex-direction: column !important;
             gap: 44px !important;
@@ -192,7 +192,6 @@ export function Footer() {
           }
         }
         @media (max-width: 414px) {
-          .mat-footer { padding: 48px 20px 24px !important; }
           .mat-footer-cols {
             grid-template-columns: 1fr 1fr !important;
             gap: 24px 20px !important;
