@@ -6,6 +6,11 @@ import { Sep, withSeps } from "../_components/Punc";
 import { MatImage } from "../_components/MatImage";
 import { MAT_IMAGES } from "../_components/data";
 
+/* Shared content width for the enquiry form and the FAQ so both sections'
+   inner columns line up edge-to-edge down the page. Change this in one place
+   and both stay aligned. */
+const CONTENT_MAX = 1120;
+
 const FAQS: [string, string][] = [
   [
     "How early should we book?",
@@ -517,11 +522,14 @@ export function ContactClient() {
         </p>
       </section>
 
-      {/* AVAILABILITY STRIP */}
+      {/* AVAILABILITY STRIP — full-width sage band. Horizontal padding is
+          LAYOUT.edge (8px) so the coloured band sits just off the left/right
+          screen edges (packed but breathing), matching the site-wide full-bleed
+          rule. An inner centred wrapper keeps the sentence at the text gutter. */}
       <section
         className="mat-contact-availability"
         style={{
-          padding: `${LAYOUT.gutterTight} ${LAYOUT.gutter}`,
+          padding: `${LAYOUT.gutterTight} ${LAYOUT.edge}`,
           background: T.sage,
           color: T.paper,
           borderTop: "1px solid rgba(0,0,0,0.14)",
@@ -534,10 +542,12 @@ export function ContactClient() {
           opacity: 0.85,
         }}
       >
-        Four dates open for winter twenty-twenty-six.
-        <span className="mat-availability-tail" style={{ marginLeft: 16, color: T.cream }}>
-          December and February are taken.
-        </span>
+        <div style={{ maxWidth: 1100, marginInline: "auto", paddingInline: LAYOUT.gutter }}>
+          Four dates open for winter twenty-twenty-six.
+          <span className="mat-availability-tail" style={{ marginLeft: 16, color: T.cream }}>
+            December and February are taken.
+          </span>
+        </div>
       </section>
 
       {/* FORM — photo column on the left + a clear, single-page form
@@ -552,7 +562,7 @@ export function ContactClient() {
           gridTemplateColumns: "5fr 7fr",
           gap: "clamp(40px, 5vw, 72px)",
           alignItems: "start",
-          maxWidth: 1120,
+          maxWidth: CONTENT_MAX,
           marginInline: "auto",
         }}
       >
@@ -883,7 +893,7 @@ export function ContactClient() {
             marginBottom: 40,
             flexWrap: "wrap",
             gap: 16,
-            maxWidth: 1100,
+            maxWidth: CONTENT_MAX,
             marginInline: "auto",
           }}
         >
@@ -911,7 +921,7 @@ export function ContactClient() {
             02<Sep />Good to Know
           </div>
         </header>
-        <div style={{ maxWidth: 1100, marginInline: "auto" }}>
+        <div style={{ maxWidth: CONTENT_MAX, marginInline: "auto" }}>
           {FAQS.map(([q, a], i) => (
             <FAQRow key={i} q={q} a={a} />
           ))}

@@ -375,7 +375,7 @@ export function AboutClient() {
     { name: "Prem Kant",         role: "Head of Cinematography & Editing",   img: MAT_IMAGES.teamPremKant },
     { name: "Akash Pandey",      role: "Head of Photography",                img: MAT_IMAGES.teamAkashPandey },
     { name: "Daksh Sharma",      role: "Head of Editing",                    img: MAT_IMAGES.teamDakshSharma },
-    { name: "Rahul Yadav",       role: "Photographer",                       img: MAT_IMAGES.couple1 },
+    { name: "Rahul Yadav",       role: "Photographer",                       img: MAT_IMAGES.teamRahulYadav },
     { name: "Harshit Morwani",   role: "Video Editor",                       img: MAT_IMAGES.teamHarshitMorwani },
   ];
   return (
@@ -448,12 +448,13 @@ export function AboutClient() {
         `}</style>
       </section>
 
-      {/* Origin — full-bleed imagery (edge-to-edge, padding 0); the narrative
-          column carries the text gutter and reads at LAYOUT.maxText. */}
+      {/* Origin — near-full-bleed imagery (inset 8px off the side edges via
+          LAYOUT.edge); the narrative column carries the text gutter and reads
+          at LAYOUT.maxText. */}
       <section
         className="mat-origin"
         style={{
-          padding: `${LAYOUT.section} 0`,
+          padding: `${LAYOUT.section} ${LAYOUT.edge}`,
           background: T.paper,
           display: "grid",
           gridTemplateColumns: "5fr 7fr",
@@ -541,12 +542,14 @@ export function AboutClient() {
         `}</style>
       </section>
 
-      {/* Stats — sage band, cream type. Counters count up on scroll into view. */}
+      {/* Stats — full-width sage band, cream type. Inset 8px off the side edges
+          via LAYOUT.edge so it doesn't touch the screen edges. Counters count
+          up on scroll into view. */}
       <section
         ref={statsRef as React.RefObject<HTMLElement>}
         className="mat-stats-band"
         style={{
-          padding: `${LAYOUT.sectionTight} ${LAYOUT.gutter}`,
+          padding: `${LAYOUT.sectionTight} ${LAYOUT.edge}`,
           background: T.sage,
           color: T.paper,
         }}
@@ -591,10 +594,11 @@ export function AboutClient() {
       </section>
 
       {/* Team — header (eyebrow + heading) keeps the text gutter; the photo
-          grid runs full-bleed (padding 0) at LAYOUT.gap. Two rows of 4. */}
+          grid runs near-full-bleed, inset 8px off the side edges via
+          LAYOUT.edge, at LAYOUT.gap. Two rows of 4. */}
       <section
         className="mat-team-section"
-        style={{ padding: `${LAYOUT.sectionTight} 0 0`, background: T.paper }}
+        style={{ padding: `${LAYOUT.sectionTight} ${LAYOUT.edge} 0`, background: T.paper }}
       >
         <div className="mat-team-head" style={{ paddingInline: LAYOUT.gutter }}>
           <div
@@ -665,7 +669,7 @@ export function AboutClient() {
             .mat-team-card {
               text-align: center;
             }
-            /* Photo stays edge-to-edge; the caption keeps the text gutter. */
+            /* Photo sits near the edge (grid inset 8px); caption keeps the text gutter. */
             .mat-team-card .mat-team-name,
             .mat-team-card .mat-team-role {
               padding-inline: ${LAYOUT.gutter};

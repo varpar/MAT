@@ -238,7 +238,7 @@ export function WeddingsClient() {
         style={{
           paddingTop: LAYOUT.sectionTight,
           paddingBottom: LAYOUT.section,
-          paddingInline: 0,
+          paddingInline: LAYOUT.edge,
           background: T.paper,
         }}
       >
@@ -279,8 +279,9 @@ export function WeddingsClient() {
           /* Horizontal padding (hero / filter bar) and vertical rhythm come
              from the clamp-based LAYOUT tokens, so the only per-breakpoint
              overrides left are genuinely responsive: grid columns, the
-             headline size, and the touch-scroll filter bar. The grid stays
-             full-bleed (padding-inline 0) at every width. */
+             headline size, and the touch-scroll filter bar. The grid sits
+             just off the screen edges (padding-inline = LAYOUT.edge / 8px)
+             at every width — packed but breathing. */
           @media (max-width: 1024px) {
             .mat-archive-grid { grid-template-columns: repeat(2, 1fr) !important; }
             .mat-weddings-hero { padding-top: 140px !important; }

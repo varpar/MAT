@@ -44,7 +44,8 @@ function HomeHero() {
         position: "relative",
         height: "100svh",
         minHeight: 640,
-        background: "#000",
+        background: T.paper,
+        paddingInline: LAYOUT.edge,
         overflow: "hidden",
       }}
     >
@@ -172,7 +173,7 @@ function HomeTriptych() {
     <section
       className="mat-tript-sec"
       style={{
-        padding: `${LAYOUT.section} 0`,
+        padding: `${LAYOUT.section} ${LAYOUT.edge}`,
         background: T.paper,
       }}
     >
@@ -398,11 +399,13 @@ function HomeFilmReel() {
           a few frames from the last two seasons
         </div>
       </div>
-      <FilmStrip
-        heights={strip.heights}
-        travels={allTravels.slice(0, strip.rows)}
-        rows={allRows.slice(0, strip.rows)}
-      />
+      <div style={{ paddingInline: LAYOUT.edge }}>
+        <FilmStrip
+          heights={strip.heights}
+          travels={allTravels.slice(0, strip.rows)}
+          rows={allRows.slice(0, strip.rows)}
+        />
+      </div>
       <style>{`
         @media (max-width: 720px) {
           .mat-reel-head { margin-bottom: 24px !important; }
@@ -806,6 +809,7 @@ function HomeRecent() {
           display: "flex",
           flexDirection: "column",
           gap: LAYOUT.gap,
+          paddingInline: LAYOUT.edge,
         }}
       >
         {rows.map((row, ri) => (
@@ -866,7 +870,7 @@ function HomeVideoSection() {
       style={{
         position: "relative",
         background: T.paper,
-        padding: `${LAYOUT.section} 0`,
+        padding: `${LAYOUT.section} ${LAYOUT.edge}`,
         overflow: "visible",
       }}
     >
@@ -954,7 +958,8 @@ function HomeQuoteFrame() {
         position: "relative",
         height: "100svh",
         minHeight: 600,
-        background: "#000",
+        background: T.paper,
+        paddingInline: LAYOUT.edge,
         overflow: "hidden",
       }}
     >
@@ -1106,6 +1111,7 @@ function HomeMosaic() {
           gridTemplateColumns: "repeat(12, 1fr)",
           gridAutoRows: "minmax(260px, auto)",
           gap: LAYOUT.gap,
+          paddingInline: LAYOUT.edge,
         }}
       >
         <AnimatedImage
@@ -1440,7 +1446,7 @@ function HomeLocations() {
 
       <div
         className="mat-loc-list"
-        style={{ display: "flex", flexDirection: "column", gap: LAYOUT.section }}
+        style={{ display: "flex", flexDirection: "column", gap: LAYOUT.section, paddingInline: LAYOUT.edge }}
       >
         {HOME_VENUES.map((v, i) => (
           <VenueRow key={v.name} venue={v} index={i} />
@@ -1472,6 +1478,8 @@ function HomeCTA() {
         gridTemplateColumns: "5fr 7fr",
         alignItems: "stretch",
         borderTop: `1px solid ${T.ink}10`,
+        paddingLeft: 0,
+        paddingRight: LAYOUT.edge,
       }}
     >
       <AnimatedImage

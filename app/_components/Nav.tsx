@@ -7,11 +7,11 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { SERIF, SANS, T, LAYOUT } from "./tokens";
 
-const LOGO_W = 156;
-const LOGO_H = 48; // logo file is ~3.24:1; height of 48 gives a width of ~156
+const LOGO_W = 113;
+const LOGO_H = 35; // logo file is ~3.24:1; height of 35 gives a width of ~113
 // Mobile logo is slightly smaller so the nav stays calm on 360px viewports.
-const LOGO_H_MOBILE = 36;
-const LOGO_W_MOBILE = 117;
+const LOGO_H_MOBILE = 26;
+const LOGO_W_MOBILE = 84;
 
 const NAV_LINKS: [string, string][] = [
   ["Featured", "/featured"],

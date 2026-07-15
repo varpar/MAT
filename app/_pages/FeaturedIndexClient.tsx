@@ -235,6 +235,10 @@ function VideoHero() {
         height: "clamp(560px, 80vh, 860px)",
         background: T.ink,
         overflow: "hidden",
+        // Inset the full-bleed hero ~8px off the left/right (and top) screen
+        // edges so it never touches them — consistent frame with the rows below.
+        // Top uses edge too; height already accounts for the box so no new scroll.
+        margin: `${LAYOUT.edge} ${LAYOUT.edge} 0`,
       }}
     >
       {/* Media — looping video, or a static cover under reduced motion */}
@@ -290,7 +294,13 @@ export function FeaturedIndexClient() {
       <VideoHero />
       <section
         className="mat-feat-list"
-        style={{ padding: `${LAYOUT.sectionTight} 0 ${LAYOUT.section}`, background: T.paper }}
+        style={{
+          // Horizontal padding = edge (8px) so the couple-spread rows sit just
+          // off the left/right screen edges instead of full-bleed against them.
+          // Vertical rhythm (sectionTight / section) is unchanged.
+          padding: `${LAYOUT.sectionTight} ${LAYOUT.edge} ${LAYOUT.section}`,
+          background: T.paper,
+        }}
       >
         <div
           className="mat-feat-list-inner"

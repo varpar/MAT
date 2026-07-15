@@ -30,9 +30,28 @@ function CoverHero({ couple, story }: { couple: Couple; story: FeaturedStory }) 
           height: "88svh",
           minHeight: 560,
           overflow: "hidden",
-          background: "#0e0e0e",
+          background: T.paper,
+          // Inset the media frame just off the top / left / right edges so the
+          // cover photo sits packed-but-breathing (~8px) inside the viewport
+          // height. Section height itself is unchanged (no new vertical scroll).
+          paddingTop: LAYOUT.edge,
+          paddingInline: LAYOUT.edge,
         }}
       >
+        {/* Positioned inset frame: the fill image / video fills THIS box (which
+            already sits inside the section padding), so the media never touches
+            the top / side screen edges. */}
+        <div
+          style={{
+            position: "absolute",
+            top: LAYOUT.edge,
+            bottom: 0,
+            left: LAYOUT.edge,
+            right: LAYOUT.edge,
+            overflow: "hidden",
+            background: "#0e0e0e",
+          }}
+        >
         {couple.heroVideo ? (
           <FilmPlayer
             src={couple.heroVideo.src}
@@ -88,6 +107,7 @@ function CoverHero({ couple, story }: { couple: Couple; story: FeaturedStory }) 
             </div>
           </>
         )}
+        </div>
         <style>{`
           @media (max-width: 720px) {
             .mat-cover-hero { height: 72svh !important; min-height: 460px !important; }
@@ -199,7 +219,10 @@ function StoryBody({
       {image && (
         <div
           style={{
-            width: "100%",
+            // Near-full-width photo band — inset ~8px off each side edge so it
+            // sits packed-but-breathing, never flush to the screen edge.
+            width: "auto",
+            marginInline: LAYOUT.edge,
             aspectRatio: "16/9",
             overflow: "hidden",
             position: "relative",
@@ -343,16 +366,31 @@ function PullQuoteFrame({
         position: "relative",
         height: "92svh",
         minHeight: 560,
-        background: "#0e0e0e",
+        background: T.paper,
         overflow: "hidden",
+        // Inset the photo ~8px off the side edges — packed but breathing.
+        paddingInline: LAYOUT.edge,
       }}
     >
-      <MatImage
-        image={bgImage}
-        variant="Hero"
-        alt=""
-        filter="grayscale(1) brightness(0.62)"
-      />
+      {/* Positioned inset frame so the fill image never touches the side edges. */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: LAYOUT.edge,
+          right: LAYOUT.edge,
+          overflow: "hidden",
+          background: "#0e0e0e",
+        }}
+      >
+        <MatImage
+          image={bgImage}
+          variant="Hero"
+          alt=""
+          filter="grayscale(1) brightness(0.62)"
+        />
+      </div>
       <div
         style={{
           position: "absolute",
@@ -549,8 +587,9 @@ function RitualSection({
         </p>
       </header>
 
-      {/* Photos go edge-to-edge in a straight full-bleed 3-up row with tight
-          gutters, matching the Weddings archive feel. No staircase offset. */}
+      {/* Photos go in a straight near-full-width 3-up row with tight gutters,
+          matching the Weddings archive feel. Inset ~8px off each side edge so
+          the row sits packed-but-breathing, never flush. No staircase offset. */}
       <div
         className="mat-rit-stair"
         style={{
@@ -558,6 +597,7 @@ function RitualSection({
           gridTemplateColumns: "repeat(3, 1fr)",
           alignItems: "stretch",
           gap: LAYOUT.gap,
+          marginInline: LAYOUT.edge,
         }}
       >
         {photos.map((p, i) => (
@@ -760,6 +800,8 @@ function WallOfImages({
           display: "grid",
           gridTemplateColumns: "repeat(3, 1fr)",
           gap: LAYOUT.gap,
+          // Inset the wall ~8px off each side edge — packed but breathing.
+          marginInline: LAYOUT.edge,
         }}
       >
         {photos.map((p, i) => (
@@ -810,6 +852,11 @@ function BridePanel({
           overflow: "hidden",
           background: "#0e0e0e",
           minHeight: 520,
+          // Inset the bride photo ~8px off the left screen edge (and top/bottom)
+          // so the media sits packed-but-breathing inside the sage panel — the
+          // paperDeep panel colour still spans full width behind it.
+          marginLeft: LAYOUT.edge,
+          marginBlock: LAYOUT.edge,
         }}
       >
         <div
@@ -875,7 +922,9 @@ function BridePanel({
       <style>{`
         @media (max-width: 880px) {
           .mat-bride-panel { grid-template-columns: 1fr !important; }
-          .mat-bride-photo { min-height: clamp(360px, 80vw, 520px) !important; aspect-ratio: 3/4; }
+          /* Stacked: photo spans full width, so inset the right edge too so it
+             sits ~8px off both side edges. */
+          .mat-bride-photo { min-height: clamp(360px, 80vw, 520px) !important; aspect-ratio: 3/4; margin-right: ${LAYOUT.edge} !important; }
         }
       `}</style>
     </section>
@@ -897,20 +946,39 @@ function Closing({ couple, story }: { couple: Couple; story: FeaturedStory }) {
           height: "92svh",
           minHeight: 560,
           overflow: "hidden",
-          background: "#0e0e0e",
+          background: T.paper,
+          // Inset the closing photo ~8px off the bottom / side edges — packed
+          // but breathing. Top stays flush against the section above; section
+          // height is unchanged (no new vertical scroll).
+          paddingInline: LAYOUT.edge,
+          paddingBottom: LAYOUT.edge,
         }}
       >
-        <MatImage image={story.photos.closing} variant="Hero" alt="" filter="brightness(0.74)" />
+        {/* Positioned inset frame so the fill image + gradient never touch the
+            side / bottom screen edges. */}
         <div
-          aria-hidden
           style={{
             position: "absolute",
-            inset: 0,
-            background:
-              "radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 100%)",
-            pointerEvents: "none",
+            top: 0,
+            bottom: LAYOUT.edge,
+            left: LAYOUT.edge,
+            right: LAYOUT.edge,
+            overflow: "hidden",
+            background: "#0e0e0e",
           }}
-        />
+        >
+          <MatImage image={story.photos.closing} variant="Hero" alt="" filter="brightness(0.74)" />
+          <div
+            aria-hidden
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 100%)",
+              pointerEvents: "none",
+            }}
+          />
+        </div>
         <div
           style={{
             position: "absolute",

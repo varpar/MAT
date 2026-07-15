@@ -624,14 +624,15 @@ export function TalesClient() {
           opacity: 0.7;
         }
 
-        /* Couple-story cards — full-bleed grid; only the photos touch the edge. */
+        /* Couple-story cards — near-full-bleed grid; photos sit just off the edge. */
         .mat-story-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: ${LAYOUT.gap};
+          padding-inline: ${LAYOUT.edge};
         }
 
-        /* Albums — head/foot copy keeps the text gutter; the photo grid is full-bleed. */
+        /* Albums — head/foot copy keeps the text gutter; the photo grid sits just off the edge. */
         .mat-album-head,
         .mat-album-foot { padding-inline: ${LAYOUT.gutter}; }
         .mat-album-head { margin-bottom: clamp(28px, 4vw, 44px); }
@@ -640,6 +641,7 @@ export function TalesClient() {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: ${LAYOUT.gap};
+          padding-inline: ${LAYOUT.edge};
         }
 
         /* Touch devices: keep the read-cta visible (no hover state). */

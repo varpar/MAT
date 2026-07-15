@@ -254,8 +254,9 @@ export const MAT_IMAGES: Record<string, MatImageRecord> = {
     source: "cloudinary",
   },
   // ─── Team headshots — extracted from MAT magazine, pages 72-75. Grayscale
-  // pre-baked into the JPEG. Rahul Yadav intentionally omitted; the AboutClient
-  // keeps a placeholder for him until the client supplies a portrait.
+  // is applied at render time by TeamCard (filter: grayscale(1)), so the source
+  // JPEGs stay in colour. Rahul Yadav's portrait is a 3:4 crop from the client-
+  // supplied "MI AMOR Magazine Final" haldi frame.
   teamRahulSharma: {
     publicId: "/images/team/rahul-sharma.jpg",
     blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAwQFBv/EACMQAAICAgECBwAAAAAAAAAAAAECAwQAIREFBhITMVFhcYH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8Am1ejz3IWliiYqNDWj9fIxA0TFMyurK4PBB0Qc0vb3VWkp+TMw8QbhT6cj3P7gbVqOpPYllQTvIdMU4A1gf/Z",
@@ -292,17 +293,24 @@ export const MAT_IMAGES: Record<string, MatImageRecord> = {
     source: "cloudinary",
   },
   teamDakshSharma: {
-    publicId: "/images/team/daksh-sharma.jpg",
+    publicId: "/images/team/daksh-sharma-2.jpg",
     blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAEF/8QAIhAAAQQBAwUBAAAAAAAAAAAAAQIDBBEAEyFBBRIxQnGB/8QAFQEBAQAAAAAAAAAAAAAAAAAAAgP/xAAWEQEBAQAAAAAAAAAAAAAAAAABABH/2gAMAwEAAhEDEQA/AJIlNtwX0POJBL10TudxxhOmOIEh5OqAVFPagquxfGFENE2OHEaaHyfUUP3M+TDfjG1gAA7G/PzCZUTL/9k=",
     width: 1080,
     height: 1350,
     source: "cloudinary",
   },
   teamHarshitMorwani: {
-    publicId: "/images/team/harshit-morwani.jpg",
-    blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwAF/8QAIBAAAgEEAQUAAAAAAAAAAAAAAQMCABESIQQFE0Fhgf/EABUBAQEAAAAAAAAAAAAAAAAAAAAC/8QAGBEBAQADAAAAAAAAAAAAAAAAAQARIUH/2gAMAwEAAhEDEQA/AM3tTQrNkQMRc7GqfjdXao2RecdDBm9+qnsgESONyR4oOPGK+MyONyJfaDrLUnC//9k=",
-    width: 1836,
-    height: 2400,
+    publicId: "/images/team/harshit-morwani-2.jpg",
+    blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABAX/xAAhEAACAgMAAAcAAAAAAAAAAAABAgMRAAQSITEyQWFxgf/EABUBAQEAAAAAAAAAAAAAAAAAAAEC/8QAFhEBAQEAAAAAAAAAAAAAAAAAIQAB/9oADAMBAAIRAxEAPwCcpCkX6j8VjI9qfS5ZJVIYXyDYH3hN2PnWcRRtZai5IoAfuA1g8kyBem8fIewrHFq0L//Z",
+    width: 1050,
+    height: 1400,
+    source: "cloudinary",
+  },
+  teamRahulYadav: {
+    publicId: "/images/team/rahul-yadav.jpg",
+    blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABAH/xAAdEAACAwADAQEAAAAAAAAAAAABAgMEEQASITFB/8QAFAEBAAAAAAAAAAAAAAAAAAAAA//EABYRAQEBAAAAAAAAAAAAAAAAAAEAAv/aAAwDAQACEQMRAD8AfakZYQ1fQ4AxQO2jOJguypGgMZIAG4w4KtStPG85MsBJ9jKaW8z7+ck1O3JGFXuGB8PThOkZAEv/2Q==",
+    width: 600,
+    height: 800,
     source: "cloudinary",
   },
 

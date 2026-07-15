@@ -35,15 +35,19 @@ export const DISPLAY = "'Made Saonara', var(--font-cormorant), 'Cormorant Garamo
    - section       → vertical padding for a MAJOR section (top & bottom).
    - sectionTight  → vertical padding for a minor / secondary section.
    - gap           → gutter BETWEEN image-grid tiles (small, so photos dominate).
+   - edge          → tiny outer inset (P2/8px) so full-bleed photos & full-width
+                     components DON'T touch the screen edges — packed but breathing.
    - maxText       → max line length for long-form reading copy (px), centered.
 
-   IMAGE SECTIONS RUN FULL-BLEED: horizontal padding 0 so a photo / photo-grid
-   spans the full width; only their headers/captions use `gutter`. */
+   IMAGE SECTIONS ARE NEAR-FULL-WIDTH: horizontal padding = `edge` (8px) so a
+   photo / photo-grid / full-width band sits just off the screen edge (not flush),
+   matching the small inner `gap`. Text/headers use the larger `gutter`. */
 export const LAYOUT = {
   gutter: "clamp(20px, 5vw, 56px)",
   gutterTight: "clamp(16px, 3vw, 32px)",
   section: "clamp(56px, 8vw, 112px)",
   sectionTight: "clamp(40px, 6vw, 80px)",
   gap: "clamp(6px, 0.7vw, 12px)",
+  edge: "8px",
   maxText: 720,
 } as const;
