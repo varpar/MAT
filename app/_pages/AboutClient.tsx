@@ -25,8 +25,8 @@ function useCountUp(target: number, run: boolean, duration = 1600) {
       typeof window !== "undefined" &&
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
     ) {
-      setValue(target);
-      return;
+      const reducedMotionRaf = requestAnimationFrame(() => setValue(target));
+      return () => cancelAnimationFrame(reducedMotionRaf);
     }
     let raf = 0;
     const start = performance.now();
@@ -42,8 +42,22 @@ function useCountUp(target: number, run: boolean, duration = 1600) {
   return value;
 }
 
-function StatCell({ n, label, run, first }: { n: number; label: string; run: boolean; first: boolean }) {
-  const value = useCountUp(n, run);
+function StatCell({
+  n,
+  label,
+  run,
+  first,
+  suffix = "",
+  display,
+}: {
+  n: number;
+  label: string;
+  run: boolean;
+  first: boolean;
+  suffix?: string;
+  display?: string;
+}) {
+  const value = useCountUp(display ? 0 : n, run);
   return (
     <div
       className="mat-stat-cell"
@@ -65,7 +79,7 @@ function StatCell({ n, label, run, first }: { n: number; label: string; run: boo
           fontVariantNumeric: "tabular-nums",
         }}
       >
-        {value}
+        {display ?? `${value}${suffix}`}
       </div>
       <div
         style={{
@@ -214,7 +228,7 @@ function PhilosophySlab() {
             ...enter(0),
           }}
         >
-          03<Sep />A Philosophy
+          01<Sep />A Philosophy
         </div>
 
         <h2
@@ -298,7 +312,7 @@ function PhilosophySlab() {
               lineHeight: 1.5,
             }}
           >
-            This is what we call the art of noticing.
+            This is what we call The Art of Noticing.
           </p>
           <p style={{ ...para, opacity: 0.86 }}>
             The practice of slowing down enough to see what truly matters.
@@ -320,7 +334,7 @@ function PhilosophySlab() {
             ...enter(0.5),
           }}
         >
-          And that is what makes us Mi&nbsp;Amor
+          And that is what makes us Mi&nbsp;Amor.
         </div>
       </div>
 
@@ -362,11 +376,16 @@ function PhilosophySlab() {
 
 export function AboutClient() {
   const [statsRef, statsVis] = useReveal<HTMLElement>(0.3);
-  const stats: [number, string][] = [
-    [218, "Weddings"],
-    [41, "Cities"],
-    [8, "Years"],
-    [12, "Awards"],
+  const stats: {
+    n: number;
+    label: string;
+    suffix?: string;
+    display?: string;
+  }[] = [
+    { n: 2, label: "Years", suffix: "+" },
+    { n: 50, label: "Weddings", suffix: "+" },
+    { n: 10, label: "Cities", suffix: "+" },
+    { n: 5, label: "Awards", display: "4–5" },
   ];
   const team: Person[] = [
     { name: "Rahul Sharma",      role: "Founder",                            img: MAT_IMAGES.teamRahulSharma },
@@ -448,6 +467,8 @@ export function AboutClient() {
         `}</style>
       </section>
 
+      <PhilosophySlab />
+
       {/* Origin — near-full-bleed imagery (inset 8px off the side edges via
           LAYOUT.edge); the narrative column carries the text gutter and reads
           at LAYOUT.maxText. */}
@@ -482,7 +503,7 @@ export function AboutClient() {
               marginBottom: 18,
             }}
           >
-            01<Sep />Origin
+            02<Sep />Origin
           </div>
           <h2
             style={{
@@ -564,8 +585,16 @@ export function AboutClient() {
             marginInline: "auto",
           }}
         >
-          {stats.map(([n, l], i) => (
-            <StatCell key={l} n={n} label={l} run={statsVis} first={i === 0} />
+          {stats.map(({ n, label, suffix, display }, i) => (
+            <StatCell
+              key={label}
+              n={n}
+              label={label}
+              run={statsVis}
+              first={i === 0}
+              suffix={suffix}
+              display={display}
+            />
           ))}
         </div>
         <style>{`
@@ -619,7 +648,7 @@ export function AboutClient() {
             }}
           >
             <span>Our Team</span>
-            <span>02<Sep />The Studio</span>
+            <span>03<Sep />The Studio</span>
           </div>
           <h2
             className="mat-team-heading"
@@ -680,8 +709,6 @@ export function AboutClient() {
           }
         `}</style>
       </section>
-
-      <PhilosophySlab />
 
     </main>
   );

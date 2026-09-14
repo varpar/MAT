@@ -110,7 +110,7 @@ function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
         >
           <span style={{ opacity: 0.92 }}>A Mi Amor Tales Story</span>
           <span style={{ opacity: 0.7 }}>
-            No. {String(idx + 1).padStart(2, "0")}<Sep />January 2026
+            No. {String(idx + 1).padStart(2, "0")}
           </span>
         </div>
 
@@ -183,7 +183,7 @@ function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
               lineHeight: 1.55,
             }}
           >
-            {couple.place}<Sep />three days, every frame kept.
+            {couple.place}<Sep />moments held close.
           </div>
           <motion.span
             className="mat-spread-cta"

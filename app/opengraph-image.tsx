@@ -62,7 +62,7 @@ export default function OG() {
               display: "flex",
             }}
           >
-            Studio, Jaipur — est. 2018
+            Studio, Jaipur — 2+ years of stories
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div

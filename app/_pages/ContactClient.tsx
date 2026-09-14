@@ -374,56 +374,72 @@ function SelectField({
 
 function FAQRow({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
+  const panelId = `faq-${q.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+
   return (
     <div
       className="mat-faq-row"
       style={{
         borderTop: `1px solid ${T.ink}15`,
-        cursor: "pointer",
       }}
-      onClick={() => setOpen((v) => !v)}
     >
-      <div
-        className="mat-faq-head"
-        style={{
-          padding: "28px 0",
-          minHeight: 76,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          gap: 16,
-        }}
-      >
-        <h3
-          className="mat-faq-q"
+      <h3 style={{ margin: 0 }}>
+        <button
+          type="button"
+          aria-expanded={open}
+          aria-controls={panelId}
+          onClick={() => setOpen((v) => !v)}
+          className="mat-faq-head"
           style={{
-            margin: 0,
-            fontFamily: SERIF,
-            fontWeight: 500,
-            fontStyle: "italic",
-            fontSize: "clamp(18px, 2.4vw, 24px)",
-            lineHeight: 1.25,
+            width: "100%",
+            padding: "28px 0",
+            minHeight: 76,
+            border: 0,
+            background: "transparent",
+            color: T.ink,
+            textAlign: "left",
+            cursor: "pointer",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: 16,
           }}
         >
-          {q}
-        </h3>
-        <span
-          aria-hidden
-          style={{
-            color: T.sage,
-            fontFamily: SERIF,
-            fontSize: 28,
-            flexShrink: 0,
-            width: 32,
-            textAlign: "center",
-            transform: open ? "rotate(45deg)" : "rotate(0)",
-            transition: "transform 320ms ease",
-          }}
-        >
-          +
-        </span>
-      </div>
+          <span
+            className="mat-faq-q"
+            style={{
+              margin: 0,
+              fontFamily: SERIF,
+              fontWeight: 600,
+              fontStyle: "italic",
+              fontSize: "clamp(18px, 2.4vw, 24px)",
+              lineHeight: 1.25,
+            }}
+          >
+            {q}
+          </span>
+          <span
+            aria-hidden
+            style={{
+              color: T.sage,
+              fontFamily: SERIF,
+              fontSize: 28,
+              flexShrink: 0,
+              width: 32,
+              textAlign: "center",
+              transform: open ? "rotate(45deg)" : "rotate(0)",
+              transition: "transform 320ms ease",
+            }}
+          >
+            +
+          </span>
+        </button>
+      </h3>
       <div
+        id={panelId}
+        role="region"
+        aria-label={q}
+        aria-hidden={!open}
         className="mat-faq-body"
         style={{
           maxHeight: open ? 400 : 0,

@@ -745,8 +745,8 @@ export type Couple = {
 
 const ANVESHA_OMKAR_STORY: FeaturedStory = {
   coverIntro: "ANVESHA AND OMKAR'S JOURNEY REFLECTS A LOVE THAT GREW WITH TIME — FROM FRIENDSHIP TO SOMETHING DEEPLY CERTAIN, EFFORTLESS IN ITS PRESENCE AND STRONG IN ITS FOUNDATION. THEIR BOND CARRIES WARMTH, UNDERSTANDING, AND A QUIET SENSE OF BELONGING, MAKING THEIR STORY FEEL BOTH BEAUTIFULLY PERSONAL AND TIMELESS.",
-  date: "Fairmont Jaipur — Three Days",
-  detailLine: "Two celebrations · One love · 2,140 frames",
+  date: "Fairmont Jaipur",
+  detailLine: "From friendship to forever · Two celebrations · One love",
   photos: {
     hero: MAT_IMAGES.aoHero,
     bride: MAT_IMAGES.aoBride,
@@ -804,8 +804,8 @@ const ANVESHA_OMKAR_STORY: FeaturedStory = {
 
 const HARSH_POOJA_STORY: FeaturedStory = {
   coverIntro: "HARSH AND POOJA'S JOURNEY REFLECTS A BOND THAT UNFOLDED WITH TIME — FROM A SIMPLE BEGINNING TO SOMETHING DEEPLY CERTAIN, ROOTED IN UNDERSTANDING AND SHAPED BY PATIENCE. THEIR CONNECTION CARRIES A QUIET STRENGTH, WHERE COMFORT MEETS COMMITMENT, MAKING THEIR STORY FEEL BOTH SINCERE AND TIMELESS.",
-  date: "ITC Mughal, Agra — Three Days",
-  detailLine: "Near the Taj Mahal · Sandstone & sindoor · 1,920 frames",
+  date: "ITC Mughal, Agra",
+  detailLine: "An arranged match · A love that grew · Near the Taj Mahal",
   photos: {
     hero: {
       publicId: "/images/weddings/065-aks09538-copy.jpg",
@@ -923,9 +923,9 @@ const HARSH_POOJA_STORY: FeaturedStory = {
 };
 
 const JOYEETA_HARSH_STORY: FeaturedStory = {
-  coverIntro: "HARSH AND JOYEETA'S STORY BEGAN QUIETLY — TWO WORLDS, ONE FROM BENGAL AND ONE FROM UTTAR PRADESH, MEETING IN THE MOST UNHURRIED WAY. WHAT GREW BETWEEN THEM WASN'T SUDDEN OR LOUD; IT WAS A SLOW CERTAINTY, BUILT ON SHARED LANGUAGES OF LAUGHTER, FAMILY, AND TIME. IN HER, HARSH FOUND HIS JOY — A QUIET, EVERYDAY JOY THAT KEEPS COMING HOME.",
-  date: "A two-state wedding — Bengali rituals, UP heart",
-  detailLine: "Mukut & safa · Scripture, sindoor, havan-fire · 2,310 frames",
+  coverIntro: "HARSH AND JOYEETA'S STORY IS A BEAUTIFUL COMING TOGETHER OF CULTURES, EMOTIONS, AND TIME. FROM A SIMPLE BEGINNING TO A DECADE OF LOVE, THEIR JOURNEY REFLECTS CONNECTION BEYOND BORDERS. WITH TRADITIONS BLENDING SEAMLESSLY AND HEARTS DEEPLY ALIGNED, THEIR CELEBRATION STANDS AS A TESTAMENT TO A LOVE THAT FEELS BOTH TIMELESS AND UNIVERSAL.",
+  date: "A Bengali–Awadhi celebration",
+  detailLine: "A connection that began in 2015 · A decade of love · #HARSHFOUNDHISJOY",
   photos: {
     hero: MAT_IMAGES.jhHero,
     bride: MAT_IMAGES.jhBride,
@@ -942,33 +942,34 @@ const JOYEETA_HARSH_STORY: FeaturedStory = {
   },
   sections: [
     {
-      heading: "Found of Joy",
+      heading: "A Story of Two Cultures",
       style: "script",
       paragraphs: [
-        "Harsh and Joyeeta met the way good stories do — slowly, without performance. A cross-cultural match: Bengal on her side, Uttar Pradesh on his, two sets of elders on either end of a long phone call. What followed wasn't the rush of a film romance but the gentler thing — long calls that turned into long silences, the kind that don't need to be filled. Somewhere between two languages, an everyday certainty settled in.",
-        "She brought Kolkata with her: the scripture-reading, the white-and-red sari, the silver mukut that made every elder pause and look. He brought the safa, his mother's quiet rehearsal of the kanyadan, the priest who knew every mantra by heart. Both families stood on either side of one mandap and somehow — between turmeric, scripture, and havan-fire — made a single wedding out of two. The hashtag wrote itself before anyone said it out loud. Harsh found his Joy.",
+        "She is Bengali, carrying the soul of Rabindra Sangeet. He is from Uttar Pradesh, rooted in the warmth of Awadhi traditions. Two worlds, distinct yet beautifully aligned. What began in 2015 as a simple connection gradually unfolded into a decade-long journey — one shaped by love, deep respect, and a shared sense of joy. Over the years, their bond evolved quietly, growing stronger with time, intention, and understanding. Ten years later, Joyeeta and Harsh came together not just as partners, but as a union of cultures — returning to the very city where it all began.",
+        "With loved ones flying in from over ten nationalities, their wedding was more than a celebration; it was a reflection of unity, diversity, and a story that transcends boundaries. From the sweetness of mishti doi to the richness of peda, from shankha-pola to the regal kalgi — every detail wove together a narrative that felt both rooted and extraordinary.",
       ],
     },
     {
-      heading: "Two languages, one mandap",
+      heading: "A Love That Stays",
       style: "serif",
       paragraphs: [
-        "We approached this one quietly. A Bengali-UP wedding has its own crowd — aunts comparing notes on the order of rituals, the priest negotiating which mantras come when — and the temptation is to chase the noise. Instead we listened. We let the white-pearl mukut catch its own light, let the safa-tying happen in the soft yellow of the prep room, let the scripture-reader's hands and the bride's hennaed feet share a single frame without explanation.",
-        "Joyeeta and Harsh don't perform for cameras. They look at each other, they laugh at the right moments, and they hold still when stillness matters. So we framed for that — the held breath before sindoor, the quiet hand on a knee under the saree's folds, the half-second after the pheras when no one is watching except the two of them. The frames are clean, the light is honest, and the love is exactly where they left it.",
+        "Some stories don't arrive loudly — they settle in quietly and stay. We met Joyeeta and Harsh during what was meant to be a simple booking meeting, but it never felt like just that. It felt like stepping into something already lived, already understood. Ten years of being together had given their love a rare stillness — balanced, committed, and deeply certain. When we reconnected a week before the wedding, that feeling hadn't changed. Their story stayed with us, and we knew we didn't want to create moments for them — we wanted to capture what already existed.",
+        "Over three days, we followed not just their wedding, but their world. We began with them as individuals — Joyeeta in her quiet warmth, surrounded by family, laughter flowing softly through familiar spaces; Harsh, grounded and calm, present with his people. As the celebrations unfolded, the spaces grew louder, fuller, more alive — but even within the chaos, they remained unchanged. A glance across the room, a small reassuring smile, a silent check-in — these were their real moments. Their love didn't compete with the noise; it existed gently within it.",
       ],
     },
     {
-      heading: "Bengali by name, theirs by ritual",
+      heading: "The Time We Spent Listening",
       style: "serif",
       paragraphs: [
-        "There is a moment in every Bengali wedding when the bride is covered head to foot in red and gold and the white sari draped over her looks like a second sky. That sky moved with Joyeeta — through scripture, through fire, through the small smile she could not quite hide as Harsh leaned down for the sindoor. Two states, two families, one ribbon of vermillion. From that line forward, only theirs.",
+        "What made this story even more special was the time we spent simply listening. We sat down for what became our longest couple interview till date — starting around 2 and only realizing it was 5 when two batteries had already drained and a full card had quietly filled itself. And yet, it never felt like work. It felt like being trusted with something deeply personal. Every answer, every pause, every memory they shared only reinforced what we had already felt from day one.",
+        "By the wedding day, there was no rush, no nervous tension — just a quiet acceptance, like two people who had already lived this moment in their hearts long before it arrived. We didn't chase emotions or construct frames; we let them unfold naturally. Their story is about consistency, patience, and choosing each other every single day for ten years. What we captured wasn't just a wedding. It was a journey — of two people who found balance in each other, who grew without losing themselves, and who showed us that the strongest love isn't the loudest one. It's the one that stays.",
       ],
     },
     {
-      heading: "The Elegant Bride",
+      heading: "Ethereal Grace",
       style: "serif",
       paragraphs: [
-        "JOYEETA WEARS HER CROWN LIKE SHE WAS BORN TO IT. THERE IS NO STRAIN IN THE WAY SHE CARRIES THE WHITE-PEARL MUKUT, NO RUSH IN THE WAY THE SARI FALLS. IN STILLNESS SHE IS COMPOSED; IN MOTION SHE IS LIGHT. SHE IS WHAT THE OLD SCRIPTURES MEANT WHEN THEY WROTE ABOUT JOY — UNHURRIED, ARRIVED, AND ENTIRELY HER OWN.",
+        "JOYEETA CARRIES A QUIET ELEGANCE THAT FEELS BOTH EFFORTLESS AND DEEPLY CAPTIVATING. WITH EVERY GLANCE AND GENTLE SMILE, SHE BRINGS WARMTH TO THE MOMENT — A PRESENCE THAT IS SOFT YET POWERFUL, LEAVING BEHIND A GLOW THAT LINGERS FAR BEYOND THE FRAME.",
       ],
     },
   ],
@@ -1052,7 +1053,7 @@ const SHUBHAM_AISHWARYA_STORY: FeaturedStory = {
   coverIntro:
     "SHUBHAM AND AISHWARYA'S JOURNEY REFLECTS A BOND BUILT ON COMFORT AND QUIET UNDERSTANDING — WHERE LOVE FEELS NATURAL, UNFORCED, AND DEEPLY ROOTED. EFFORTLESS IN ITS PRESENCE AND STEADY IN ITS GROWTH, THEIR CONNECTION CARRIES WARMTH AND SINCERITY, MAKING THEIR STORY FEEL BOTH GENUINE AND TIMELESS.",
   date: "Chokhi Dhani, Jaipur — from colleagues to companions",
-  detailLine: "Rustic folk textures · Petal-shower haldi · Four years in the making",
+  detailLine: "From colleagues to companions · Four to five years of growing together",
   photos: {
     hero: MAT_IMAGES.saHero,
     bride: MAT_IMAGES.saBride,
@@ -1107,9 +1108,9 @@ const SHUBHAM_AISHWARYA_STORY: FeaturedStory = {
 
 const RIYA_MOHIT_STORY: FeaturedStory = {
   coverIntro:
-    "RIYA AND MOHIT HAD BEEN A DECADE'S WORTH OF EACH OTHER BEFORE THE FIRST GUEST EVER ARRIVED. WHAT WE GOT TO PHOTOGRAPH WAS NOT THE BEGINNING OF SOMETHING; IT WAS THE PUBLIC PUNCTUATION OF SOMETHING ALREADY WRITTEN. JAIBAGH PALACE HELD THE LIGHT. THE PINK HELD THE MOOD. THE TEN YEARS HELD THEMSELVES.",
-  date: "Jaibagh Palace, Jaipur — a decade, then a day",
-  detailLine: "Pink lehenga · #RIRIKAMOH · 1,840 frames",
+    "RIYA AND MOHIT'S STORY BEGAN AS NEIGHBORS WHO MET ON A TERRACE. FOURTEEN YEARS LATER, THEIR WEDDING AT JAIBAGH PALACE CELEBRATED A BOND SHAPED BY TIME, TRUST, AND THE EASE OF GROWING UP SIDE BY SIDE. SURROUNDED BY FAMILY AND LAUGHTER, IT WAS A CONTINUATION OF A STORY ALREADY DEEPLY ROOTED — PLAYFUL, EMOTIONAL, AND THEIR OWN.",
+  date: "Jaibagh Palace, Jaipur",
+  detailLine: "Neighbors to partners · Fourteen years together · #RIRIKAMOH",
   photos: {
     // heroVideo on the Couple overrides this at render-time, so the static
     // hero photo is unseen — it stays here as a fallback for reduced-motion
@@ -1129,33 +1130,34 @@ const RIYA_MOHIT_STORY: FeaturedStory = {
   },
   sections: [
     {
-      heading: "Decade, Of Us",
+      heading: "A Love That Stays",
       style: "script",
       paragraphs: [
-        "Riya and Mohit met young, and then they kept meeting. Through college and not-college, through cities that changed and friends who didn't, through the long ordinary weeks that long love is mostly made of. Ten years in, the wedding wasn't a beginning; it was a public confirmation of something already true. The vows had been said in a hundred ways before any priest sat them down.",
-        "We approached this one quietly. We're not the camera that breaks the moment to set it up again. We waited, we let them look at each other, and we let Jaibagh Palace do the framing. What we got back is what they look like together — the version that ten years quietly made.",
+        "Mohit and Riya's story began simply — two people meeting, talking, and finding comfort in each other's presence. What started as easy conversations slowly grew into something deeper, built on understanding, laughter, and a connection that felt natural from the very beginning. Over time, they became each other's constant, choosing to stay, grow, and evolve side by side.",
+        "Through the years, their bond strengthened with trust, patience, and countless shared moments. Mohit's calm steadiness and Riya's warmth created a balance that felt effortless and real. As they stepped into this new chapter, their story stood as a reflection of time, commitment, and a love that quietly turned into forever.",
       ],
     },
     {
-      heading: "Pink, palace, decade kept",
+      heading: "Tradition Meets a Cinematic Presence",
       style: "serif",
       paragraphs: [
-        "Riya wore pink the whole way through — a soft daylight pink for the corridor walk, a deeper rose for the pheras, a regal blush at the mandap. Mohit matched her, in cream and a pink safa, in a way only ten years of knowing what the other one wants can match. The palace's pale arches caught it all — the lehenga, the marigold, the moment after the moment when neither of them needed to be told what came next.",
-        "Their hashtag was #RIRIKAMOH — half a tease, half a brand. By the second day every uncle knew it; by the third, it was on the wedding favours. The hashtag is a small thing, but it tells you something about who they are: a decade together, still inventing little inside jokes that the family then adopts and the internet then keeps. They will laugh about it forever. So will we.",
+        "Mohit and Riya are a perfect blend of traditional values and a cinematic presence, and their story carries both with equal strength. From being neighbors who met on a terrace to building a bond that has lasted 14 years, their journey feels familiar yet deeply special. When we approached their shoot, we wanted to reflect both sides of them — the rooted, traditional connection and the effortless, film-like chemistry they share.",
+        "Riya naturally carried a strong, model-like presence, so we crafted her frames with that elegance, keeping compositions clean, confident, and visually striking. At the same time, we brought in playful energy through a rapid-fire segment, capturing their comfort, humor, and how easily they understand each other. Their story didn't need heavy direction — it already had depth, time, and honesty. What we created was a balance of structure and spontaneity, where tradition meets a cinematic feel, and two people who grew up side by side now stand together with a bond shaped over years.",
       ],
     },
     {
-      heading: "Under fire, the same vow they already had",
+      heading: "At Jaibagh Palace",
       style: "serif",
       paragraphs: [
-        "The pheras came at night, on a small mandap with marigold and jasmine and a fire the priest barely needed to feed. Riya sat in pink. Mohit sat beside her in pink-safa cream. Their hands didn't shake — these were not new hands. The seven steps happened. The mantras were said. What was new wasn't the vow; it was the witnessing — they finally got to do this where everyone they loved could see them do it. The fire spoke. They listened. It was done.",
+        "Set against the regal backdrop of Jai Bagh Palace, Mohit and Riya's wedding unfolded with a sense of timeless charm and quiet grandeur. Curated by Bhagwati Weddings, every detail — from the intricately styled spaces to the larger-than-life setups — reflected a vision that was both refined and deeply personal. The celebration carried a seamless flow, where each function transitioned effortlessly into the next, with thoughtfully designed experiences that felt immersive yet intimate.",
+        "From soft, romantic settings to vibrant, high-energy moments, every space was crafted to evoke emotion and elevate the atmosphere. The palace became more than just a venue; it transformed into a living canvas — where architecture, decor, and storytelling came together in perfect harmony, creating a celebration that was not only visually stunning, but truly unforgettable.",
       ],
     },
     {
       heading: "The Elegant Bride",
       style: "serif",
       paragraphs: [
-        "RIYA HAS A KIND OF STILLNESS YOU CANNOT BUY. IT IS NOT POSED — IT IS WHAT TEN YEARS OF CERTAINTY LOOKS LIKE WHEN A PHOTOGRAPHER IS ALLOWED IN THE ROOM. WE SHOT HER UNDER A RED ARCH WITH HER EYES CLOSED; WE SHOT HER SEATED UNDER PALACE JHAROKHAS WITH THE WEIGHT OF GOLD ON HER WRISTS; WE SHOT HER WALKING ALONE THROUGH A PALACE HALL AT FIRST LIGHT. SHE DIDN'T HAVE TO BE TOLD. SHE JUST WAS.",
+        "RIYA EMERGES AS A VISION OF REGAL GRACE, WHERE EVERY DETAIL SPEAKS ELEGANCE. POISED YET EFFORTLESS, SHE CARRIES TRADITION WITH MODERN CHARM, EMBODYING A BRIDE WHO FEELS TIMELESS, COMPOSED, AND QUIETLY POWERFUL.",
       ],
     },
   ],
@@ -1175,9 +1177,9 @@ const RIYA_MOHIT_STORY: FeaturedStory = {
 
 const VARUN_VANYA_STORY: FeaturedStory = {
   coverIntro:
-    "VARUN AND VANYA CAME TO ANANTARA THE WAY YOU COME TO A HOUSE YOU ALREADY KNOW — UNHURRIED, SURE OF THE ROOM. THERE WAS NO PERFORMANCE TO THE WAY THEY HELD EACH OTHER, AND NO STRAIN IN THE WAY THEY LAUGHED. THE PALACE HELD THE LIGHT. THE CHANDELIERS HELD THE NIGHT. WHAT MADE THEM SPECIAL WAS HOW LITTLE THEY ASKED OF EITHER.",
-  date: "Anantara Jaipur Resort — three nights, one fire",
-  detailLine: "Baraat under phoolon ki chaadar · Sparklers at the varmala · 2,210 frames",
+    "VARUN AND VANYA'S JOURNEY REFLECTS A LOVE THAT EXISTS IN QUIET MOMENTS — EFFORTLESS IN ITS PRESENCE AND DEEPLY FELT IN ITS SILENCE. ROOTED IN COMFORT AND UNSPOKEN UNDERSTANDING, THEIR BOND CARRIES A GENTLE STRENGTH. AT ANANTARA JAIPUR RESORT, THAT CONNECTION UNFOLDED THROUGH SOFT GLANCES, MEANINGFUL RITUALS, AND A MOONLIT MOMENT THAT BECAME THE ESSENCE OF THEIR STORY.",
+  date: "Anantara Jaipur Resort",
+  detailLine: "Quiet companionship · Moonlit portraits · An unspoken understanding",
   photos: {
     hero: MAT_IMAGES.vvHero,
     bride: MAT_IMAGES.vvBride,
@@ -1194,33 +1196,34 @@ const VARUN_VANYA_STORY: FeaturedStory = {
   },
   sections: [
     {
-      heading: "Quiet, Of Certain",
+      heading: "A Story of Love",
       style: "script",
       paragraphs: [
-        "Varun and Vanya did not arrive at this wedding looking for it to convince them of anything. The certainty was already there — in the way she found his hand without checking, in the way he turned his head before she spoke. What we got to photograph was the comfort that comes after the decision has been made, when a wedding stops being a question and starts being a thank-you.",
-        "We shot it close. The setups they gave us were the ones they were already in — a glance across the sangeet floor, his arm raised mid-cheer with her laughing beside him, a hand on a back during a stage moment when the smoke caught the spotlight. The frames did not need direction. They needed patience and a long lens.",
+        "Varun and Vanya's journey unfolded like poetry in motion — in soft glances, gentle smiles, and moments that spoke far beyond words. There was a certain stillness to their connection, a quiet depth that revealed itself in the spaces between. Capturing their wedding was not just about documenting events — it was about witnessing a companionship that felt effortless, and a love that didn't need to announce itself to be known.",
+        "From fleeting, stolen moments to rituals filled with meaning, every frame carried the essence of a bond rooted in comfort, trust, and an unspoken understanding.",
       ],
     },
     {
-      heading: "Anantara, after dark",
+      heading: "At Anantara Jaipur Resort",
       style: "serif",
       paragraphs: [
-        "Anantara holds light the way old Jaipur properties do — softly, and from every direction. The facade lit up after sundown and gave us a backdrop the palace had been rehearsing for. We followed them through it: across the lawns, along the corridors, into the candelabra-lined room where the reception sat under warm tungsten. The hotel did half the work. They did the other half by being so plainly each other's.",
-        "The sangeet was loud in the good way — a stage in red curtain, smoke catching the spotlights, the couple already mid-laugh when we found them. The baraat was carried on shoulders and held under a phoolon ki chaadar; Varun arrived under the flowers with the kind of grin that does not need to be coached. By the time the varmala came, the chandeliers had been waiting all evening.",
+        "Set amidst the serene grandeur of Anantara Jaipur Resort, Varun and Vanya's wedding unfolded in an atmosphere of quiet luxury and refined elegance. The timeless architecture, soft natural light, and tranquil surroundings created a setting that felt both intimate and expansive — perfectly reflecting the essence of their story. Every corner of the venue held a certain calm, allowing moments to breathe, emotions to linger, and the celebration to flow with effortless grace.",
       ],
     },
     {
-      heading: "Under sparklers, under fire",
+      heading: "Under the Moon",
       style: "serif",
       paragraphs: [
-        "Vanya walked in veiled in a red dupatta, her hands held by her family, the sparklers going off on either side as the chandeliers above her caught the gold. The varmala happened the way these things should — slow, and watched. The pheras were quieter. After the last circle around the fire, they sat for the gifting in warm side light, and for a long moment neither of them said anything. The vow had already taken.",
+        "Varun and Vanya's story found its most striking expression under the moon, where their chemistry unfolded in a way that felt both effortless and magnetic. We didn't build the moment — we waited for it. As the night settled and the moon rose, everything aligned naturally: the light, the silence, and the way they stood close without needing direction. Their connection carried the frame, not gestures or poses, but the ease with which they exist around each other.",
+        "The moon became more than a backdrop; it reflected the mood between them — subtle, intimate, and deeply felt. We kept the frames clean and intentional, allowing the contrast of night and light to highlight their presence without distraction. That one moment, simple yet powerful, captured everything about them — their comfort, their bond, and the quiet intensity they share. It wasn't just a highlight shot; it became the essence of their story, where everything else faded and only their connection remained.",
       ],
     },
     {
-      heading: "The Elegant Bride",
+      heading: "Quietude",
       style: "serif",
       paragraphs: [
-        "VANYA CARRIES HER RED THE WAY YOU CARRY SOMETHING YOU HAVE BEEN PRACTISING FOR — WITHOUT HURRY, WITHOUT STRAIN. THE LEHENGA FALLS HOW IT WAS MEANT TO; THE DUPATTA SITS WHERE IT WAS PLACED; THE GOLD CATCHES THE CHANDELIER AND HOLDS IT. SHE HAS A STILLNESS THAT DOES NOT ASK FOR THE FRAME. IT FILLS IT ANYWAY. WE DID NOT POSE HER. WE WATCHED THE PALACE FIND HER.",
+        "Their connection carried a stillness, one that felt grounding amidst everything around them. Even in the midst of celebration, where moments moved quickly and emotions ran high, they remained anchored in each other — calm, present, and completely in sync. There's something deeply reassuring about a love like theirs. It doesn't demand attention, yet it holds it. It doesn't try too hard, yet it leaves a lasting impression.",
+        "It exists in the spaces in between — where words are unnecessary, and feelings speak for themselves. Capturing Varun and Vanya was less about documenting events, and more about understanding a rhythm — slow, steady, and beautifully consistent. A love that doesn't rush, but endures. And perhaps that's what makes their story unforgettable — it wasn't loud, but it was real.",
       ],
     },
   ],

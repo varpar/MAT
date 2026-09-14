@@ -52,7 +52,7 @@ function FeaturedTitle({ couple, idx }: { couple: Couple; idx: number }) {
             maxWidth: "100%",
           }}
         >
-          Featured<Sep />No. {String(idx).padStart(2, "0")}<Sep />{couple.place}<Sep />January 2026
+          Featured<Sep />No. {String(idx).padStart(2, "0")}<Sep />{couple.place}
         </div>
       </div>
       <h1

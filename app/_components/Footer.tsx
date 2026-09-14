@@ -98,7 +98,7 @@ export function Footer() {
           >
             Studio<span style={{ color: T.cream, margin: "0 8px" }}>·</span>
             Jaipur, IN<span style={{ color: T.cream, margin: "0 8px" }}>·</span>
-            est<span style={{ color: T.cream }}>.</span> 2018
+            2+ years of stories
           </div>
         </div>
         <div
@@ -161,7 +161,7 @@ export function Footer() {
           <span style={{ color: T.cream }}>.</span>
         </span>
         <span>
-          Mi Amor Tales <span style={{ color: T.cream }}>sang</span> their first wedding in 2018
+          Preserving feelings <span style={{ color: T.cream }}>since</span> our first wedding
           <span style={{ color: T.cream }}>.</span>
         </span>
       </div>

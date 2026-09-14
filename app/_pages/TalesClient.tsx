@@ -82,7 +82,18 @@ function StoryCard({
     <motion.article
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
+      onFocus={() => setHov(true)}
+      onBlur={() => setHov(false)}
       onClick={go}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          go();
+        }
+      }}
+      role="link"
+      tabIndex={0}
+      aria-label={`Read the wedding story of ${couple.bride} and ${couple.groom}`}
       data-cursor="Read story"
       initial={initial}
       whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
@@ -235,22 +246,31 @@ function StoryCard({
 function AlbumTile({
   image,
   idx,
+  photoCount,
   alt,
   reduceMotion,
 }: {
   image: MatImageRecord;
   idx: number;
+  photoCount: number;
   alt: string;
   reduceMotion: boolean | null;
 }) {
   const [ref, vis] = useReveal<HTMLDivElement>(0.08);
-  const aspect = ["3/4", "4/3", "3/4", "1/1", "4/3", "3/4"][idx % 6];
   const show = reduceMotion ? true : vis;
+  const naturalAspect = `${image.width} / ${image.height}`;
+  // Match the editorial grid below, including the full-width closing spread
+  // for eight-photo albums. Polaroid's four-column preset is too small here.
+  const closingSpread = idx === 7 && photoCount === 8;
+  const desktopColumns = closingSpread ? 12 : [8, 4, 4, 8, 4, 4, 4, 7, 5][idx];
+  const tabletWidth = idx === 0 || closingSpread ? 100 : 50;
+  const sizes = `(max-width: 480px) 100vw, (max-width: 1000px) ${tabletWidth}vw, ${((desktopColumns / 12) * 100).toFixed(2)}vw`;
   return (
     <div
       ref={ref}
+      className={`mat-album-tile mat-album-tile-${idx + 1}`}
       style={{
-        aspectRatio: aspect,
+        "--natural-aspect": naturalAspect,
         overflow: "hidden",
         background: "#0e0e0e",
         position: "relative",
@@ -259,9 +279,9 @@ function AlbumTile({
         transition: reduceMotion
           ? "none"
           : `opacity 0.9s ${EASE} ${(idx % 3) * 0.07}s, transform 0.9s ${EASE} ${(idx % 3) * 0.07}s`,
-      }}
+      } as React.CSSProperties}
     >
-      <MatImage image={image} variant="Polaroid" alt={alt} />
+      <MatImage image={image} variant="Polaroid" alt={alt} sizesOverride={sizes} />
     </div>
   );
 }
@@ -288,6 +308,8 @@ function CoupleAlbum({
   const more = all.length - shown.length;
   const slug = couple.slug ?? "riya-sang-mohit";
   const alt = `${couple.bride} sang ${couple.groom} — ${couple.place}`;
+  const story = couple.story;
+  const storyHeading = story?.sections[0]?.heading ?? "Their story";
 
   return (
     <article className="mat-album">
@@ -328,7 +350,30 @@ function CoupleAlbum({
           </span>
           <span>{couple.groom}</span>
         </h3>
+
+        <div className="mat-album-details">
+          <span>{story?.date}</span>
+          <span aria-hidden="true">·</span>
+          <span>{story?.detailLine}</span>
+        </div>
       </header>
+
+      {/* The magazine's own narrative introduces the couple before their
+          photographs, turning each album into a chapter rather than a grid. */}
+      {story ? (
+        <div className="mat-album-story">
+          {story.pullQuote?.word ? (
+            <span className="mat-album-story-word" aria-hidden="true">
+              {story.pullQuote.word}
+            </span>
+          ) : null}
+          <div className="mat-album-story-copy">
+            <span className="mat-album-story-kicker">Before the photographs</span>
+            <h4>{storyHeading}</h4>
+            <p>{story.coverIntro}</p>
+          </div>
+        </div>
+      ) : null}
 
       <div className="mat-album-grid">
         {shown.map((p, i) => (
@@ -336,6 +381,7 @@ function CoupleAlbum({
             key={p.publicId}
             image={p}
             idx={i}
+            photoCount={shown.length}
             alt={alt}
             reduceMotion={reduceMotion}
           />
@@ -510,6 +556,7 @@ export function TalesClient() {
               <button
                 key={opt.slug}
                 onClick={() => setFilter(opt.slug)}
+                aria-pressed={active}
                 className="mat-tales-filter-btn"
                 style={{
                   background: "transparent",
@@ -554,7 +601,7 @@ export function TalesClient() {
           <span className="mat-section-kicker">Section One</span>
           <h2 className="mat-section-h2">Couple Stories</h2>
           <p className="mat-section-sub">
-            The full features — three days, every frame kept.
+            The full features — every story, thoughtfully told.
           </p>
         </header>
 
@@ -631,18 +678,124 @@ export function TalesClient() {
           gap: ${LAYOUT.gap};
           padding-inline: ${LAYOUT.edge};
         }
+        .mat-story-card:focus-visible,
+        .mat-album-link:focus-visible,
+        .mat-tales-filter-btn:focus-visible {
+          outline: 2px solid ${T.sage};
+          outline-offset: 4px;
+        }
 
         /* Albums — head/foot copy keeps the text gutter; the photo grid sits just off the edge. */
         .mat-album-head,
         .mat-album-foot { padding-inline: ${LAYOUT.gutter}; }
         .mat-album-head { margin-bottom: clamp(28px, 4vw, 44px); }
+        .mat-album-details {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 7px 12px;
+          margin-top: 20px;
+          max-width: 720px;
+          font-family: ${SANS};
+          font-size: 9px;
+          line-height: 1.6;
+          letter-spacing: 0.24em;
+          text-transform: uppercase;
+          color: ${T.ink};
+          opacity: 0.58;
+        }
+        .mat-album-story {
+          position: relative;
+          isolation: isolate;
+          display: grid;
+          grid-template-columns: minmax(140px, 0.42fr) minmax(0, 1fr);
+          align-items: center;
+          gap: clamp(30px, 6vw, 92px);
+          margin: 0 ${LAYOUT.gutter} clamp(38px, 6vw, 78px);
+          padding: clamp(34px, 5vw, 72px) clamp(24px, 5.5vw, 88px);
+          min-height: clamp(300px, 33vw, 470px);
+          overflow: hidden;
+          background: ${T.sage};
+          color: #f4f5f2;
+        }
+        .mat-album-story::after {
+          content: "";
+          position: absolute;
+          inset: 18px;
+          z-index: -1;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          pointer-events: none;
+        }
+        .mat-album-story-word {
+          font-family: ${DISPLAY};
+          font-size: clamp(54px, 8.6vw, 134px);
+          font-weight: 300;
+          line-height: 0.76;
+          letter-spacing: -0.055em;
+          writing-mode: vertical-rl;
+          transform: rotate(180deg);
+          opacity: 0.13;
+          white-space: nowrap;
+          justify-self: center;
+          user-select: none;
+        }
+        .mat-album-story-copy {
+          position: relative;
+          max-width: 780px;
+          border-left: 1px solid rgba(255, 255, 255, 0.36);
+          padding-left: clamp(24px, 4vw, 60px);
+        }
+        .mat-album-story-kicker {
+          display: block;
+          margin-bottom: 18px;
+          font-family: ${SANS};
+          font-size: 9px;
+          letter-spacing: 0.4em;
+          text-transform: uppercase;
+          opacity: 0.7;
+        }
+        .mat-album-story h4 {
+          margin: 0 0 20px;
+          font-family: ${DISPLAY};
+          font-size: clamp(30px, 4.2vw, 62px);
+          font-weight: 300;
+          line-height: 0.98;
+          letter-spacing: -0.025em;
+          text-wrap: balance;
+        }
+        .mat-album-story p {
+          margin: 0;
+          max-width: 760px;
+          font-family: ${BODY};
+          font-size: clamp(14px, 1.35vw, 18px);
+          line-height: 1.76;
+          letter-spacing: 0.025em;
+        }
         .mat-album-foot { margin-top: clamp(28px, 3.6vw, 44px); text-align: center; }
         .mat-album-grid {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: ${LAYOUT.gap};
+          grid-template-columns: repeat(12, minmax(0, 1fr));
+          grid-template-rows:
+            clamp(380px, 48vw, 720px)
+            clamp(380px, 48vw, 720px)
+            clamp(260px, 31vw, 470px)
+            clamp(320px, 40vw, 610px);
+          gap: clamp(3px, 0.4vw, 7px);
           padding-inline: ${LAYOUT.edge};
         }
+        .mat-album-tile { min-width: 0; min-height: 0; }
+        .mat-album-tile-1 { grid-column: 1 / span 8; grid-row: 1; }
+        .mat-album-tile-2 { grid-column: 9 / span 4; grid-row: 1; }
+        .mat-album-tile-3 { grid-column: 1 / span 4; grid-row: 2; }
+        .mat-album-tile-4 { grid-column: 5 / span 8; grid-row: 2; }
+        .mat-album-tile-5 { grid-column: 1 / span 4; grid-row: 3; }
+        .mat-album-tile-6 { grid-column: 5 / span 4; grid-row: 3; }
+        .mat-album-tile-7 { grid-column: 9 / span 4; grid-row: 3; }
+        .mat-album-tile-8 { grid-column: 1 / span 7; grid-row: 4; }
+        .mat-album-tile-9 { grid-column: 8 / span 5; grid-row: 4; }
+        /* An eight-photo album closes with a complete spread, not an empty
+           partner slot. This also spans both tablet columns below. */
+        .mat-album-tile-8:last-child { grid-column: 1 / -1; }
 
         /* Touch devices: keep the read-cta visible (no hover state). */
         @media (hover: none) {
@@ -650,8 +803,20 @@ export function TalesClient() {
         }
 
         @media (max-width: 1000px) {
-          .mat-story-grid,
-          .mat-album-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .mat-story-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .mat-album-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-rows: repeat(5, clamp(300px, 54vw, 520px));
+          }
+          .mat-album-tile-1 { grid-column: 1 / -1; grid-row: 1; }
+          .mat-album-tile-2 { grid-column: 1; grid-row: 2; }
+          .mat-album-tile-3 { grid-column: 2; grid-row: 2; }
+          .mat-album-tile-4 { grid-column: 1; grid-row: 3; }
+          .mat-album-tile-5 { grid-column: 2; grid-row: 3; }
+          .mat-album-tile-6 { grid-column: 1; grid-row: 4; }
+          .mat-album-tile-7 { grid-column: 2; grid-row: 4; }
+          .mat-album-tile-8 { grid-column: 1; grid-row: 5; }
+          .mat-album-tile-9 { grid-column: 2; grid-row: 5; }
         }
 
         @media (max-width: 900px) {
@@ -673,6 +838,26 @@ export function TalesClient() {
 
         @media (max-width: 640px) {
           .mat-story-grid { grid-template-columns: 1fr !important; }
+          .mat-album-story {
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin-inline: ${LAYOUT.gutterTight};
+            padding: 42px 30px;
+          }
+          .mat-album-story-word {
+            position: absolute;
+            top: 26px;
+            right: 24px;
+            writing-mode: initial;
+            transform: none;
+            font-size: clamp(54px, 20vw, 90px);
+          }
+          .mat-album-story-copy {
+            border-left: 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.36);
+            padding: 30px 0 0;
+          }
+          .mat-album-story p { line-height: 1.68; }
         }
 
         /* Tighten the hero's fixed top-padding so it clears the nav on
@@ -692,7 +877,17 @@ export function TalesClient() {
         }
 
         @media (max-width: 480px) {
-          .mat-album-grid { grid-template-columns: 1fr !important; }
+          .mat-album-details > span[aria-hidden="true"] { display: none; }
+          .mat-album-details { flex-direction: column; align-items: flex-start; }
+          .mat-album-grid {
+            display: flex;
+            flex-direction: column;
+          }
+          .mat-album-tile {
+            width: 100%;
+            aspect-ratio: var(--natural-aspect);
+            max-height: 78vh;
+          }
         }
       `}</style>
     </main>

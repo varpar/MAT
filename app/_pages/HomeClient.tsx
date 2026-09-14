@@ -16,10 +16,21 @@ import { FEATURED, MAT_IMAGES, type Couple } from "../_components/data";
 import type { MatImageRecord } from "../_lib/mat-image-types";
 import { AnimatedImage } from "../_components/AnimatedImage";
 import { FilmStrip } from "../_components/FilmStrip";
+import { FilmPlayer } from "../_components/FilmPlayer";
 import { MatImage } from "../_components/MatImage";
 import { Sep } from "../_components/Punc";
 
 const EASE = [0.2, 0.7, 0.2, 1] as const;
+const PHOTO_GAP = "clamp(4px, 0.55vw, 9px)";
+
+const HOME_HERO_IMAGE: MatImageRecord = {
+  publicId: "/home/hero-aks09773.jpg",
+  width: 3200,
+  height: 1801,
+  source: "cloudinary",
+  blurDataURL:
+    "data:image/jpeg;base64,/9j/2wBDABIMDRANCxIQDhAUExIVGywdGxgYGzYnKSAsQDlEQz85Pj1HUGZXR0thTT0+WXlaYWltcnNyRVV9hnxvhWZwcm7/2wBDARMUFBsXGzQdHTRuST5Jbm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm7/wAARCAALABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAQFAgP/xAAhEAABAwQCAwEAAAAAAAAAAAABAAMRAgQSIQUxIkFRcf/EABUBAQEAAAAAAAAAAAAAAAAAAAED/8QAGREAAgMBAAAAAAAAAAAAAAAAAAECESES/9oADAMBAAIRAxEAPwCHxDdpW5DtGZgxtOci/a0iWbcNjrvRH1RuNEv7+Ldxu0yJJIqgfig46XUsOrrbWfjEHaEnlVA36Qmg6R//2Q==",
+};
 
 /* ─────────────────────────────────────────────────────────────
    HERO — full-bleed image with Ken-Burns drift, slow scale-out,
@@ -64,9 +75,9 @@ function HomeHero() {
         transition={{ duration: 2.2, ease: EASE }}
       >
         <MatImage
-          image={MAT_IMAGES.hero}
+          image={HOME_HERO_IMAGE}
           variant="Hero"
-          alt=""
+          alt="Bride standing beneath the ornate arches of a heritage palace"
           filter="brightness(0.86)"
         />
       </motion.div>
@@ -182,7 +193,7 @@ function HomeTriptych() {
         style={{
           display: "grid",
           gridTemplateColumns: "1fr 1fr 1fr",
-          gap: LAYOUT.gap,
+          gap: PHOTO_GAP,
           alignItems: "stretch",
         }}
       >
@@ -219,7 +230,7 @@ function HomeTriptych() {
               marginBottom: 28,
             }}
           >
-            Studio, Jaipur<Sep />est. 2018
+            Studio, Jaipur<Sep />2+ years of stories
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -281,7 +292,7 @@ function HomeTriptych() {
           }
         }
         @media (max-width: 720px) {
-          .mat-tript { grid-template-columns: 1fr !important; gap: ${LAYOUT.gap} !important; }
+          .mat-tript { grid-template-columns: 1fr !important; gap: ${PHOTO_GAP} !important; }
           .mat-tript > * { margin: 0 !important; }
         }
       `}</style>
@@ -808,7 +819,7 @@ function HomeRecent() {
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: LAYOUT.gap,
+          gap: PHOTO_GAP,
           paddingInline: LAYOUT.edge,
         }}
       >
@@ -820,7 +831,7 @@ function HomeRecent() {
               display: "grid",
               gridTemplateColumns: "repeat(3, 1fr)",
               alignItems: "flex-start",
-              gap: LAYOUT.gap,
+              gap: PHOTO_GAP,
             }}
           >
             {row.map((c, ci) => (
@@ -853,27 +864,102 @@ function HomeRecent() {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   FULL-BLEED VIDEO REEL — looping background video with two
-   serif blocks that bleed past the video's top-left and
-   bottom-right corners. The text uses mix-blend-mode: difference
-   so the same white renders dark on paper (outside the video)
-   and white over the darker video — one colour, both readable.
-
-   Drop a video file at /public/video/home-loop.mp4 (h264, ~6-12s
-   loop, ~1080p/2-5 MB). Until then the `poster` image is shown.
+   FEATURED WEDDING — the couple's own cover remains the thumbnail;
+   a deliberate click starts their full film with sound and controls.
+   Keeping the name, place, cover and video on the same Couple record
+   prevents the editorial label from drifting away from its imagery.
    ───────────────────────────────────────────────────────────── */
 function HomeVideoSection() {
-  const reduceMotion = useReducedMotion();
+  const featuredFilm =
+    FEATURED.find(
+      (couple) => couple.slug === "riya-sang-mohit" && couple.heroVideo,
+    ) ?? FEATURED.find((couple) => couple.heroVideo);
+
+  if (!featuredFilm?.heroVideo) return null;
+
+  const { heroVideo } = featuredFilm;
+
   return (
     <section
       className="mat-vidsection"
       style={{
         position: "relative",
         background: T.paper,
-        padding: `${LAYOUT.section} ${LAYOUT.edge}`,
+        padding: `${LAYOUT.sectionTight} ${LAYOUT.edge} ${LAYOUT.section}`,
         overflow: "visible",
       }}
     >
+      <header
+        className="mat-vidsection-head"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr auto",
+          alignItems: "end",
+          gap: 32,
+          padding: `0 calc(${LAYOUT.gutter} - ${LAYOUT.edge})`,
+          marginBottom: 36,
+        }}
+      >
+        <div>
+          <div
+            style={{
+              fontFamily: SANS,
+              fontSize: 10,
+              letterSpacing: "0.4em",
+              textTransform: "uppercase",
+              color: T.sage,
+              marginBottom: 18,
+            }}
+          >
+            Featured Wedding<Sep />Wedding Film
+          </div>
+          <h2
+            style={{
+              margin: 0,
+              fontFamily: DISPLAY,
+              fontWeight: 400,
+              textTransform: "uppercase",
+              fontSize: "clamp(34px, 4.6vw, 58px)",
+              lineHeight: 1.02,
+              letterSpacing: "-0.005em",
+            }}
+          >
+            {featuredFilm.bride}{" "}
+            <Sang size={28} />{" "}
+            {featuredFilm.groom}
+            <span style={{ color: T.sage }}>.</span>
+          </h2>
+          <p
+            style={{
+              margin: "15px 0 0",
+              fontFamily: SERIF,
+              fontStyle: "italic",
+              fontSize: 17,
+              opacity: 0.7,
+            }}
+          >
+            {featuredFilm.place}
+          </p>
+        </div>
+        <Link
+          href={`/featured/${featuredFilm.slug}`}
+          style={{
+            minHeight: 44,
+            display: "inline-flex",
+            alignItems: "center",
+            color: "inherit",
+            borderBottom: `1px solid ${T.ink}`,
+            textDecoration: "none",
+            fontFamily: SANS,
+            fontSize: 10,
+            letterSpacing: "0.32em",
+            textTransform: "uppercase",
+            whiteSpace: "nowrap",
+          }}
+        >
+          Read their story →
+        </Link>
+      </header>
       <div
         className="mat-vidsection-frame"
         style={{
@@ -884,46 +970,24 @@ function HomeVideoSection() {
           background: "#0e0e0e",
         }}
       >
-        {reduceMotion ? (
-          <MatImage
-            image={MAT_IMAGES.cinemaQuote}
-            variant="Hero"
-            alt=""
-            filter="brightness(0.78)"
-          />
-        ) : (
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="metadata"
-            poster={MAT_IMAGES.cinemaQuote.publicId}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              filter: "brightness(0.82)",
-            }}
-          >
-            <source src="/video/home-loop.mp4" type="video/mp4" />
-            <source src="/video/home-loop.webm" type="video/webm" />
-          </video>
-        )}
-        {/* edge darkening so the bleed text reads cleanly */}
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(135deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 65%, rgba(0,0,0,0.45) 100%)",
-            pointerEvents: "none",
-          }}
+        <FilmPlayer
+          src={heroVideo.src}
+          poster={featuredFilm.img.publicId}
+          duration={heroVideo.duration}
+          label={`Play ${featuredFilm.bride} sang ${featuredFilm.groom}'s wedding film — ${heroVideo.duration}`}
         />
       </div>
 
       <style>{`
+        @media (max-width: 720px) {
+          .mat-vidsection-head {
+            grid-template-columns: 1fr !important;
+            align-items: start !important;
+            gap: 20px !important;
+            margin-bottom: 28px !important;
+          }
+          .mat-vidsection-head a { justify-self: start; }
+        }
         @media (max-width: 1024px) {
           .mat-vidsection-frame { height: min(60vh, 560px) !important; min-height: 380px !important; }
         }
@@ -1110,7 +1174,7 @@ function HomeMosaic() {
           display: "grid",
           gridTemplateColumns: "repeat(12, 1fr)",
           gridAutoRows: "minmax(260px, auto)",
-          gap: LAYOUT.gap,
+          gap: PHOTO_GAP,
           paddingInline: LAYOUT.edge,
         }}
       >
