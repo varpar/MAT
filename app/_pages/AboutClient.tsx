@@ -9,7 +9,12 @@ import { MatImage } from "../_components/MatImage";
 import { Sep } from "../_components/Punc";
 import type { MatImageRecord } from "../_lib/mat-image-types";
 
-type Person = { name: string; role: string; img: MatImageRecord };
+type Person = {
+  name: string;
+  role: string;
+  img: MatImageRecord;
+  crop?: { scale: number; origin: string };
+};
 
 /* Count-up — eases a number from 0 to `target` once it scrolls into view.
    Honours prefers-reduced-motion by snapping straight to the final value, so
@@ -99,6 +104,7 @@ function StatCell({
 
 function TeamCard({ t }: { t: Person }) {
   const [hov, setHov] = useState(false);
+  const imageScale = t.crop?.scale ?? 1;
   return (
     <article
       className="mat-team-card"
@@ -121,7 +127,8 @@ function TeamCard({ t }: { t: Person }) {
           filter="grayscale(1)"
           style={{
             objectFit: "cover",
-            transform: hov ? "scale(1.03)" : "scale(1)",
+            transform: `scale(${imageScale * (hov ? 1.03 : 1)})`,
+            transformOrigin: t.crop?.origin ?? "center",
             transition: "all 1s cubic-bezier(.2,.7,.2,1)",
           }}
         />
@@ -394,7 +401,9 @@ export function AboutClient() {
     { name: "Prem Kant",         role: "Head of Cinematography & Editing",   img: MAT_IMAGES.teamPremKant },
     { name: "Akash Pandey",      role: "Head of Photography",                img: MAT_IMAGES.teamAkashPandey },
     { name: "Daksh Sharma",      role: "Head of Editing",                    img: MAT_IMAGES.teamDakshSharma },
-    { name: "Rahul Yadav",       role: "Photographer",                       img: MAT_IMAGES.teamRahulYadav },
+    // The source portrait has a white strip along its bottom edge. Keep a
+    // small top-anchored crop at rest and on hover without changing the file.
+    { name: "Rahul Yadav",       role: "Photographer",                       img: MAT_IMAGES.teamRahulYadav, crop: { scale: 1.07, origin: "50% 0%" } },
     { name: "Harshit Morwani",   role: "Video Editor",                       img: MAT_IMAGES.teamHarshitMorwani },
   ];
   return (
@@ -627,7 +636,7 @@ export function AboutClient() {
           LAYOUT.edge, at LAYOUT.gap. Two rows of 4. */}
       <section
         className="mat-team-section"
-        style={{ padding: `${LAYOUT.sectionTight} ${LAYOUT.edge} 0`, background: T.paper }}
+        style={{ padding: `${LAYOUT.sectionTight} ${LAYOUT.edge} clamp(32px, 4vw, 64px)`, background: T.paper }}
       >
         <div className="mat-team-head" style={{ paddingInline: LAYOUT.gutter }}>
           <div

@@ -57,6 +57,7 @@ function CoverHero({ couple, story }: { couple: Couple; story: FeaturedStory }) 
             src={couple.heroVideo.src}
             poster={couple.heroVideo.poster}
             duration={couple.heroVideo.duration}
+            withSound={couple.heroVideo.withSound}
             label={`Play ${couple.bride} sang ${couple.groom} — ${couple.heroVideo.duration}`}
           />
         ) : (
@@ -429,10 +430,9 @@ function PullQuoteFrame({
 }
 
 /* ─────────────────────────────────────────────────────────────
-   SEGMENTED RITUALS — one section per ceremony (Haldi, Mehendi,
-   Sangeet, Pheras, Vidaai). Each section uses the staircase grid
-   pattern: 3 photos with progressive 20% / 40% descent. Photos
-   fade-up on scroll into view.
+   EDITORIAL CHAPTERS — the source folders do not consistently label
+   individual functions. Neutral, feeling-led chapter titles keep the
+   copy honest while preserving the album rhythm.
    ───────────────────────────────────────────────────────────── */
 const RITUAL_DEFS: {
   key: "haldi" | "mehendi" | "sangeet" | "pheras" | "vidaai";
@@ -442,77 +442,65 @@ const RITUAL_DEFS: {
 }[] = [
   {
     key: "haldi",
-    label: "Haldi",
+    label: "The Celebration Begins",
     num: "01",
     blurb:
-      "A morning of turmeric, laughter, and family hands — colour worn before the gold.",
+      "The first chapter arrives with warmth, anticipation, and everyone drawing close.",
   },
   {
     key: "mehendi",
-    label: "Mehendi",
+    label: "The Beautiful Details",
     num: "02",
     blurb:
-      "Hours of henna while the women sing — the groom's name hidden in the paisleys.",
+      "Small gestures, careful details, and the moments that reward a closer look.",
   },
   {
     key: "sangeet",
-    label: "Sangeet",
+    label: "The Energy Between",
     num: "03",
     blurb:
-      "The night before. Dholki, dance, dupatta blur — sound carrying every story forward.",
+      "Movement, laughter, and the unmistakable ease they carry into every frame.",
   },
   {
     key: "pheras",
-    label: "Pheras",
+    label: "Held Close",
     num: "04",
     blurb:
-      "Seven steps around the fire. The vow itself, witnessed by elders and silence.",
+      "A quieter chapter — glances, hands, and the comfort of being completely present.",
   },
   {
     key: "vidaai",
-    label: "Vidaai",
+    label: "What Remained",
     num: "05",
     blurb:
-      "The threshold. The handful of rice. The car door — and a new house to walk into.",
+      "The final frames hold what the day leaves behind: warmth, stillness, and memory.",
   },
-];
-
-/** Order matters: used to index into `story.extras` so each ritual gets
- *  two distinct extras (cycling if the extras run out). */
-const RITUAL_ORDER: (typeof RITUAL_DEFS)[number]["key"][] = [
-  "haldi",
-  "mehendi",
-  "sangeet",
-  "pheras",
-  "vidaai",
 ];
 
 function ritualPhotosFor(
   story: FeaturedStory,
   k: (typeof RITUAL_DEFS)[number]["key"],
+  used: Set<string>,
 ): MatImageRecord[] {
   const main = story.photos[k];
+  const candidates = [
+    main,
+    ...(story.extras ?? []),
+    ...(story.ritualExtras?.[k] ?? []),
+    ...Object.values(story.photos),
+  ];
+  const selected: MatImageRecord[] = [];
+  const local = new Set<string>();
 
-  // If the story provides its own extras, build the 3-up from THIS couple's
-  // photos only — no leakage from the generic MAT_IMAGES pool.
-  if (story.extras && story.extras.length > 0) {
-    const idx = RITUAL_ORDER.indexOf(k);
-    const start = idx * 2;
-    const len = story.extras.length;
-    const a = story.extras[start % len];
-    const b = story.extras[(start + 1) % len];
-    return [main, a, b].filter(Boolean);
+  for (const photo of candidates) {
+    if (!photo || local.has(photo.publicId) || used.has(photo.publicId)) continue;
+    local.add(photo.publicId);
+    used.add(photo.publicId);
+    selected.push(photo);
+    if (selected.length === 3) break;
   }
 
-  // Legacy: 3 photos = the dedicated ritual photo + two from the broader pool.
-  const pools: Record<typeof k, MatImageRecord[]> = {
-    haldi: [main, MAT_IMAGES.atmos1, MAT_IMAGES.detail1],
-    mehendi: [main, MAT_IMAGES.detail2, MAT_IMAGES.detail3],
-    sangeet: [main, MAT_IMAGES.reel1, MAT_IMAGES.atmos2],
-    pheras: [main, MAT_IMAGES.detail4, MAT_IMAGES.reel2],
-    vidaai: [main, MAT_IMAGES.detail5, MAT_IMAGES.atmos3],
-  };
-  return pools[k];
+  return selected;
 }
 
 function RitualSection({
@@ -556,7 +544,7 @@ function RitualSection({
               marginBottom: 16,
             }}
           >
-            Ceremony {def.num}
+            Chapter {def.num}
           </div>
           <h3
             style={{
@@ -594,7 +582,7 @@ function RitualSection({
         className="mat-rit-stair"
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
+          gridTemplateColumns: `repeat(${photos.length}, 1fr)`,
           alignItems: "stretch",
           gap: LAYOUT.gap,
           marginInline: LAYOUT.edge,
@@ -604,7 +592,7 @@ function RitualSection({
           <div
             key={`${def.key}-${i}`}
             style={{
-              aspectRatio: "3/4",
+              aspectRatio: photos.length === 1 ? "16/9" : "3/4",
               overflow: "hidden",
               background: "#0e0e0e",
               position: "relative",
@@ -616,7 +604,7 @@ function RitualSection({
             <MatImage
               image={p}
               variant="Grid"
-              alt={`${def.label} ceremony — photograph ${i + 1}`}
+              alt={`${def.label} — photograph ${i + 1}`}
             />
           </div>
         ))}
@@ -638,6 +626,14 @@ function RitualSection({
 
 function SegmentedRituals({ story }: { story: FeaturedStory }) {
   const [ref, vis] = useReveal<HTMLElement>(0.05);
+  const visibleChapters = RITUAL_DEFS.filter(
+    (def) => !story.hiddenRituals?.includes(def.key),
+  );
+  const used = new Set<string>();
+  const chapters = visibleChapters
+    .map((def) => ({ def, photos: ritualPhotosFor(story, def.key, used) }))
+    .filter(({ photos }) => photos.length > 0);
+
   return (
     <section style={{ background: T.paper }}>
       <header
@@ -660,7 +656,7 @@ function SegmentedRituals({ story }: { story: FeaturedStory }) {
             marginBottom: 22,
           }}
         >
-          The Ceremonies
+          The Celebration
         </div>
         <h2
           style={{
@@ -673,16 +669,16 @@ function SegmentedRituals({ story }: { story: FeaturedStory }) {
             marginInline: "auto",
           }}
         >
-          Five rituals, in the order they unfolded
+          A story told in five chapters
           <span style={{ color: T.sage, fontStyle: "normal" }}>.</span>
         </h2>
       </header>
 
-      {RITUAL_DEFS.map((def) => (
+      {chapters.map(({ def, photos }) => (
         <RitualSection
           key={def.key}
           def={def}
-          photos={ritualPhotosFor(story, def.key)}
+          photos={photos}
         />
       ))}
     </section>
@@ -1021,11 +1017,9 @@ function Closing({ couple, story }: { couple: Couple; story: FeaturedStory }) {
               textWrap: "balance",
             }}
           >
-            <span>And then</span>
-            <span style={{ fontStyle: "normal" }}>{couple.bride}</span>
-            <Sang size={42} color="#fff" accent={T.cream} />
-            <span style={{ fontStyle: "normal" }}>{couple.groom}</span>
-            <span style={{ color: T.sage, fontStyle: "normal" }}>.</span>
+            <span style={{ fontStyle: "normal" }}>
+              {couple.bride} and {couple.groom}
+            </span>
           </h2>
         </div>
         <style>{`

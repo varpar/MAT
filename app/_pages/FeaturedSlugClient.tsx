@@ -131,6 +131,7 @@ function FeaturedHero({ couple }: { couple: Couple }) {
           src={heroVideo.src}
           poster={heroVideo.poster}
           duration={heroVideo.duration}
+          withSound={heroVideo.withSound}
           label={`Play ${couple.bride} sang ${couple.groom} — ${heroVideo.duration}`}
         />
       ) : (

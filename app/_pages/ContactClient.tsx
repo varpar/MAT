@@ -57,6 +57,32 @@ const PACKAGES = [
   "Not sure yet",
 ] as const;
 
+const WHATSAPP_NUMBER = "919928412112";
+
+function buildWhatsAppUrl(form: FormState) {
+  const details = [
+    `Names: ${form.names}`,
+    `Email: ${form.email}`,
+    form.phone && `Phone / WhatsApp: ${form.phone}`,
+    form.date && `Wedding date / season: ${form.date}`,
+    form.venue && `Venue / city: ${form.venue}`,
+    form.pkg && `Interested in: ${form.pkg}`,
+  ].filter(Boolean);
+
+  const message = [
+    "Hi Mi Amor Tales,",
+    "",
+    "We'd like to check your availability for our wedding.",
+    "",
+    ...details,
+    ...(form.message ? ["", "A little about our day:", form.message] : []),
+    "",
+    "Thank you!",
+  ].join("\n");
+
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+
 /* ─────────────────────────────────────────────────────────────
    FORM FIELD — uppercase label above, visible sage-light input
    below with sage focus border. Designed so a glance reads "here
@@ -462,13 +488,17 @@ function FAQRow({ q, a }: { q: string; a: string }) {
 export function ContactClient() {
   const [form, setForm] = useState<FormState>(INITIAL);
   const [submitted, setSubmitted] = useState(false);
+  const [whatsAppUrl, setWhatsAppUrl] = useState("");
 
   const update = (k: keyof FormState, v: string) =>
     setForm((s) => ({ ...s, [k]: v }));
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const url = buildWhatsAppUrl(form);
+    setWhatsAppUrl(url);
     setSubmitted(true);
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -634,8 +664,8 @@ export function ContactClient() {
               maxWidth: 360,
             }}
           >
-            Your enquiry reaches Aanya by email and WhatsApp at once. She replies
-            herself<Sep />never an assistant.
+            We’ll prepare your enquiry as a WhatsApp message. Review it, send it,
+            and Aanya will reply herself<Sep />never an assistant.
           </p>
           <div
             style={{
@@ -686,7 +716,7 @@ export function ContactClient() {
                   marginBottom: 22,
                 }}
               >
-                Enquiry received
+                Your message is ready
               </div>
               <h3
                 style={{
@@ -698,7 +728,7 @@ export function ContactClient() {
                   textWrap: "balance",
                 }}
               >
-                Thank you{", "}
+                Almost there{", "}
                 <span style={{ color: T.sage }}>{form.names || "friends"}</span>
                 <span style={{ color: T.sage }}>.</span>
               </h3>
@@ -713,9 +743,28 @@ export function ContactClient() {
                   marginInline: "auto",
                 }}
               >
-                Aanya will write back within thirty-six hours. In a hurry? WhatsApp
-                her on the number to the left.
+                WhatsApp should now be open with your enquiry ready to send. You
+                can review the message before sending it.
               </p>
+              <a
+                href={whatsAppUrl}
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  display: "inline-block",
+                  marginTop: 22,
+                  padding: "16px 28px",
+                  background: T.sage,
+                  color: T.paper,
+                  fontFamily: SANS,
+                  fontSize: 10,
+                  letterSpacing: "0.3em",
+                  textTransform: "uppercase",
+                  textDecoration: "none",
+                }}
+              >
+                Continue on WhatsApp →
+              </a>
             </div>
           ) : (
             <form
@@ -805,7 +854,7 @@ export function ContactClient() {
                 </div>
                 <button
                   type="submit"
-                  data-cursor="Check"
+                  data-cursor="WhatsApp"
                   className="mat-contact-submit"
                   style={{
                     padding: "18px 40px",
@@ -827,7 +876,7 @@ export function ContactClient() {
                     e.currentTarget.style.background = T.sage;
                   }}
                 >
-                  Check availability →
+                  Continue on WhatsApp →
                 </button>
               </div>
             </form>

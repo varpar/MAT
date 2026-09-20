@@ -39,6 +39,16 @@ export type FeaturedStory = {
   pullQuote?: { word: string; color?: string };
   /** Optional vendor credits — rendered as a hairline table. */
   vendors?: [string, string][];
+  /** Ceremony-specific supporting frames. These take precedence over the
+   *  positional `extras` fallback so Haldi, Sangeet, and the other rituals
+   *  cannot accidentally borrow photographs from a different function. */
+  ritualExtras?: Partial<
+    Record<"haldi" | "mehendi" | "sangeet" | "pheras" | "vidaai", MatImageRecord[]>
+  >;
+  /** Ceremonies that are not represented by a verified photograph for this
+   *  couple. Omitting them is preferable to showing another function under
+   *  the wrong label. */
+  hiddenRituals?: ("haldi" | "mehendi" | "sangeet" | "pheras" | "vidaai")[];
   /** Extra photos of THIS couple, used for:
    *    • the secondary tiles in each ritual section (so a couple's
    *      Haldi/Mehendi/… grids stay entirely their own photos), and

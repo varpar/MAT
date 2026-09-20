@@ -31,6 +31,8 @@ type Props = {
   duration: string;
   /** Aria label for the initial play button. */
   label: string;
+  /** Set false for silent editorial photo films. */
+  withSound?: boolean;
 };
 
 const formatTime = (s: number) => {
@@ -183,7 +185,13 @@ function ControlButton({
   );
 }
 
-export function FilmPlayer({ src, poster, duration, label }: Props) {
+export function FilmPlayer({
+  src,
+  poster,
+  duration,
+  label,
+  withSound = true,
+}: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
@@ -461,7 +469,7 @@ export function FilmPlayer({ src, poster, duration, label }: Props) {
             >
               {duration}
               <Sep />
-              With sound
+              {withSound ? "With sound" : "Photo film"}
             </span>
           </span>
         </button>
@@ -613,12 +621,14 @@ export function FilmPlayer({ src, poster, duration, label }: Props) {
 
             <div style={{ flex: 1 }} />
 
-            <ControlButton
-              onClick={toggleMute}
-              ariaLabel={muted ? "Unmute" : "Mute"}
-            >
-              {muted ? <MutedIcon size={17} /> : <VolumeIcon size={17} />}
-            </ControlButton>
+            {withSound && (
+              <ControlButton
+                onClick={toggleMute}
+                ariaLabel={muted ? "Unmute" : "Mute"}
+              >
+                {muted ? <MutedIcon size={17} /> : <VolumeIcon size={17} />}
+              </ControlButton>
+            )}
             <ControlButton
               onClick={toggleFullscreen}
               ariaLabel={
