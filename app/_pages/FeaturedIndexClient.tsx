@@ -1,258 +1,49 @@
 "use client";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React from "react";
+import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
-import { SANS, BODY, DISPLAY, T, LAYOUT } from "../_components/tokens";
+import { BODY, DISPLAY, SANS, T, LAYOUT } from "../_components/tokens";
 import { FEATURED, type Couple } from "../_components/data";
 import { MatImage } from "../_components/MatImage";
-import { Sep } from "../_components/Punc";
-import { Sang } from "../_components/Sang";
 
 const EASE = [0.2, 0.7, 0.2, 1] as const;
 
-/* ─────────────────────────────────────────────────────────────
-   Editorial spread per couple — sage name-plate beside a tall
-   feature photo. Layout alternates side-to-side. Lifted from the
-   MAT magazine PDF (Harsh / Pooja cover spread, page 10).
-   ───────────────────────────────────────────────────────────── */
-function CoupleSpread({ couple, idx }: { couple: Couple; idx: number }) {
-  const [hov, setHov] = useState(false);
-  const router = useRouter();
-  const reverse = idx % 2 === 1;
-  const go = () => router.push(`/featured/${couple.slug ?? "riya-sang-mohit"}`);
+const bySlug = (slug: string) => FEATURED.find((couple) => couple.slug === slug);
+
+const RIYA_MOHIT = bySlug("riya-sang-mohit");
+const JOYEETA_HARSH = bySlug("harsh-sang-joyeeta");
+
+const FIRST_PAIR = FEATURED.filter((couple) =>
+  ["anvesha-sang-omkar", "shrenik-sang-ishika"].includes(couple.slug ?? ""),
+);
+
+const SECOND_PAIR = FEATURED.filter((couple) =>
+  ["shubham-sang-aishwarya", "varun-sang-vanya"].includes(couple.slug ?? ""),
+);
+
+function FilmFeature({ couple }: { couple: Couple }) {
+  const reduceMotion = useReducedMotion();
+  const film = couple.heroVideo;
+
+  if (!film) return null;
 
   return (
-    <motion.article
-      onMouseEnter={() => setHov(true)}
-      onMouseLeave={() => setHov(false)}
-      onClick={go}
-      data-cursor="Read their story"
-      initial={{ opacity: 0, y: 32 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-10%" }}
-      transition={{ duration: 1, ease: EASE }}
-      className={`mat-spread ${reverse ? "mat-spread-reverse" : ""}`}
-      style={{
-        cursor: "pointer",
-        display: "grid",
-        gridTemplateColumns: reverse ? "5fr 7fr" : "7fr 5fr",
-        gap: 0,
-        alignItems: "stretch",
-      }}
+    <motion.section
+      initial={false}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: "-8%" }}
+      transition={{ duration: 0.9, ease: EASE }}
+      className="mat-film-feature"
+      aria-labelledby={`film-${couple.slug}`}
     >
-      <div
-        style={{
-          gridColumn: reverse ? 2 : 1,
-          position: "relative",
-          aspectRatio: "4/5",
-          overflow: "hidden",
-          background: "#0e0e0e",
-        }}
-      >
-        <motion.div
-          style={{ position: "absolute", inset: 0, willChange: "transform" }}
-          animate={{ scale: hov ? 1.04 : 1 }}
-          transition={{ duration: 1.6, ease: EASE }}
-        >
-          <MatImage
-            image={couple.img}
-            variant="Grid"
-            alt={`${couple.bride} sang ${couple.groom} — ${couple.place}`}
+      <div className="mat-film-frame">
+        {reduceMotion ? (
+          <img
+            src={film.poster}
+            alt={`${couple.bride} and ${couple.groom}`}
+            className="mat-film-media"
           />
-        </motion.div>
-      </div>
-
-      <div
-        className="mat-spread-pane"
-        style={{
-          gridColumn: reverse ? 1 : 2,
-          gridRow: 1,
-          background: T.sage,
-          color: "#f1f4f3",
-          padding: `${LAYOUT.sectionTight} ${LAYOUT.gutter}`,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          position: "relative",
-          overflow: "hidden",
-          minHeight: "clamp(420px, 56vw, 640px)",
-        }}
-      >
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "radial-gradient(ellipse at center, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0.08) 100%)",
-            pointerEvents: "none",
-          }}
-        />
-
-        {/* Top eyebrow — sits above the names so the green pane reads
-            balanced top→middle→bottom instead of empty above the title. */}
-        <div
-          style={{
-            position: "relative",
-            zIndex: 1,
-            display: "flex",
-            flexDirection: "column",
-            gap: 8,
-            alignItems: reverse ? "flex-end" : "flex-start",
-            textAlign: reverse ? "right" : "left",
-            fontFamily: SANS,
-            fontSize: 10,
-            letterSpacing: "0.42em",
-            textTransform: "uppercase",
-            color: "#f1f4f3",
-          }}
-        >
-          <span style={{ opacity: 0.92 }}>A Mi Amor Tales Story</span>
-          <span style={{ opacity: 0.7 }}>
-            No. {String(idx + 1).padStart(2, "0")}
-          </span>
-        </div>
-
-        <div
-          style={{
-            position: "relative",
-            zIndex: 1,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: reverse ? "flex-end" : "flex-start",
-            textAlign: reverse ? "right" : "left",
-            margin: "8px 0",
-          }}
-        >
-          <span
-            style={{
-              fontFamily: DISPLAY,
-              fontWeight: 400,
-              fontSize: "clamp(48px, 7.2vw, 124px)",
-              lineHeight: 0.92,
-              letterSpacing: "-0.02em",
-              textTransform: "uppercase",
-            }}
-          >
-            {couple.bride}
-          </span>
-          <span
-            style={{
-              display: "inline-flex",
-              opacity: 0.92,
-              margin: "10px 0",
-            }}
-          >
-            <Sang size={26} color="#f4f7f7" accent={T.cream} />
-          </span>
-          <span
-            style={{
-              fontFamily: DISPLAY,
-              fontWeight: 400,
-              fontSize: "clamp(48px, 7.2vw, 124px)",
-              lineHeight: 0.92,
-              letterSpacing: "-0.02em",
-              textTransform: "uppercase",
-            }}
-          >
-            {couple.groom}
-          </span>
-        </div>
-
-        <div
-          className="mat-spread-foot"
-          style={{
-            position: "relative",
-            zIndex: 1,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-end",
-            flexWrap: "wrap",
-            gap: 16,
-            marginTop: 16,
-          }}
-        >
-          <div
-            style={{
-              fontFamily: BODY,
-              fontStyle: "italic",
-              fontSize: "clamp(14px, 1.4vw, 16px)",
-              opacity: 0.85,
-              maxWidth: 320,
-              lineHeight: 1.55,
-            }}
-          >
-            {couple.place}<Sep />moments held close.
-          </div>
-          <motion.span
-            className="mat-spread-cta"
-            animate={{ x: hov ? 6 : 0, opacity: hov ? 1 : 0.78 }}
-            transition={{ duration: 0.4, ease: EASE }}
-            style={{
-              fontFamily: SANS,
-              fontSize: 10,
-              letterSpacing: "0.4em",
-              textTransform: "uppercase",
-              borderBottom: "1px solid rgba(255,255,255,0.55)",
-              paddingBottom: 4,
-              whiteSpace: "nowrap",
-              minHeight: 44,
-              display: "inline-flex",
-              alignItems: "center",
-            }}
-          >
-            Read their story →
-          </motion.span>
-        </div>
-      </div>
-    </motion.article>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────────
-   Video hero — a looping feature reel with tastefully overlaid
-   billing + title. Lighter and more cohesive with the paper-
-   background rest of the site than the old all-black title card.
-   Reduced-motion users get a static FEATURED cover image instead
-   of the video. White text uses mixBlendMode:"difference" so it
-   stays legible over both light and dark footage; a bottom scrim
-   reinforces the lower billing block.
-   ───────────────────────────────────────────────────────────── */
-/**
- * Featured hero — just the looping video. No overlay text. Reduced-motion
- * users get a static cover image instead of the video.
- */
-function VideoHero() {
-  const reduce = useReducedMotion();
-  const cover = FEATURED[0]?.img;
-
-  return (
-    <section
-      className="mat-feat-hero"
-      style={{
-        position: "relative",
-        height: "clamp(560px, 80vh, 860px)",
-        background: T.ink,
-        overflow: "hidden",
-        // Inset the full-bleed hero ~8px off the left/right (and top) screen
-        // edges so it never touches them — consistent frame with the rows below.
-        // Top uses edge too; height already accounts for the box so no new scroll.
-        margin: `${LAYOUT.edge} ${LAYOUT.edge} 0`,
-      }}
-    >
-      {/* Media — looping video, or a static cover under reduced motion */}
-      <div style={{ position: "absolute", inset: 0 }}>
-        {reduce ? (
-          cover ? (
-            <MatImage
-              image={cover}
-              variant="Hero"
-              alt="Mi Amor Tales — featured weddings"
-            />
-          ) : (
-            <div style={{ position: "absolute", inset: 0, background: T.ink }} />
-          )
         ) : (
           <video
             autoPlay
@@ -260,93 +51,239 @@ function VideoHero() {
             muted
             playsInline
             preload="metadata"
-            style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
+            poster={film.poster}
+            tabIndex={-1}
+            aria-label={`${couple.bride} and ${couple.groom}'s wedding film preview`}
+            className="mat-film-media"
           >
-            <source src="/video/featured-loop.mp4" type="video/mp4" />
+            <source src={film.src} type="video/mp4" />
+            Your browser does not support the video tag.
           </video>
         )}
       </div>
 
-      {/* Subtle bottom scrim — eases the section into the paper rows below. */}
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "linear-gradient(to bottom, rgba(14,14,14,0) 0%, rgba(14,14,14,0) 60%, rgba(14,14,14,0.55) 100%)",
-          zIndex: 2,
-        }}
-      />
+      <div className="mat-film-caption">
+        <div>
+          <h2 id={`film-${couple.slug}`}>
+            {couple.bride} <span>and</span> {couple.groom}
+          </h2>
+          <p>{couple.place}</p>
+        </div>
+        <Link href={`/featured/${couple.slug}`} className="mat-film-link">
+          View the film
+        </Link>
+      </div>
+    </motion.section>
+  );
+}
+
+function ImageCard({ couple }: { couple: Couple }) {
+  return (
+    <motion.article
+      initial={false}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-8%" }}
+      transition={{ duration: 0.8, ease: EASE }}
+      className="mat-feature-card"
+    >
+      <Link href={`/featured/${couple.slug}`} aria-label={`View ${couple.bride} and ${couple.groom}'s story`}>
+        <div className="mat-feature-card-image">
+          <MatImage
+            image={couple.img}
+            variant="Grid"
+            alt={`${couple.bride} and ${couple.groom} — ${couple.place}`}
+          />
+        </div>
+        <div className="mat-feature-card-caption">
+          <h3>
+            {couple.bride} <span>and</span> {couple.groom}
+          </h3>
+          <p>{couple.place}</p>
+          <span className="mat-feature-card-link">View their story</span>
+        </div>
+      </Link>
+    </motion.article>
+  );
+}
+
+function CardPair({ couples }: { couples: Couple[] }) {
+  return (
+    <section className="mat-feature-pair" aria-label="Featured couple stories">
+      {couples.map((couple) => (
+        <ImageCard key={couple.slug} couple={couple} />
+      ))}
     </section>
   );
 }
 
 export function FeaturedIndexClient() {
   return (
-    <main>
-      <VideoHero />
-      <section
-        className="mat-feat-list"
-        style={{
-          // Horizontal padding = edge (8px) so the couple-spread rows sit just
-          // off the left/right screen edges instead of full-bleed against them.
-          // Vertical rhythm (sectionTight / section) is unchanged.
-          padding: `${LAYOUT.sectionTight} ${LAYOUT.edge} ${LAYOUT.section}`,
-          background: T.paper,
-        }}
-      >
-        <div
-          className="mat-feat-list-inner"
-          style={{ display: "flex", flexDirection: "column", gap: LAYOUT.sectionTight }}
-        >
-          {FEATURED.map((c, i) => (
-            <CoupleSpread key={i} couple={c} idx={i} />
-          ))}
-        </div>
-        <style>{`
-          /* Featured video hero — keep section short on narrow viewports
-             so it doesn't dominate above the fold on mobile. */
-          @media (max-width: 720px) {
-            .mat-feat-hero { height: clamp(320px, 56vh, 520px) !important; }
+    <main className="mat-featured-index">
+      {RIYA_MOHIT && <FilmFeature couple={RIYA_MOHIT} />}
+      <CardPair couples={FIRST_PAIR} />
+      {JOYEETA_HARSH && <FilmFeature couple={JOYEETA_HARSH} />}
+      <CardPair couples={SECOND_PAIR} />
+
+      <style>{`
+        .mat-featured-index {
+          background: ${T.paper};
+          padding: ${LAYOUT.edge};
+        }
+
+        .mat-film-feature {
+          margin: 0 0 ${LAYOUT.section};
+        }
+
+        .mat-film-frame {
+          position: relative;
+          width: 100%;
+          height: calc(100svh - 112px);
+          min-height: 600px;
+          max-height: 920px;
+          overflow: hidden;
+          background: ${T.ink};
+        }
+
+        .mat-film-media {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          pointer-events: none;
+        }
+
+        .mat-film-caption {
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: 32px;
+          padding: 30px clamp(18px, 3vw, 44px) 0;
+        }
+
+        .mat-film-caption h2,
+        .mat-feature-card-caption h3 {
+          margin: 0;
+          font-family: ${DISPLAY};
+          font-weight: 400;
+          letter-spacing: -0.025em;
+          text-transform: uppercase;
+        }
+
+        .mat-film-caption h2 {
+          font-size: clamp(42px, 6.4vw, 100px);
+          line-height: 0.95;
+        }
+
+        .mat-film-caption h2 span,
+        .mat-feature-card-caption h3 span {
+          font: inherit;
+          text-transform: lowercase;
+        }
+
+        .mat-film-caption p,
+        .mat-feature-card-caption p {
+          margin: 12px 0 0;
+          font-family: ${BODY};
+          font-size: 16px;
+          font-style: italic;
+          opacity: 0.68;
+        }
+
+        .mat-film-link,
+        .mat-feature-card-link {
+          color: inherit;
+          font-family: ${SANS};
+          font-size: 10px;
+          letter-spacing: 0.32em;
+          text-transform: uppercase;
+          text-decoration: none;
+          border-bottom: 1px solid currentColor;
+          padding: 14px 0 8px;
+          white-space: nowrap;
+        }
+
+        .mat-film-link:focus-visible,
+        .mat-feature-card a:focus-visible {
+          outline: 2px solid ${T.sage};
+          outline-offset: 5px;
+        }
+
+        .mat-feature-pair {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: ${LAYOUT.gap};
+          margin-bottom: ${LAYOUT.section};
+        }
+
+        .mat-feature-card a {
+          display: block;
+          color: inherit;
+          text-decoration: none;
+        }
+
+        .mat-feature-card-image {
+          position: relative;
+          aspect-ratio: 4 / 5;
+          overflow: hidden;
+          background: ${T.ink};
+        }
+
+        .mat-feature-card-image img {
+          transition: transform 900ms cubic-bezier(.2,.7,.2,1);
+        }
+
+        .mat-feature-card a:hover .mat-feature-card-image img {
+          transform: scale(1.025);
+        }
+
+        .mat-feature-card-caption {
+          padding: 22px 12px 0;
+        }
+
+        .mat-feature-card-caption h3 {
+          font-size: clamp(30px, 4vw, 58px);
+          line-height: 1;
+        }
+
+        .mat-feature-card-link {
+          display: inline-block;
+          margin-top: 24px;
+        }
+
+        @media (max-width: 800px) {
+          .mat-film-frame {
+            height: 62svh;
+            min-height: 420px;
           }
 
-          /* CoupleSpread — stacked, image on top, sage pane below.
-             Preserves the top-eyebrow / middle-names / bottom-place rhythm
-             vertically. The reverse variant collapses to the same stack. */
-          @media (max-width: 880px) {
-            .mat-spread { grid-template-columns: 1fr !important; }
-            .mat-spread > *:first-child {
-              aspect-ratio: 4/5 !important;
-              grid-column: 1 !important;
-              grid-row: 1 !important;
-            }
-            .mat-spread > *:nth-child(2) {
-              grid-column: 1 !important;
-              grid-row: 2 !important;
-              min-height: clamp(420px, 90vw, 560px) !important;
-            }
-            /* Always align stacked panel content left, regardless of reverse */
-            .mat-spread-pane > div { align-items: flex-start !important; text-align: left !important; }
-            /* Force the read-cta to be visible on touch (no hover) */
-            .mat-spread-cta { opacity: 1 !important; transform: none !important; }
+          .mat-film-caption {
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 14px;
+            padding-inline: 10px;
           }
-          @media (max-width: 540px) {
-            .mat-spread-foot { flex-direction: column !important; align-items: flex-start !important; gap: 18px !important; }
-            .mat-spread-foot > div { max-width: 100% !important; }
+
+          .mat-feature-pair {
+            grid-template-columns: 1fr;
           }
-          /* Touch devices: surface the read-the-story affordance permanently. */
-          @media (hover: none) {
-            .mat-spread-cta { opacity: 1 !important; }
+        }
+
+        @media (max-width: 520px) {
+          .mat-film-frame {
+            height: 54svh;
+            min-height: 360px;
           }
-        `}</style>
-      </section>
+
+          .mat-film-feature,
+          .mat-feature-pair {
+            margin-bottom: ${LAYOUT.sectionTight};
+          }
+
+          .mat-feature-card-caption {
+            padding-inline: 6px;
+          }
+        }
+      `}</style>
     </main>
   );
 }

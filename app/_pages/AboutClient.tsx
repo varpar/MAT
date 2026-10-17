@@ -381,6 +381,84 @@ function PhilosophySlab() {
   );
 }
 
+function FoundersSection() {
+  const founders = [
+    {
+      name: "Bhagwat Singh Deora",
+      role: "Co-Founder",
+      image: MAT_IMAGES.founderBhagwatSinghDeora,
+      copy:
+        "Bhagwat believes wedding storytelling should remain honest, intentional, and deeply human. For him, every celebration is an investment in people, passion, and the family memories that will matter long after the day has passed.",
+    },
+    {
+      name: "Rahul Sharma",
+      role: "Founder & Creative Director",
+      image: MAT_IMAGES.founderRahulSharma,
+      copy:
+        "Rahul founded Mi Amor Tales in 2024 with a desire to create stories that are felt, not simply seen. His eye rests on fleeting glances, quiet pauses, and unscripted laughter — shaping each wedding through a cinematic, editorial point of view.",
+    },
+  ];
+
+  return (
+    <section
+      className="mat-founders"
+      style={{
+        padding: `${LAYOUT.section} ${LAYOUT.edge}`,
+        background: T.paper,
+      }}
+    >
+      <div style={{ paddingInline: LAYOUT.gutter }}>
+        <div
+          style={{
+            borderTop: `1px solid ${T.ink}20`,
+            paddingTop: 28,
+            marginBottom: 48,
+            display: "flex",
+            justifyContent: "space-between",
+            gap: 16,
+            fontFamily: SANS,
+            fontSize: 10,
+            letterSpacing: "0.32em",
+            textTransform: "uppercase",
+            color: T.sage,
+          }}
+        >
+          <span>From the founders</span>
+          <span>03<Sep />The Beginning</span>
+        </div>
+      </div>
+      <div
+        className="mat-founders-grid"
+        style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: LAYOUT.gap }}
+      >
+        {founders.map((founder) => (
+          <article key={founder.name} className="mat-founder-card">
+            <div style={{ position: "relative", aspectRatio: "4/5", overflow: "hidden", background: "#222" }}>
+              <MatImage image={founder.image} variant="Grid" alt={founder.name} style={{ objectFit: "cover" }} />
+            </div>
+            <div className="mat-founder-copy" style={{ padding: `32px ${LAYOUT.gutter} 0` }}>
+              <div style={{ fontFamily: SANS, fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase", color: T.sage }}>
+                {founder.role}
+              </div>
+              <h2 style={{ margin: "12px 0 18px", fontFamily: DISPLAY, fontWeight: 300, fontSize: "clamp(32px, 4vw, 56px)", lineHeight: 1 }}>
+                {founder.name}<span style={{ color: T.sage }}>.</span>
+              </h2>
+              <p style={{ margin: 0, maxWidth: 560, fontFamily: BODY, fontSize: "clamp(16px, 1.4vw, 19px)", lineHeight: 1.72 }}>
+                {founder.copy}
+              </p>
+            </div>
+          </article>
+        ))}
+      </div>
+      <style>{`
+        @media (max-width: 720px) {
+          .mat-founders-grid { grid-template-columns: 1fr !important; gap: 64px !important; }
+        }
+      `}</style>
+    </section>
+  );
+}
+
 export function AboutClient() {
   const [statsRef, statsVis] = useReveal<HTMLElement>(0.3);
   const stats: {
@@ -395,7 +473,6 @@ export function AboutClient() {
     { n: 5, label: "Awards", display: "4–5" },
   ];
   const team: Person[] = [
-    { name: "Rahul Sharma",      role: "Founder",                            img: MAT_IMAGES.teamRahulSharma },
     { name: "Harshita Sharma",   role: "Creative Director",                  img: MAT_IMAGES.teamHarshitaSharma },
     { name: "Nandini Shekhawat", role: "Marketing Head",                     img: MAT_IMAGES.teamNandiniShekhawat },
     { name: "Prem Kant",         role: "Head of Cinematography & Editing",   img: MAT_IMAGES.teamPremKant },
@@ -631,6 +708,8 @@ export function AboutClient() {
         `}</style>
       </section>
 
+      <FoundersSection />
+
       {/* Team — header (eyebrow + heading) keeps the text gutter; the photo
           grid runs near-full-bleed, inset 8px off the side edges via
           LAYOUT.edge, at LAYOUT.gap. Two rows of 4. */}
@@ -657,7 +736,7 @@ export function AboutClient() {
             }}
           >
             <span>Our Team</span>
-            <span>03<Sep />The Studio</span>
+            <span>04<Sep />The Studio</span>
           </div>
           <h2
             className="mat-team-heading"
@@ -672,8 +751,7 @@ export function AboutClient() {
               textWrap: "balance",
             }}
           >
-            <span>Eight hands</span>
-            <span style={{ color: T.sage }}>.</span> One studio
+            <span>The people behind the stories</span>
             <span style={{ color: T.sage }}>.</span>
           </h2>
         </div>

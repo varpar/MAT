@@ -264,6 +264,20 @@ export const MAT_IMAGES: Record<string, MatImageRecord> = {
     height: 1600,
     source: "cloudinary",
   },
+  founderRahulSharma: {
+    publicId: "/images/team/founder-rahul-sharma.jpg",
+    blurDataURL: "data:image/jpeg;base64,/9j/2wBDAA4KCw0LCQ4NDA0QDw4RFiQXFhQUFiwgIRokNC43NjMuMjI6QVNGOj1OPjIySGJJTlZYXV5dOEVmbWVabFNbXVn/2wBDAQ8QEBYTFioXFypZOzI7WVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVn/wAARCAAMAAcDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAMF/8QAHxABAAEDBAMAAAAAAAAAAAAAAgEAAwQGERIhMUHB/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AMnN0vetjDZMXXfEriJ3k+/tKu8y+NNYbFyQxHAo+ePXW9KD/9k=",
+    width: 1025,
+    height: 1667,
+    source: "cloudinary",
+  },
+  founderBhagwatSinghDeora: {
+    publicId: "/images/team/founder-bhagwat-singh-deora.jpg",
+    blurDataURL: "data:image/jpeg;base64,/9j/2wBDAA4KCw0LCQ4NDA0QDw4RFiQXFhQUFiwgIRokNC43NjMuMjI6QVNGOj1OPjIySGJJTlZYXV5dOEVmbWVabFNbXVn/2wBDAQ8QEBYTFioXFypZOzI7WVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVn/wAARCAAMAAkDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAgMEBf/EACQQAAECBQMFAQAAAAAAAAAAAAECAwAEBRESFjHRIVJUcZKT/8QAFQEBAQAAAAAAAAAAAAAAAAAAAgP/xAAZEQADAAMAAAAAAAAAAAAAAAAAAQIRITH/2gAMAwEAAhEDEQA/ANCo1WRabQlwho5ZGxKup3EM1XRvKP5q4g56hSU6/eZDi1LG+din1aJdIUrsd+hxE2pnopy1o//Z",
+    width: 908,
+    height: 1210,
+    source: "cloudinary",
+  },
   teamHarshitaSharma: {
     publicId: "/images/team/harshita-sharma.jpg",
     blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAgQF/8QAIBAAAgEDBAMAAAAAAAAAAAAAAQIDABESBBMhMTJB0f/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDTkieLULkQhY3GXVJBJEgG8HfnIgd90GQMLrLmSwuXF+Ks00cRfKQ8+reI+UH/2Q==",
@@ -625,7 +639,7 @@ export const MAT_IMAGES: Record<string, MatImageRecord> = {
   maExtra10:    { publicId: "/images/aniket-sang-monika/extra10.jpg",     blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAwQFBv/EACAQAAIBAwQDAAAAAAAAAAAAAAEDAgAEERITFCExYbH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFxEBAAMAAAAAAAAAAAAAAAAAAAERIf/aAAwDAQACEQMRAD8A1rMxVIjzihWJ1Kl6nL7UpD7sxjzbkL3BgLwMk03yJIt2LSQXEExEuu6QXj//2Q==", width: 1290, height: 1920, source: "cloudinary" },
   maExtra11:    { publicId: "/images/aniket-sang-monika/extra11.jpg",     blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAwQFBv/EACAQAAIBAwQDAAAAAAAAAAAAAAEDAgAEERITFCExYbH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFxEBAAMAAAAAAAAAAAAAAAAAAAERIf/aAAwDAQACEQMRAD8A1rMxVIjzihWJ1Kl6nL7UpD7sxjzbkL3BgLwMk03yJIt2LSQXEExEuu6QXj//2Q==", width: 1280, height: 1920, source: "cloudinary" },
   maExtra12:    { publicId: "/images/aniket-sang-monika/extra12.jpg",     blurDataURL: "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQABADASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAwQFBv/EACAQAAIBAwQDAAAAAAAAAAAAAAEDAgAEERITFCExYbH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFxEBAAMAAAAAAAAAAAAAAAAAAAERIf/aAAwDAQACEQMRAD8A1rMxVIjzihWJ1Kl6nL7UpD7sxjzbkL3BgLwMk03yJIt2LSQXEExEuu6QXj//2Q==", width: 1745, height: 1920, source: "cloudinary" },
-  // ─── Harsh sang Pooja — visually verified single-couple sequence 001–013.
+  // ─── Shrenik sang Ishika — visually verified single-couple sequence 001–013.
   hpMehendiGame: { publicId: "/images/weddings/002-aks00840.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDAA4KCw0LCQ4NDA0QDw4RFiQXFhQUFiwgIRokNC43NjMuMjI6QVNGOj1OPjIySGJJTlZYXV5dOEVmbWVabFNbXVn/2wBDAQ8QEBYTFioXFypZOzI7WVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVn/wAARCAAKABADASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAQMEBv/EACQQAQABAwMCBwAAAAAAAAAAAAECAAMEBRESIVEGExQyQUKy/8QAFQEBAQAAAAAAAAAAAAAAAAAAAwX/xAAbEQACAgMBAAAAAAAAAAAAAAABAgARAwQSUf/aAAwDAQACEQMRAD8Aoj4jnPNyJl08izsFpQZnXeR360TU4XM63avRYmRGPM5ex+AazuJGJpmUgD6btTdPV1TH3X6/mi6KtKutjW7PhM//2Q==", width: 2400, height: 1524, source: "cloudinary" },
   hpBride: { publicId: "/images/weddings/006-aks01386.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDAA4KCw0LCQ4NDA0QDw4RFiQXFhQUFiwgIRokNC43NjMuMjI6QVNGOj1OPjIySGJJTlZYXV5dOEVmbWVabFNbXVn/2wBDAQ8QEBYTFioXFypZOzI7WVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVn/wAARCAAQAAsDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABQP/xAAhEAADAAEEAQUAAAAAAAAAAAABAgMEAAURMRITIVFhgf/EABQBAQAAAAAAAAAAAAAAAAAAAAT/xAAYEQEBAAMAAAAAAAAAAAAAAAABAAITIf/aAAwDAQACEQMRAD8AQtt2219APGdPBiqMnPK/oP3piGFNYoqmaKBwF+NB0QY8BjzBTgl2IHZJ71GmdnO5ZL1VT0FX20UzJWlel//Z", width: 1600, height: 2400, source: "cloudinary" },
   hpWeddingSeated: { publicId: "/images/weddings/007-aks01433.jpg", blurDataURL: "data:image/jpeg;base64,/9j/2wBDAA4KCw0LCQ4NDA0QDw4RFiQXFhQUFiwgIRokNC43NjMuMjI6QVNGOj1OPjIySGJJTlZYXV5dOEVmbWVabFNbXVn/2wBDAQ8QEBYTFioXFypZOzI7WVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVn/wAARCAALABADASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAgQFBv/EACMQAAIBAwQBBQAAAAAAAAAAAAECAwAEEQUSEyFhFCIjUaH/xAAVAQEBAAAAAAAAAAAAAAAAAAADBP/EABcRAAMBAAAAAAAAAAAAAAAAAAABAiH/2gAMAwEAAhEDEQA/AGbLUTI/zceT2zJnGPAo7zUPTkK0XICcgJ2QKzcTGNbAp0WDFvPuaqEsMd1xCdd42/eD+UVYyiZVaf/Z", width: 2400, height: 1597, source: "cloudinary" },
@@ -1021,6 +1035,42 @@ const VERIFIED_HARSH_POOJA_STORY: FeaturedStory = {
   ],
 };
 
+// The dedicated Fairmont archive and the magazine identify this couple as
+// Shrenik & Ishika. Keep the verified single-couple image sequence above, but
+// replace the legacy names and Agra copy that had been attached to it.
+const SHRENIK_ISHIKA_STORY: FeaturedStory = {
+  ...VERIFIED_HARSH_POOJA_STORY,
+  coverIntro:
+    "SHRENIK AND ISHIKA'S JOURNEY REFLECTS A BOND SHAPED BY GRACE AND QUIET UNDERSTANDING — WHERE LOVE FLOWS EFFORTLESSLY AND GROWS WITH TIME. ROOTED IN WARMTH AND REFINED IN ITS PRESENCE, THEIR CONNECTION CARRIES A SENSE OF EASE AND ELEGANCE, MAKING THEIR STORY FEEL BOTH TIMELESS AND BEAUTIFULLY PERSONAL.",
+  date: "Fairmont Jaipur",
+  detailLine: "Quiet harmony · Shared glances · A timeless Jaipur celebration",
+  sections: [
+    {
+      heading: "A Quiet Harmony",
+      style: "script",
+      paragraphs: [
+        "Some stories are defined not by moments alone, but by the way they make you feel. Shrenik and Ishika's journey unfolded with a quiet elegance where love met grace, and every moment carried a sense of warmth and joy. There was a timeless quality to their bond, one that felt both effortless and deeply rooted.",
+        "From the subtlest emotions to the grandeur of celebration, their story moved seamlessly between stillness and joy — each frame reflecting a connection that only grew stronger with time. Capturing their wedding was about preserving this balance: the calm, the chaos, the laughter, and the love, just the way memories are meant to be felt and remembered.",
+      ],
+    },
+    {
+      heading: "Two Souls, One Rhythm",
+      style: "serif",
+      paragraphs: [
+        "Shrenik and Ishika embody a quiet harmony that needs no words — just shared glances, steady presence, and two souls moving in perfect rhythm. Their love is not loud, but it is deep, built on trust, respect, and a beautiful sense of togetherness.",
+      ],
+    },
+    {
+      heading: "At Fairmont Jaipur",
+      style: "serif",
+      paragraphs: [
+        "Set against the majestic backdrop of Fairmont Jaipur, their wedding unfolded as a seamless blend of grandeur, thoughtful detail, and timeless charm. The palace architecture framed a celebration that felt expansive yet personal, allowing every ritual and every unguarded emotion to retain its intimacy.",
+      ],
+    },
+  ],
+  pullQuote: { word: "HARMONY" },
+};
+
 const JH_DRIVE_BLUR =
   "data:image/jpeg;base64,/9j/2wBDABIMDRANCxIQDhAUExIVGywdGxgYGzYnKSAsQDlEQz85Pj1HUGZXR0thTT0+WXlaYWltcnNyRVV9hnxvhWZwcm7/2wBDARMUFBsXGzQdHTRuST5Jbm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm7/wAARCAAQAAwDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwQF/8QAJBAAAgEEAQIHAAAAAAAAAAAAAQIDAAQRIRIFFDFBUYGhscH/xAAUAQEAAAAAAAAAAAAAAAAAAAAE/8QAGBEBAAMBAAAAAAAAAAAAAAAAAQACAzH/2gAMAwEAAhEDEQA/ALbnqPclTAVCNteWc6+s5NFHeSBeKFVVdASbI9x41mwSNbJaMRIFkJVwQSMHyx80NyQbh2WSRVYnAU69Pyjtl7FudRSf/9k=";
 
@@ -1038,6 +1088,27 @@ const joyeetaDriveImage = (
 
 /** Fresh edited originals downloaded from the couple's dedicated Drive folder. */
 const JOYEETA_HARSH_DRIVE = {
+  sangeetPink: {
+    publicId: "/images/joyeeta-sang-harsh/sangeet-couple-pink.jpg",
+    blurDataURL: "data:image/jpeg;base64,/9j/2wBDAA4KCw0LCQ4NDA0QDw4RFiQXFhQUFiwgIRokNC43NjMuMjI6QVNGOj1OPjIySGJJTlZYXV5dOEVmbWVabFNbXVn/2wBDAQ8QEBYTFioXFypZOzI7WVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVn/wAARCAAMAAgDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAID/8QAHhAAAgMAAQUAAAAAAAAAAAAAAQIAAxEiBBQhMWH/xAAVAQEBAAAAAAAAAAAAAAAAAAADBP/EABcRAQEBAQAAAAAAAAAAAAAAAAERAAL/2gAMAwEAAhEDEQA/AM1Whr72d2XAGAAxRu5v3xEs9NX2NrctPL3EO6rsGR3/2Q==",
+    width: 1586,
+    height: 2400,
+    source: "cloudinary",
+  },
+  preweddingLotus: {
+    publicId: "/images/joyeeta-sang-harsh/prewedding-lotus.jpg",
+    blurDataURL: "data:image/jpeg;base64,/9j/2wBDAA4KCw0LCQ4NDA0QDw4RFiQXFhQUFiwgIRokNC43NjMuMjI6QVNGOj1OPjIySGJJTlZYXV5dOEVmbWVabFNbXVn/2wBDAQ8QEBYTFioXFypZOzI7WVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVn/wAARCAAMAAcDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAX/xAAfEAABBAICAwAAAAAAAAAAAAACAAEEEgMRISIxgfH/xAAUAQEAAAAAAAAAAAAAAAAAAAAE/8QAGBEAAwEBAAAAAAAAAAAAAAAAAAJRARP/2gAMAwEAAhEDEQA/AKseDhZmMio2y7iNibx7+IpEqbnjVATuL86PlEXmsFa7U//Z",
+    width: 1491,
+    height: 2400,
+    source: "cloudinary",
+  },
+  sangeetBlue: {
+    publicId: "/images/joyeeta-sang-harsh/sangeet-couple-blue.jpg",
+    blurDataURL: "data:image/jpeg;base64,/9j/2wBDAA4KCw0LCQ4NDA0QDw4RFiQXFhQUFiwgIRokNC43NjMuMjI6QVNGOj1OPjIySGJJTlZYXV5dOEVmbWVabFNbXVn/2wBDAQ8QEBYTFioXFypZOzI7WVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVn/wAARCAAMAAgDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAIG/8QAHRAAAQQDAQEAAAAAAAAAAAAAAQACAxEEITESE//EABUBAQEAAAAAAAAAAAAAAAAAAAME/8QAFREBAQAAAAAAAAAAAAAAAAAAAQD/2gAMAwEAAhEDEQA/AMxMwviefmxzAasDY3VopgyZRhuPq7BFEc7xFOiTiN//2Q==",
+    width: 1641,
+    height: 2400,
+    source: "cloudinary",
+  },
   brideJoy: joyeetaDriveImage("drive-aks00579-2.jpg", 1800, 2400),
   coupleWalk: joyeetaDriveImage("drive-aks00727.jpg", 2400, 1600),
   coupleClose: joyeetaDriveImage("drive-aks00776.jpg", 1600, 2400),
@@ -1071,7 +1142,7 @@ const JOYEETA_HARSH_STORY: FeaturedStory = {
     storyImage2: JOYEETA_HARSH_DRIVE.ceremonyWideBW,
     haldi: JOYEETA_HARSH_DRIVE.ritualLeaves,
     mehendi: JOYEETA_HARSH_DRIVE.handsCloseBW,
-    sangeet: JOYEETA_HARSH_DRIVE.groomRitual,
+    sangeet: JOYEETA_HARSH_DRIVE.sangeetBlue,
     pheras: JOYEETA_HARSH_DRIVE.sacredFire,
     vidaai: JOYEETA_HARSH_DRIVE.weddingFeet,
     intimateBW: JOYEETA_HARSH_DRIVE.brideEyesBW,
@@ -1112,11 +1183,15 @@ const JOYEETA_HARSH_STORY: FeaturedStory = {
   ],
   pullQuote: { word: "JOY" },
   vendors: [],
-  hiddenRituals: ["haldi", "mehendi", "sangeet", "vidaai"],
+  hiddenRituals: ["haldi", "mehendi", "vidaai"],
   ritualExtras: {
+    sangeet: [JOYEETA_HARSH_DRIVE.sangeetPink, JOYEETA_HARSH_DRIVE.preweddingLotus],
     pheras: [JOYEETA_HARSH_DRIVE.sacredFireAlt, JOYEETA_HARSH_DRIVE.sindoor],
   },
   extras: [
+    JOYEETA_HARSH_DRIVE.sangeetPink,
+    JOYEETA_HARSH_DRIVE.preweddingLotus,
+    JOYEETA_HARSH_DRIVE.sangeetBlue,
     JOYEETA_HARSH_DRIVE.brideVeil,
     JOYEETA_HARSH_DRIVE.groomPrep,
     JOYEETA_HARSH_DRIVE.groomPrepBW,
@@ -1230,18 +1305,18 @@ const SHUBHAM_AISHWARYA_STORY: FeaturedStory = {
   date: "Chokhi Dhani, Jaipur — from colleagues to companions",
   detailLine: "From colleagues to companions · Four to five years of growing together",
   photos: {
-    hero: SHUBHAM_AISHWARYA_DRIVE.movingKiss,
-    bride: SHUBHAM_AISHWARYA_DRIVE.brideFlowers,
-    groom: SHUBHAM_AISHWARYA_DRIVE.windowPortrait,
-    storyImage1: SHUBHAM_AISHWARYA_DRIVE.windowWideBW,
-    storyImage2: SHUBHAM_AISHWARYA_DRIVE.brideGarden,
-    haldi: MAT_IMAGES.saHaldi,
-    mehendi: MAT_IMAGES.saMehendi,
-    sangeet: MAT_IMAGES.saSangeet,
+    hero: MAT_IMAGES.saPheras,
+    bride: MAT_IMAGES.saBride,
+    groom: MAT_IMAGES.saGroom,
+    storyImage1: MAT_IMAGES.saExtra3,
+    storyImage2: MAT_IMAGES.saExtra6,
+    haldi: MAT_IMAGES.saExtra8,
+    mehendi: MAT_IMAGES.saExtra7,
+    sangeet: MAT_IMAGES.saExtra6,
     pheras: MAT_IMAGES.saPheras,
     vidaai: MAT_IMAGES.saVidaai,
-    intimateBW: SHUBHAM_AISHWARYA_DRIVE.danceBW,
-    closing: SHUBHAM_AISHWARYA_DRIVE.movingKiss,
+    intimateBW: MAT_IMAGES.saExtra1,
+    closing: MAT_IMAGES.saClosing,
   },
   sections: [
     {
@@ -1269,22 +1344,19 @@ const SHUBHAM_AISHWARYA_STORY: FeaturedStory = {
   ],
   pullQuote: { word: "TRUE" },
   vendors: [],
+  hiddenRituals: ["haldi", "mehendi", "sangeet"],
   ritualExtras: {
-    haldi: [MAT_IMAGES.saExtra2, MAT_IMAGES.saHaldi],
-    mehendi: [MAT_IMAGES.saStory1],
-    sangeet: [MAT_IMAGES.saStory2, MAT_IMAGES.saIntimateBW],
+    haldi: [],
+    mehendi: [],
+    sangeet: [],
     pheras: [],
     vidaai: [],
   },
   extras: [
-    SHUBHAM_AISHWARYA_DRIVE.danceBW,
-    SHUBHAM_AISHWARYA_DRIVE.brideGarden,
-    SHUBHAM_AISHWARYA_DRIVE.brideFlowers,
-    SHUBHAM_AISHWARYA_DRIVE.windowPortrait,
-    SHUBHAM_AISHWARYA_DRIVE.windowWideBW,
-    SHUBHAM_AISHWARYA_DRIVE.movingKiss,
+    MAT_IMAGES.saBride,
+    MAT_IMAGES.saGroom,
+    MAT_IMAGES.saClosing,
     MAT_IMAGES.saExtra1,
-    MAT_IMAGES.saExtra2,
     MAT_IMAGES.saExtra3,
     MAT_IMAGES.saExtra4,
     MAT_IMAGES.saExtra5,
@@ -1329,17 +1401,17 @@ const RIYA_MOHIT_STORY: FeaturedStory = {
     // hero photo is unseen — it stays here as a fallback for reduced-motion
     // and to satisfy the FeaturedStory type contract.
     hero: MAT_IMAGES.rmCoupleCorridor,
-    bride: RIYA_MOHIT_DRIVE.brideStaircase,
-    groom: RIYA_MOHIT_DRIVE.terracePortrait,
-    storyImage1: RIYA_MOHIT_DRIVE.closePortrait,
-    storyImage2: RIYA_MOHIT_DRIVE.sunsetWalk,
+    bride: MAT_IMAGES.rmBrideRedArch,
+    groom: MAT_IMAGES.rmCouplePortrait,
+    storyImage1: MAT_IMAGES.rmCoupleNight,
+    storyImage2: MAT_IMAGES.rmBrideJewelry,
     haldi: MAT_IMAGES.rmHaldiMain,
     mehendi: MAT_IMAGES.rmBrideJharokha,
     sangeet: MAT_IMAGES.rmSangeetMain,
     pheras: MAT_IMAGES.rmCoupleMandap,
     vidaai: MAT_IMAGES.rmBrideWalking,
-    intimateBW: RIYA_MOHIT_DRIVE.portraitBW,
-    closing: RIYA_MOHIT_DRIVE.eveningDance,
+    intimateBW: MAT_IMAGES.rmCouplePortrait,
+    closing: MAT_IMAGES.rmCoupleNight,
   },
   sections: [
     {
@@ -1384,12 +1456,6 @@ const RIYA_MOHIT_STORY: FeaturedStory = {
     vidaai: [],
   },
   extras: [
-    RIYA_MOHIT_DRIVE.closePortrait,
-    RIYA_MOHIT_DRIVE.terracePortrait,
-    RIYA_MOHIT_DRIVE.sunsetWalk,
-    RIYA_MOHIT_DRIVE.portraitBW,
-    RIYA_MOHIT_DRIVE.brideStaircase,
-    RIYA_MOHIT_DRIVE.eveningDance,
     MAT_IMAGES.rmBrideRedArch,
     MAT_IMAGES.rmCoupleCorridor,
     MAT_IMAGES.rmBrideJewelry,
@@ -1495,16 +1561,17 @@ export const FEATURED: Couple[] = [
     },
   },
   {
-    bride: "Pooja",
-    groom: "Harsh",
-    place: "ITC Mughal, Agra",
-    img: VERIFIED_HARSH_POOJA_STORY.photos.hero,
-    slug: "harsh-sang-pooja",
-    story: VERIFIED_HARSH_POOJA_STORY,
+    bride: "Shrenik",
+    groom: "Ishika",
+    place: "Fairmont Jaipur",
+    img: SHRENIK_ISHIKA_STORY.photos.hero,
+    slug: "shrenik-sang-ishika",
+    story: SHRENIK_ISHIKA_STORY,
     heroVideo: {
-      src: "/video/featured/harsh-sang-pooja/highlight.mp4",
-      poster: "/video/featured/harsh-sang-pooja/poster.jpg",
-      duration: "4:20",
+      src: "/video/featured/shrenik-sang-ishika/highlight.mp4",
+      poster: "/video/featured/shrenik-sang-ishika/poster.jpg",
+      duration: "0:18",
+      withSound: false,
     },
   },
   {
@@ -1529,9 +1596,8 @@ export const FEATURED: Couple[] = [
     story: JOYEETA_HARSH_STORY,
     heroVideo: {
       src: "/video/featured/harsh-sang-joyeeta/highlight.mp4",
-      poster: "/images/joyeeta-sang-harsh/hero.jpg",
-      duration: "0:13",
-      withSound: false,
+      poster: "/video/featured/harsh-sang-joyeeta/poster.jpg",
+      duration: "2:39",
     },
   },
   {
@@ -1543,9 +1609,8 @@ export const FEATURED: Couple[] = [
     story: SHUBHAM_AISHWARYA_STORY,
     heroVideo: {
       src: "/video/featured/shubham-sang-aishwarya/highlight.mp4",
-      poster: "/images/shubham-sang-aishwarya/aks09326-copy.jpg",
-      duration: "0:13",
-      withSound: false,
+      poster: "/video/featured/shubham-sang-aishwarya/poster.jpg",
+      duration: "2:45",
     },
   },
   {

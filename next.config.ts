@@ -1,6 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/featured/harsh-sang-pooja",
+        destination: "/featured/shrenik-sang-ishika",
+        permanent: true,
+      },
+    ];
+  },
   // Silence the multi-lockfile warning by pinning the Turbopack root to this
   // project. (We have a stray package-lock.json one level up.)
   turbopack: {

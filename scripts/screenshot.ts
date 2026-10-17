@@ -15,7 +15,7 @@ const ROUTES = [
   { url: "/", name: "home" },
   { url: "/featured", name: "featured-index" },
   { url: "/featured/anvesha-sang-omkar", name: "featured-anvesha" },
-  { url: "/featured/harsh-sang-pooja", name: "featured-harsh" },
+  { url: "/featured/shrenik-sang-ishika", name: "featured-shrenik" },
   { url: "/featured/riya-sang-mohit", name: "featured-slug" },
   { url: "/weddings", name: "weddings" },
   { url: "/about", name: "about" },

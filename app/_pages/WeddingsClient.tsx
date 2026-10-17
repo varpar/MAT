@@ -5,7 +5,7 @@ import { SANS, DISPLAY, T, LAYOUT } from "../_components/tokens";
 import { Sep } from "../_components/Punc";
 import { Sang } from "../_components/Sang";
 import { useReveal } from "../_components/hooks";
-import { FEATURED, MAT_IMAGES, type Couple } from "../_components/data";
+import { FEATURED, type Couple } from "../_components/data";
 import { MatImage } from "../_components/MatImage";
 import type { MatImageRecord } from "../_lib/mat-image-types";
 
@@ -19,31 +19,32 @@ type Frame = {
 };
 
 const FRAMES: Frame[] = (() => {
-  const couples = FEATURED;
-  const base = [
-    { img: MAT_IMAGES.couple1, ratio: 3 / 4, filter: ["Couple"] },
-    { img: MAT_IMAGES.bride1, ratio: 3 / 4, filter: ["Bride"] },
-    { img: MAT_IMAGES.detail3, ratio: 4 / 3, filter: ["Venue"] },
-    { img: MAT_IMAGES.couple2, ratio: 4 / 3, filter: ["Couple"] },
-    { img: MAT_IMAGES.bride2, ratio: 3 / 4, filter: ["Bride"] },
-    { img: MAT_IMAGES.sangeet, ratio: 4 / 3, filter: ["Party"] },
-    { img: MAT_IMAGES.bride3, ratio: 3 / 4, filter: ["Bride", "B&W"] },
-    { img: MAT_IMAGES.detail1, ratio: 1, filter: ["Venue"] },
-    { img: MAT_IMAGES.couple3, ratio: 4 / 3, filter: ["Couple"] },
-    { img: MAT_IMAGES.detail5, ratio: 1, filter: ["Venue"] },
-    { img: MAT_IMAGES.haldi, ratio: 4 / 3, filter: ["Party"] },
-    { img: MAT_IMAGES.mehendi, ratio: 3 / 4, filter: ["B&W"] },
-    { img: MAT_IMAGES.detail7, ratio: 4 / 3, filter: ["Venue"] },
-    { img: MAT_IMAGES.detail2, ratio: 3 / 4, filter: ["Couple"] },
-    { img: MAT_IMAGES.detail4, ratio: 4 / 3, filter: ["B&W"] },
-    { img: MAT_IMAGES.pheras, ratio: 3 / 4, filter: ["Couple"] },
-  ] as const;
-  return base.map((f, i) => ({
-    img: f.img,
-    couple: couples[i % couples.length],
-    ratio: f.ratio,
-    filter: [...(f.filter as readonly (typeof ARCHIVE_FILTERS)[number][])],
-  }));
+  // Every frame is now selected from the same couple object that supplies its
+  // caption. The former archive mixed generic photographs with rotating names,
+  // which made otherwise-correct photographs appear under the wrong couple.
+  return FEATURED.flatMap((couple) => {
+    if (!couple.story) return [];
+    const { photos } = couple.story;
+    const candidates: Frame[] = [
+      { img: couple.img, couple, ratio: 4 / 3, filter: ["Couple"] },
+      { img: photos.bride, couple, ratio: 3 / 4, filter: ["Bride"] },
+      { img: photos.sangeet, couple, ratio: 4 / 3, filter: ["Party"] },
+      { img: photos.intimateBW, couple, ratio: 3 / 4, filter: ["Couple", "B&W"] },
+      { img: photos.storyImage2, couple, ratio: 4 / 3, filter: ["Venue"] },
+      { img: photos.pheras, couple, ratio: 3 / 4, filter: ["Couple"] },
+      { img: photos.haldi, couple, ratio: 4 / 3, filter: ["Party"] },
+      { img: photos.groom, couple, ratio: 3 / 4, filter: ["Couple"] },
+      { img: photos.closing, couple, ratio: 4 / 3, filter: ["Couple"] },
+    ];
+    const seen = new Set<string>();
+    return candidates
+      .filter(({ img }) => {
+        if (seen.has(img.publicId)) return false;
+        seen.add(img.publicId);
+        return true;
+      })
+      .slice(0, 5);
+  });
 })();
 
 function FrameTile({

@@ -1114,7 +1114,7 @@ function HomeQuoteFrame() {
             textTransform: "uppercase",
           }}
         >
-          <Sang size={11} latin /> Riya & Mohit, Udaipur 2025
+          <Sang size={11} latin /> Riya & Mohit, Jaipur
         </motion.footer>
       </div>
       <style>{`
@@ -1261,8 +1261,8 @@ function HomeMosaic() {
      • ITC Mementos Udaipur→ atmos1   (B&W aerial courtyard — scenic stand-in,
                                        no couple tied to this venue yet)
      • Ananta              → atmos3   (036-…ananta — fog-lit chhatri stage)
-     • ITC Agra            → reel1    (Harsh sang Pooja — wedding was at ITC
-                                       Mughal, Agra; B&W Mughal colonnade)
+     • ITC Agra            → reel1    (B&W Mughal colonnade; atmospheric
+                                       venue stand-in until a verified venue frame arrives)
      • Anantara            → vvHero   (Varun sang Vanya — wedding was at
                                        Anantara, Jaipur; chandelier ballroom)
    ───────────────────────────────────────────────────────────── */
