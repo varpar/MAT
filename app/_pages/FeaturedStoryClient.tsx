@@ -7,6 +7,8 @@ import { Sang } from "../_components/Sang";
 import { useReveal } from "../_components/hooks";
 import { MatImage } from "../_components/MatImage";
 import { FilmPlayer } from "../_components/FilmPlayer";
+import { ElegantSlideshow } from "../_components/ElegantSlideshow";
+import { AnimatedImage } from "../_components/AnimatedImage";
 import { LightboxProvider } from "../_components/Lightbox";
 import { withSeps } from "../_components/Punc";
 import { type Couple, MAT_IMAGES } from "../_components/data";
@@ -21,6 +23,15 @@ const EASE = "cubic-bezier(.2,.7,.2,1)";
    ───────────────────────────────────────────────────────────── */
 function CoverHero({ couple, story }: { couple: Couple; story: FeaturedStory }) {
   const [ref, vis] = useReveal<HTMLElement>(0.05);
+  const slideshowImages = [
+    story.photos.hero,
+    story.photos.storyImage1,
+    story.photos.storyImage2,
+    story.photos.bride,
+    story.photos.groom,
+    story.photos.closing,
+  ];
+  const hasPhotoFilm = couple.heroVideo?.withSound === false;
   return (
     <>
       <section
@@ -52,7 +63,12 @@ function CoverHero({ couple, story }: { couple: Couple; story: FeaturedStory }) 
             background: "#0e0e0e",
           }}
         >
-        {couple.heroVideo ? (
+        {hasPhotoFilm ? (
+          <ElegantSlideshow
+            images={slideshowImages}
+            label={`${couple.bride} sang ${couple.groom} wedding photographs`}
+          />
+        ) : couple.heroVideo ? (
           <FilmPlayer
             src={couple.heroVideo.src}
             poster={couple.heroVideo.poster}
@@ -483,12 +499,10 @@ function ritualPhotosFor(
   used: Set<string>,
 ): MatImageRecord[] {
   const main = story.photos[k];
-  const candidates = [
-    main,
-    ...(story.extras ?? []),
-    ...(story.ritualExtras?.[k] ?? []),
-    ...Object.values(story.photos),
-  ];
+  const curated = story.ritualExtras?.[k] ?? [];
+  const candidates = story.strictRitualGrouping
+    ? [main, ...curated]
+    : [main, ...curated, ...(story.extras ?? []), ...Object.values(story.photos)];
   const selected: MatImageRecord[] = [];
   const local = new Set<string>();
 
@@ -719,24 +733,22 @@ function buildWall(story: FeaturedStory): MatImageRecord[] {
 }
 
 function WallTile({ image, idx }: { image: MatImageRecord; idx: number }) {
-  const [ref, vis] = useReveal<HTMLDivElement>(0.08);
   // Vary aspect ratios for visual rhythm.
   const aspect = ["3/4", "4/3", "3/4", "1/1", "3/4", "4/5"][idx % 6];
   return (
-    <div
-      ref={ref}
+    <AnimatedImage
+      image={image}
+      alt=""
+      aspect={aspect}
+      parallax={[18, 24, 16][idx % 3]}
+      reveal="fade"
+      hoverScale={1.015}
+      delay={(idx % 3) * 0.06}
+      className="mat-wall-tile"
       style={{
-        aspectRatio: aspect,
-        overflow: "hidden",
-        background: "#0e0e0e",
-        position: "relative",
-        opacity: vis ? 1 : 0,
-        transform: vis ? "translateY(0)" : "translateY(24px)",
-        transition: `all 0.9s ${EASE} ${(idx % 3) * 0.08}s`,
+        alignSelf: "start",
       }}
-    >
-      <MatImage image={image} variant="Grid" alt="" />
-    </div>
+    />
   );
 }
 
@@ -748,6 +760,36 @@ function WallOfImages({
   couple: Couple;
 }) {
   const photos = buildWall(story);
+  const wallRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const wall = wallRef.current;
+    if (!wall) return;
+
+    let frame = 0;
+    const arrange = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        const styles = window.getComputedStyle(wall);
+        const row = Number.parseFloat(styles.gridAutoRows) || 4;
+        const gap = Number.parseFloat(styles.rowGap) || 0;
+
+        wall.querySelectorAll<HTMLElement>(".mat-wall-tile").forEach((tile) => {
+          tile.style.gridRowEnd = "auto";
+          const height = tile.getBoundingClientRect().height;
+          tile.style.gridRowEnd = `span ${Math.ceil((height + gap) / (row + gap))}`;
+        });
+      });
+    };
+
+    arrange();
+    window.addEventListener("resize", arrange, { passive: true });
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("resize", arrange);
+    };
+  }, [photos.length]);
+
   return (
     <section
       style={{
@@ -791,10 +833,13 @@ function WallOfImages({
       </header>
 
       <div
+        ref={wallRef}
         className="mat-wall"
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(3, 1fr)",
+          gridAutoRows: 4,
+          gridAutoFlow: "row dense",
           gap: LAYOUT.gap,
           // Inset the wall ~8px off each side edge — packed but breathing.
           marginInline: LAYOUT.edge,
@@ -1138,7 +1183,7 @@ export function FeaturedStoryClient({ couple }: { couple: Couple }) {
       <SegmentedRituals story={story} />
 
       <BridePanel
-        bride={couple.bride}
+        bride={couple.brideName ?? couple.bride}
         bridePortrait={story.photos.bride}
         body={brideSection?.paragraphs[0]}
       />

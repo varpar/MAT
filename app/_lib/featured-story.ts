@@ -45,6 +45,9 @@ export type FeaturedStory = {
   ritualExtras?: Partial<
     Record<"haldi" | "mehendi" | "sangeet" | "pheras" | "vidaai", MatImageRecord[]>
   >;
+  /** When enabled, ritual sections use only their explicitly curated photos.
+   *  This keeps visually distinct functions from bleeding into one another. */
+  strictRitualGrouping?: boolean;
   /** Ceremonies that are not represented by a verified photograph for this
    *  couple. Omitting them is preferable to showing another function under
    *  the wrong label. */

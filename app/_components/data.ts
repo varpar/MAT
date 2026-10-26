@@ -753,8 +753,12 @@ export const MAT_IMAGES: Record<string, MatImageRecord> = {
 };
 
 export type Couple = {
+  /** Legacy public title order used throughout the site. */
   bride: string;
   groom: string;
+  /** Explicit roles when the editorial title order is groom-first. */
+  brideName?: string;
+  groomName?: string;
   place: string;
   img: MatImageRecord;
   slug?: string;
@@ -992,40 +996,35 @@ const HARSH_POOJA_STORY: FeaturedStory = {
 };
 
 // The original magazine mapping above mixed several couples from the shared
-// archive. This verified version uses only the contiguous 001–013 sequence:
-// the same faces, outfits, and venue across the colourful pre-wedding event,
-// turmeric ceremony, and wedding night.
+// archive. Face-checking the Fairmont set shows that 006–007 belong to another
+// bride and groom as well. Keep only the visually consistent 005 and 008–013
+// frames for Shrenik & Ishika.
 const VERIFIED_HARSH_POOJA_STORY: FeaturedStory = {
   ...HARSH_POOJA_STORY,
   photos: {
     hero: MAT_IMAGES.hpClosing,
-    bride: MAT_IMAGES.hpBride,
-    groom: MAT_IMAGES.hpWeddingSeated,
-    storyImage1: MAT_IMAGES.reel2,
-    storyImage2: MAT_IMAGES.detail3,
+    bride: MAT_IMAGES.hpWeddingWalk,
+    groom: MAT_IMAGES.hpHaldiClose,
+    storyImage1: MAT_IMAGES.detail3,
+    storyImage2: MAT_IMAGES.hpWeddingWalk,
     haldi: MAT_IMAGES.hpHaldiRitual,
-    mehendi: MAT_IMAGES.haldi,
+    mehendi: MAT_IMAGES.detail3,
     sangeet: MAT_IMAGES.detail3,
-    pheras: MAT_IMAGES.hpWeddingSeated,
+    pheras: MAT_IMAGES.hpCeremonyWide,
     vidaai: MAT_IMAGES.hpWeddingWalk,
     intimateBW: MAT_IMAGES.detail3,
     closing: MAT_IMAGES.hpClosing,
   },
+  hiddenRituals: ["mehendi", "sangeet", "vidaai"],
   ritualExtras: {
     haldi: [MAT_IMAGES.hpHaldiClose],
-    mehendi: [MAT_IMAGES.hpMehendiGame, MAT_IMAGES.mehendi],
+    mehendi: [],
     sangeet: [],
     pheras: [MAT_IMAGES.hpCeremonyWide, MAT_IMAGES.pheras],
     vidaai: [],
   },
   extras: [
-    MAT_IMAGES.haldi,
-    MAT_IMAGES.hpMehendiGame,
-    MAT_IMAGES.mehendi,
-    MAT_IMAGES.reel2,
     MAT_IMAGES.detail3,
-    MAT_IMAGES.hpBride,
-    MAT_IMAGES.hpWeddingSeated,
     MAT_IMAGES.hpHaldiClose,
     MAT_IMAGES.hpHaldiRitual,
     MAT_IMAGES.hpCeremonyWide,
@@ -1274,31 +1273,6 @@ const ADITI_SWAPNIL_STORY: FeaturedStory = {
   ],
 };
 
-const SA_DRIVE_BLUR =
-  "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAALABADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABAD/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABRESMWETIUFRYv/EABUBAQEAAAAAAAAAAAAAAAAAAAME/8QAFxEBAQEBAAAAAAAAAAAAAAAAAQIAIf/aAAwDAQACEQMRAD8Abb2EdrIgLgqNI+fOeagsjyCRpnDiIqz5GGG4ONhR7IzPaZy5JIf3wKQYkmjPUGrCAjvRC81NQFJv/9k=";
-
-const shubhamDriveImage = (
-  file: string,
-  width: number,
-  height: number,
-): MatImageRecord => ({
-  publicId: `/images/shubham-sang-aishwarya/${file}`,
-  blurDataURL: SA_DRIVE_BLUR,
-  width,
-  height,
-  source: "cloudinary",
-});
-
-/** Newly selected frames from the couple's 100-photo edited Drive set. */
-const SHUBHAM_AISHWARYA_DRIVE = {
-  danceBW: shubhamDriveImage("drive-dsw00009.jpg", 2400, 1600),
-  brideGarden: shubhamDriveImage("drive-dsw00414.jpg", 2400, 1968),
-  brideFlowers: shubhamDriveImage("drive-dsw00446.jpg", 2400, 1600),
-  windowPortrait: shubhamDriveImage("drive-dsw01319.jpg", 1600, 2400),
-  windowWideBW: shubhamDriveImage("drive-dsw01391.jpg", 2400, 1687),
-  movingKiss: shubhamDriveImage("drive-dsw01518.jpg", 2400, 1677),
-};
-
 const SHUBHAM_AISHWARYA_STORY: FeaturedStory = {
   coverIntro:
     "SHUBHAM AND AISHWARYA'S JOURNEY REFLECTS A BOND BUILT ON COMFORT AND QUIET UNDERSTANDING — WHERE LOVE FEELS NATURAL, UNFORCED, AND DEEPLY ROOTED. EFFORTLESS IN ITS PRESENCE AND STEADY IN ITS GROWTH, THEIR CONNECTION CARRIES WARMTH AND SINCERITY, MAKING THEIR STORY FEEL BOTH GENUINE AND TIMELESS.",
@@ -1308,14 +1282,16 @@ const SHUBHAM_AISHWARYA_STORY: FeaturedStory = {
     hero: MAT_IMAGES.saPheras,
     bride: MAT_IMAGES.saBride,
     groom: MAT_IMAGES.saGroom,
-    storyImage1: MAT_IMAGES.saExtra3,
-    storyImage2: MAT_IMAGES.saExtra6,
-    haldi: MAT_IMAGES.saExtra8,
-    mehendi: MAT_IMAGES.saExtra7,
-    sangeet: MAT_IMAGES.saExtra6,
+    // Face audit: the regular AKS, DSCF, and DSW sequences are this couple.
+    // Only the separately downloaded `drive-dsw…` files belong elsewhere.
+    storyImage1: MAT_IMAGES.saHero,
+    storyImage2: MAT_IMAGES.saStory1,
+    haldi: MAT_IMAGES.saHaldi,
+    mehendi: MAT_IMAGES.saMehendi,
+    sangeet: MAT_IMAGES.saSangeet,
     pheras: MAT_IMAGES.saPheras,
     vidaai: MAT_IMAGES.saVidaai,
-    intimateBW: MAT_IMAGES.saExtra1,
+    intimateBW: MAT_IMAGES.saIntimateBW,
     closing: MAT_IMAGES.saClosing,
   },
   sections: [
@@ -1344,19 +1320,39 @@ const SHUBHAM_AISHWARYA_STORY: FeaturedStory = {
   ],
   pullQuote: { word: "TRUE" },
   vendors: [],
-  hiddenRituals: ["haldi", "mehendi", "sangeet"],
+  hiddenRituals: ["vidaai"],
+  strictRitualGrouping: true,
   ritualExtras: {
-    haldi: [],
-    mehendi: [],
-    sangeet: [],
-    pheras: [],
+    haldi: [MAT_IMAGES.saExtra2],
+    mehendi: [MAT_IMAGES.saStory1, MAT_IMAGES.saExtra6, MAT_IMAGES.saExtra7, MAT_IMAGES.saExtra8],
+    sangeet: [MAT_IMAGES.saHero, MAT_IMAGES.saStory2, MAT_IMAGES.saIntimateBW],
+    pheras: [
+      MAT_IMAGES.saBride,
+      MAT_IMAGES.saGroom,
+      MAT_IMAGES.saVidaai,
+      MAT_IMAGES.saClosing,
+      MAT_IMAGES.saExtra1,
+      MAT_IMAGES.saExtra3,
+      MAT_IMAGES.saExtra4,
+      MAT_IMAGES.saExtra5,
+    ],
     vidaai: [],
   },
   extras: [
+    MAT_IMAGES.saHero,
     MAT_IMAGES.saBride,
     MAT_IMAGES.saGroom,
+    MAT_IMAGES.saStory1,
+    MAT_IMAGES.saStory2,
+    MAT_IMAGES.saHaldi,
+    MAT_IMAGES.saMehendi,
+    MAT_IMAGES.saSangeet,
+    MAT_IMAGES.saPheras,
+    MAT_IMAGES.saVidaai,
+    MAT_IMAGES.saIntimateBW,
     MAT_IMAGES.saClosing,
     MAT_IMAGES.saExtra1,
+    MAT_IMAGES.saExtra2,
     MAT_IMAGES.saExtra3,
     MAT_IMAGES.saExtra4,
     MAT_IMAGES.saExtra5,
@@ -1364,31 +1360,6 @@ const SHUBHAM_AISHWARYA_STORY: FeaturedStory = {
     MAT_IMAGES.saExtra7,
     MAT_IMAGES.saExtra8,
   ],
-};
-
-const RM_DRIVE_BLUR =
-  "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAQAAsDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAEC/8QAHhAAAgICAgMAAAAAAAAAAAAAAQIDEQAEBSETYXH/xAAVAQEBAAAAAAAAAAAAAAAAAAACA//EABcRAQEBAQAAAAAAAAAAAAAAAAEAAiH/2gAMAwEAAhEDEQA/ALsmfWmlMar41UN0CD9vHQRbM8CSxlCrixbZjadpFkRqKOCAb7xnFa0icdCrvTV2L95PR2YCX//Z";
-
-const riyaDriveImage = (
-  file: string,
-  width: number,
-  height: number,
-): MatImageRecord => ({
-  publicId: `/images/riya-sang-mohit/${file}`,
-  blurDataURL: RM_DRIVE_BLUR,
-  width,
-  height,
-  source: "cloudinary",
-});
-
-/** Fresh portraits selected from Riya & Mohit's dedicated edited set. */
-const RIYA_MOHIT_DRIVE = {
-  closePortrait: riyaDriveImage("drive-aks05289.jpg", 1600, 2400),
-  terracePortrait: riyaDriveImage("drive-aks05294.jpg", 1600, 2400),
-  sunsetWalk: riyaDriveImage("drive-aks05303.jpg", 1741, 2400),
-  portraitBW: riyaDriveImage("drive-aks05317.jpg", 1600, 2400),
-  brideStaircase: riyaDriveImage("drive-aks05737.jpg", 1600, 2400),
-  eveningDance: riyaDriveImage("drive-aks05746.jpg", 1600, 2400),
 };
 
 const RIYA_MOHIT_STORY: FeaturedStory = {
@@ -1403,7 +1374,8 @@ const RIYA_MOHIT_STORY: FeaturedStory = {
     hero: MAT_IMAGES.rmCoupleCorridor,
     bride: MAT_IMAGES.rmBrideRedArch,
     groom: MAT_IMAGES.rmCouplePortrait,
-    storyImage1: MAT_IMAGES.rmCoupleNight,
+    // rmCoupleNight is AKS02212 from Shrenik & Ishika's Fairmont set.
+    storyImage1: MAT_IMAGES.rmCoupleCorridor,
     storyImage2: MAT_IMAGES.rmBrideJewelry,
     haldi: MAT_IMAGES.rmHaldiMain,
     mehendi: MAT_IMAGES.rmBrideJharokha,
@@ -1411,7 +1383,7 @@ const RIYA_MOHIT_STORY: FeaturedStory = {
     pheras: MAT_IMAGES.rmCoupleMandap,
     vidaai: MAT_IMAGES.rmBrideWalking,
     intimateBW: MAT_IMAGES.rmCouplePortrait,
-    closing: MAT_IMAGES.rmCoupleNight,
+    closing: MAT_IMAGES.rmBrideWalking,
   },
   sections: [
     {
@@ -1463,7 +1435,7 @@ const RIYA_MOHIT_STORY: FeaturedStory = {
     MAT_IMAGES.rmBrideJharokha,
     MAT_IMAGES.rmCouplePortrait,
     MAT_IMAGES.rmBrideWalking,
-    MAT_IMAGES.rmCoupleNight,
+    MAT_IMAGES.rmHaldiBride,
   ],
 };
 
@@ -1563,6 +1535,8 @@ export const FEATURED: Couple[] = [
   {
     bride: "Shrenik",
     groom: "Ishika",
+    brideName: "Ishika",
+    groomName: "Shrenik",
     place: "Fairmont Jaipur",
     img: SHRENIK_ISHIKA_STORY.photos.hero,
     slug: "shrenik-sang-ishika",

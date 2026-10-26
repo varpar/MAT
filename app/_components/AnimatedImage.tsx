@@ -71,9 +71,15 @@ export function AnimatedImage({
     offset: ["start end", "end start"],
   });
 
-  const yShift: MotionValue<number> | number = effParallax
-    ? useTransform(scrollYProgress, [0, 1], [effParallax, -effParallax])
-    : 0;
+  // Keep the hook order stable as responsive/reduced-motion preferences change.
+  // Reduced-motion visitors still get the photograph, without scroll drift.
+  const parallaxY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [effParallax, -effParallax],
+  );
+  const yShift: MotionValue<number> | number =
+    effParallax && !reduceMotion ? parallaxY : 0;
 
   const wipeFrom =
     reveal !== "fade" && reveal !== "none"
