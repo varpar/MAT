@@ -50,6 +50,8 @@ export function ElegantSlideshow({ images, label, intervalMs = 5200 }: Props) {
           <MatImage
             image={image}
             variant={index === 0 ? "Hero" : "Grid"}
+            priority={index === 0}
+            fetchPriority={index === 0 ? "high" : "auto"}
             sizesOverride="100vw"
             alt=""
             noLightbox

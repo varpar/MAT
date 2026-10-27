@@ -139,6 +139,8 @@ function FeaturedHero({ couple }: { couple: Couple }) {
           <MatImage
             image={couple.img}
             variant="Hero"
+            priority
+            fetchPriority="high"
             alt=""
             filter="brightness(0.86)"
           />

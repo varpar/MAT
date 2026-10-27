@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { BODY, DISPLAY, SANS, T, LAYOUT } from "../_components/tokens";
 import { FEATURED, type Couple } from "../_components/data";
@@ -39,10 +40,12 @@ function FilmFeature({ couple }: { couple: Couple }) {
     >
       <div className="mat-film-frame">
         {reduceMotion ? (
-          <img
+          <Image
             src={film.poster}
             alt={`${couple.bride} and ${couple.groom}`}
             className="mat-film-media"
+            fill
+            sizes="100vw"
           />
         ) : (
           <video
@@ -119,6 +122,7 @@ function CardPair({ couples }: { couples: Couple[] }) {
 export function FeaturedIndexClient() {
   return (
     <main className="mat-featured-index">
+      <h1 className="mat-visually-hidden">Featured wedding films and stories</h1>
       {RIYA_MOHIT && <FilmFeature couple={RIYA_MOHIT} />}
       <CardPair couples={FIRST_PAIR} />
       {JOYEETA_HARSH && <FilmFeature couple={JOYEETA_HARSH} />}

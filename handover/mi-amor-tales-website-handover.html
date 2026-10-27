@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Mi Amor Tales - Website Handover Guide</title>
+  <style>
+    @font-face{font-family:Saonara;src:url("../public/fonts/made-saonara.woff2") format("woff2");font-display:swap}
+    :root{--ink:#1a1a1a;--paper:#fafaf7;--sage:#436c67;--pale:#e8efee;--cream:#cde0dd;--muted:#68716f;--line:rgba(67,108,103,.22);--display:Saonara,"Cormorant Garamond",Georgia,serif;--serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;--sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--pale);color:var(--ink);font:15px/1.68 var(--sans);-webkit-font-smoothing:antialiased}a{color:var(--sage);text-underline-offset:3px}img{display:block;max-width:100%}code{padding:.12em .34em;border-radius:2px;background:var(--pale);font:.86em ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;word-break:break-word}pre{margin:24px 0;padding:22px 24px;overflow:auto;border-left:2px solid var(--sage);background:var(--sage);color:var(--paper);font:12px/1.72 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap}pre code{padding:0;background:transparent;color:inherit}
+    .shell{width:min(1180px,calc(100% - 40px));margin:34px auto 88px;background:var(--paper);box-shadow:0 20px 64px rgba(67,108,103,.13)}
+    .cover{min-height:760px;display:grid;grid-template-columns:46% 54%;overflow:hidden;background:var(--sage);color:var(--paper)}.cover-copy{display:flex;flex-direction:column;justify-content:space-between;padding:68px 60px 56px}.logo{width:164px}.cover h1{margin:0;font:300 clamp(56px,7vw,92px)/.95 var(--display);letter-spacing:-.025em}.deck{max-width:420px;margin:32px 0 0;color:var(--paper);font:italic 24px/1.4 var(--serif);opacity:.8}.meta{display:flex;justify-content:space-between;gap:20px;padding-top:24px;border-top:1px solid rgba(255,255,255,.28);font-size:10px;letter-spacing:.18em;text-transform:uppercase}.cover-image{position:relative;min-height:760px;overflow:hidden}.cover-image img{width:100%;height:100%;object-fit:cover}
+    .doc{padding:0 64px 72px}.chapter{padding:82px 0 76px;border-bottom:1px solid var(--line)}.chapter:last-child{border-bottom:0}.head{display:grid;grid-template-columns:160px 1fr;gap:42px;align-items:start;margin-bottom:44px}.kicker{padding-top:10px;color:var(--sage);font-size:10px;letter-spacing:.2em;text-transform:uppercase}h2{max-width:780px;margin:0;font:300 54px/1.02 var(--display);letter-spacing:-.02em}h3{margin:40px 0 14px;color:var(--sage);font:400 27px/1.18 var(--serif)}h4{margin:26px 0 10px;font:600 13px/1.35 var(--sans);letter-spacing:.08em;text-transform:uppercase}p{margin:0 0 16px}ul,ol{margin:12px 0 24px;padding-left:22px}li{margin:7px 0}.lead{max-width:800px;margin:0 0 42px 202px;font:400 24px/1.58 var(--serif)}
+    .grid2,.grid3,.quick{display:grid;gap:22px;margin:28px 0}.grid2{grid-template-columns:repeat(2,1fr)}.grid3{grid-template-columns:repeat(3,1fr)}.quick{grid-template-columns:repeat(4,1fr)}.card{padding:22px 0 18px;border-top:1px solid var(--sage);background:transparent;break-inside:avoid}.label{margin-bottom:12px;color:var(--sage);font-size:9px;letter-spacing:.14em;text-transform:uppercase}.value{font:400 21px/1.3 var(--serif)}.card p{margin-top:11px;font-size:13px;line-height:1.58}.note,.warn,.good{margin:26px 0;padding:20px 22px;border-left:2px solid var(--sage);background:var(--pale);break-inside:avoid}.note strong,.warn strong,.good strong{display:block;margin-bottom:6px}
+    table{width:100%;margin:26px 0 34px;border-collapse:collapse;border-top:1px solid var(--sage);font-size:12.5px}thead{display:table-header-group}tr{break-inside:avoid}th{padding:12px 12px 10px;border-bottom:1px solid var(--sage);background:transparent;color:var(--sage);font-size:9px;letter-spacing:.1em;text-align:left;text-transform:uppercase}td{padding:13px 12px;vertical-align:top;border-bottom:1px solid var(--line)}.path{font:11px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.status{display:inline-block;padding:3px 8px;border:1px solid var(--sage);border-radius:999px;background:transparent;color:var(--sage);font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.pending,.optional{background:transparent;color:var(--sage)}
+    .toc{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;margin:0;padding:0;list-style:none;counter-reset:toc}.toc li{counter-increment:toc;border-bottom:1px solid var(--line)}.toc a{display:grid;grid-template-columns:36px 1fr;gap:8px;padding:13px 0;color:var(--ink);text-decoration:none}.toc a:before{content:counter(toc,decimal-leading-zero);color:var(--sage);font-size:10px;letter-spacing:.12em}
+    .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:30px 0;border-top:1px solid var(--sage);border-bottom:1px solid var(--sage)}.flow div{position:relative;min-height:92px;padding:18px 14px;background:transparent;font:400 15px/1.35 var(--serif)}.flow div+div{border-left:1px solid var(--line)}.flow div:not(:last-child):after{content:">";position:absolute;top:50%;right:-8px;z-index:1;width:16px;background:var(--paper);color:var(--sage);text-align:center;transform:translateY(-50%)}.flow small{display:block;margin-bottom:10px;color:var(--sage);font:700 8px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase}.checks{padding:0;list-style:none}.checks li{position:relative;padding-left:28px}.checks li:before{content:"";position:absolute;left:0;top:.52em;width:13px;height:13px;border:1.5px solid var(--sage)}
+    .photo-band{display:grid;grid-template-columns:1.2fr .8fr;min-height:280px;margin:28px 0;overflow:hidden;background:var(--sage);color:var(--paper)}.photo-band img{width:100%;height:100%;min-height:280px;object-fit:cover}.photo-band div{display:flex;flex-direction:column;justify-content:center;padding:34px}.photo-band blockquote{margin:0;color:var(--cream);font:italic 26px/1.35 var(--serif)}.photo-band cite{margin-top:18px;font-size:10px;font-style:normal;letter-spacing:.16em;text-transform:uppercase}
+    .print-footer{display:none!important}
+    @media(max-width:760px){.shell{width:100%;margin:0}.cover{grid-template-columns:1fr}.cover-copy{min-height:600px;padding:40px 24px}.cover-image{min-height:520px}.doc{padding:0 24px 42px}.head{grid-template-columns:1fr;gap:12px}.lead{margin-left:0}.grid2,.grid3,.quick,.toc{grid-template-columns:1fr}.flow{grid-template-columns:1fr}.photo-band{grid-template-columns:1fr}table{display:block;width:100%;max-width:100%;overflow-x:auto}h2{font-size:42px}}
+    @page{size:A4;margin:16mm 15mm 18mm}@media print{html,body{background:var(--paper)}body{font-size:9pt;line-height:1.4}.shell{width:auto;margin:0;box-shadow:none}.cover{height:263mm;min-height:263mm;grid-template-columns:47% 53%;break-after:page}.cover-copy{padding:20mm 11mm 15mm 14mm}.cover h1{font-size:47pt}.cover-image{min-height:263mm}.doc{padding:0}.chapter{padding:10mm 2mm 8mm;break-inside:auto}.chapter.page{break-before:page}.head{grid-template-columns:30mm 1fr;gap:8mm;margin-bottom:7mm}.kicker{font-size:6.8pt}h2{font-size:30pt;line-height:1.02}h3{margin:5mm 0 2.2mm;font-size:15.5pt}h4{margin:4mm 0 1.5mm;font-size:8pt}p{margin-bottom:2.6mm}ul,ol{margin:2mm 0 3.5mm;padding-left:5mm}li{margin:1.2mm 0}.lead{margin:0 0 6mm 38mm;font-size:13pt;line-height:1.45}.grid2,.grid3,.quick{gap:4mm;margin:5mm 0}.card{padding:3.5mm 0 3mm}.card .label{margin-bottom:1.8mm;font-size:6.5pt}.value{font-size:12.5pt}.card p,table{font-size:7.4pt;line-height:1.4}table{margin:4mm 0 5mm}.note,.warn,.good{margin:4mm 0;padding:3.5mm 4mm}th{padding:2.2mm 2.4mm;font-size:6.5pt}td{padding:2.2mm 2.4mm}.status{padding:.5mm 1.4mm;font-size:5.6pt}pre{margin:4mm 0;padding:3.5mm;font-size:6.8pt;line-height:1.5}#structure table{font-size:7pt}#structure td{padding:1.55mm 2.4mm}#structure th{padding:1.8mm 2.4mm}#structure pre,#couples pre{margin:2.5mm 0;padding:2.8mm;font-size:6.2pt;line-height:1.35}.flow{margin:5mm 0}.flow div{min-height:19mm;padding:3mm;font-size:8.5pt}.flow small{margin-bottom:1.5mm;font-size:5.8pt}.photo-band{min-height:60mm;margin:5mm 0}.photo-band img{min-height:60mm}.photo-band div{padding:6mm}.photo-band blockquote{font-size:17pt}.print-footer{display:none!important}a{color:inherit;text-decoration:none}}
+  </style>
+</head>
+<body>
+<main class="shell">
+  <section class="cover">
+    <div class="cover-copy">
+      <img class="logo" src="../public/brand/mat-logo-cream.webp" alt="Mi Amor Tales">
+      <div><h1>Website<br>handover.</h1><p class="deck">Everything needed to own, update, publish, protect, and grow the Mi Amor Tales website.</p></div>
+      <div class="meta"><span>Prepared 5 October 2026</span><span>Version f30fe6c</span></div>
+    </div>
+    <div class="cover-image"><img src="../public/home/hero-aks09773.jpg" alt="Mi Amor Tales wedding photograph"></div>
+  </section>
+
+  <div class="doc">
+    <section class="chapter" id="start">
+      <div class="head"><div class="kicker">Start here</div><h2>The website in one page.</h2></div>
+      <p class="lead">Mi Amor Tales is a custom, code-managed portfolio website. It is fast and flexible, but it does not have an admin dashboard. Content changes are made in the project files, checked locally, and published through GitHub and Vercel.</p>
+      <div class="quick">
+        <article class="card"><div class="label">Live website</div><div class="value">www.miamortales.com</div><p>The root domain redirects to www.</p></article>
+        <article class="card"><div class="label">Hosting</div><div class="value">Vercel</div><p>The site and DNS are served by Vercel.</p></article>
+        <article class="card"><div class="label">Source code</div><div class="value">GitHub</div><p><span class="path">github.com/varpar/MAT</span>, branch <code>main</code>.</p></article>
+        <article class="card"><div class="label">Framework</div><div class="value">Next.js 16</div><p>React 19, TypeScript, local media.</p></article>
+      </div>
+      <div class="good"><strong>Current production baseline</strong>This guide documents commit <code>f30fe6c11262125c011224648c9b8633259ebb1e</code>, "Complete featured films and enquiry flow". Local and remote <code>main</code> matched when this guide was prepared.</div>
+      <div class="grid3">
+        <article class="card"><div class="label">Public pages</div><div class="value">Home, Featured, Weddings, About, Tales, Contact</div></article>
+        <article class="card"><div class="label">Featured stories</div><div class="value">Six couples</div><p>Each has its own story, gallery, rituals, and moving hero.</p></article>
+        <article class="card"><div class="label">Enquiries</div><div class="value">WhatsApp</div><p>The form prepares a message. It does not email or store leads.</p></article>
+      </div>
+    </section>
+
+    <section class="chapter page" id="contents">
+      <div class="head"><div class="kicker">Contents</div><h2>Find the answer quickly.</h2></div>
+      <ol class="toc">
+        <li><a href="#ownership">Accounts and ownership</a></li><li><a href="#hosting">Hosting and domains</a></li>
+        <li><a href="#structure">How the site is organised</a></li><li><a href="#editing">Common content changes</a></li>
+        <li><a href="#couples">Featured couples and stories</a></li><li><a href="#media">Photos and films</a></li>
+        <li><a href="#contact">Contact form and details</a></li><li><a href="#local">Run the site locally</a></li>
+        <li><a href="#publish">Publish and roll back</a></li><li><a href="#qa">Release checklist</a></li>
+        <li><a href="#care">Maintenance and troubleshooting</a></li><li><a href="#guide">Update this guide</a></li>
+      </ol>
+      <div class="note"><strong>Who should read what</strong>Sections 1-3 explain ownership in plain language. Sections 4-12 are the working manual for the maintainer or developer.</div>
+    </section>
+
+    <section class="chapter page" id="ownership">
+      <div class="head"><div class="kicker">01 / Ownership</div><h2>Accounts the client must control.</h2></div>
+      <p class="lead">A handover is complete only when Mi Amor Tales controls the code, hosting, domain, and original media. Never write passwords in this guide or commit them to GitHub.</p>
+      <table><thead><tr><th>Asset</th><th>Current reference</th><th>Handover action</th><th>Status</th></tr></thead><tbody>
+        <tr><td>Domain</td><td class="path">miamortales.com</td><td>Confirm registrar owner, billing, recovery email, and two-factor authentication.</td><td><span class="status pending">Confirm</span></td></tr>
+        <tr><td>Hosting</td><td>Vercel</td><td>Invite the client as owner/admin of the production project. Confirm billing and alerts.</td><td><span class="status pending">Transfer</span></td></tr>
+        <tr><td>Source code</td><td class="path">github.com/varpar/MAT</td><td>Add the client and future maintainer. Protect <code>main</code>.</td><td><span class="status pending">Transfer</span></td></tr>
+        <tr><td>Source media</td><td>Client Google Drive</td><td>Keep original photographs, films, magazine copy, and usage permissions in a client-owned archive.</td><td><span class="status pending">Confirm</span></td></tr>
+        <tr><td>Business email</td><td class="path">hello@miamortales.com</td><td>Confirm mailbox ownership, renewal, recovery, and spam protection.</td><td><span class="status pending">Confirm</span></td></tr>
+        <tr><td>Cloudinary</td><td>Optional utility</td><td>Keys in <code>.env.example</code> are for migration scripts. Current public images are local.</td><td><span class="status optional">Optional</span></td></tr>
+      </tbody></table>
+      <h3>Recommended access model</h3>
+      <ul><li>Mi Amor Tales owns every primary account and keeps two recovery contacts.</li><li>The developer receives collaborator access, not the client's password.</li><li>Enable two-factor authentication everywhere and store recovery codes in a client-owned password manager.</li><li>Remove former collaborators when their work ends.</li></ul>
+      <div class="warn"><strong>Keep secrets out of GitHub</strong>Real <code>.env</code> files are ignored. API keys, registrar passwords, email passwords, and Vercel tokens belong in account settings or a password manager.</div>
+    </section>
+
+    <section class="chapter page" id="hosting">
+      <div class="head"><div class="kicker">02 / Hosting</div><h2>Where the website lives.</h2></div>
+      <p class="lead">The public site is hosted on Vercel. The custom domain points to Vercel, and the root domain redirects to the www address.</p>
+      <div class="grid2">
+        <article class="card"><div class="label">Primary address</div><div class="value">https://www.miamortales.com</div><p>Use this in profiles, QR codes, and client communication.</p></article>
+        <article class="card"><div class="label">Technical fallback</div><div class="value">https://mat-bay.vercel.app</div><p>Keep as a deployment URL, not the public brand address.</p></article>
+      </div>
+      <h3>Verified behaviour</h3>
+      <ul><li><code>https://miamortales.com</code> redirects to <code>https://www.miamortales.com/</code>.</li><li><code>www.miamortales.com</code> resolves through <code>cname.vercel-dns.com</code>.</li><li>The live response identifies Vercel as the server and uses HTTPS with HSTS.</li></ul>
+      <h3>Final transfer checklist</h3>
+      <ol><li>Open Vercel and identify the project serving the custom domain.</li><li>Confirm its Git repository is <code>varpar/MAT</code> and production branch is <code>main</code>.</li><li>Invite the client's Vercel account as owner/admin.</li><li>Confirm both root and www domains are attached.</li><li>Move renewal, billing, and failure notifications to client-controlled addresses.</li></ol>
+      <div class="warn"><strong>Do not create a duplicate Vercel project</strong>The local <code>.vercel</code> folder is ignored. A maintainer using the CLI must run <code>npx vercel link</code> and select the existing production project.</div>
+    </section>
+
+    <section class="chapter page" id="structure">
+      <div class="head"><div class="kicker">03 / Structure</div><h2>How the site is organised.</h2></div>
+      <p class="lead">Page copy and layouts live in page components. Shared wedding data, image records, stories, and featured couple settings live in one central data file. This is a code-managed website, not a WordPress, Webflow, CMS, or database project.</p>
+      <table><thead><tr><th>Area</th><th>Primary location</th><th>Controls</th></tr></thead><tbody>
+        <tr><td>Homepage</td><td class="path">app/_pages/HomeClient.tsx</td><td>Hero, marquee, six couples, featured film, editorial sections, and CTA.</td></tr>
+        <tr><td>Featured index</td><td class="path">app/_pages/FeaturedIndexClient.tsx</td><td>Featured landing page and cards.</td></tr>
+        <tr><td>Couple pages</td><td class="path">app/_pages/FeaturedStoryClient.tsx</td><td>Story layout, chapters, gallery, venue story, and ending.</td></tr>
+        <tr><td>Wedding data</td><td class="path">app/_components/data.ts</td><td>Image records, stories, featured list, videos, and ritual assignments.</td></tr>
+        <tr><td>Story schema</td><td class="path">app/_lib/featured-story.ts</td><td>Required story fields, rituals, vendor credits, and extras.</td></tr>
+        <tr><td>Weddings archive</td><td class="path">app/_pages/WeddingsClient.tsx</td><td>Archive grid, categories, ratios, and selected records.</td></tr>
+        <tr><td>Tales</td><td class="path">app/_pages/TalesClient.tsx</td><td>Stories, album previews, filters, and introductions.</td></tr>
+        <tr><td>About</td><td class="path">app/_pages/AboutClient.tsx</td><td>Studio story, stats, team, roles, and crop settings.</td></tr>
+        <tr><td>Contact</td><td class="path">app/_pages/ContactClient.tsx</td><td>WhatsApp flow, fields, details, and FAQs.</td></tr>
+        <tr><td>Navigation / footer</td><td class="path">app/_components/Nav.tsx<br>app/_components/Footer.tsx</td><td>Menus, business details, social labels, and copyright.</td></tr>
+        <tr><td>Brand system</td><td class="path">app/_components/tokens.ts<br>app/globals.css</td><td>Colour, type, spacing, image gaps, and global behaviour.</td></tr>
+        <tr><td>Metadata</td><td class="path">app/layout.tsx and app/**/page.tsx</td><td>Browser titles and search descriptions.</td></tr>
+        <tr><td>Media</td><td class="path">public/brand, public/images, public/home, public/video</td><td>Logos, photographs, portraits, films, loops, and posters.</td></tr>
+      </tbody></table>
+      <h3>Route map</h3>
+      <pre><code>/                         Homepage
+/featured                 Featured weddings
+/featured/[couple-slug]   One couple's story
+/weddings                 Wedding archive
+/tales                    Stories and albums
+/about                    Studio, stats, and team
+/contact                  Enquiry form and FAQs</code></pre>
+    </section>
+
+    <section class="chapter page" id="editing">
+      <div class="head"><div class="kicker">04 / Editing</div><h2>Common content changes.</h2></div>
+      <h3>Homepage hero photograph</h3>
+      <ol><li>Prepare a strong landscape JPEG with the subject safe in the centre crop.</li><li>Replace <code>public/home/hero-aks09773.jpg</code> using the same filename.</li><li>If the filename changes, update <code>HERO_IMAGE.publicId</code> near the top of <code>HomeClient.tsx</code>.</li><li>Check desktop and phone crops.</li></ol>
+      <h3>About copy and statistics</h3>
+      <ul><li>The story and "The Art of Noticing" copy are in <code>AboutClient.tsx</code>.</li><li>The <code>stats</code> array currently shows 2+ Years, 50+ Weddings, 10+ Cities, and 4-5 Awards.</li><li>Update related homepage and footer wording when a milestone changes.</li></ul>
+      <h3>Team member</h3>
+      <ol><li>Add or replace the portrait in <code>public/images/team</code>.</li><li>Add or update its image record in <code>data.ts</code>.</li><li>Edit the <code>team</code> array in <code>AboutClient.tsx</code>.</li><li>Use optional crop settings only for small source-image corrections.</li></ol>
+      <h3>Homepage featured film</h3>
+      <p>The homepage currently prefers slug <code>riya-sang-mohit</code> inside <code>HomeVideoSection</code>. Change that slug only after the replacement couple has a valid <code>heroVideo</code>.</p>
+      <h3>Menu and footer</h3>
+      <p>Edit <code>NAV_LINKS</code> in <code>Nav.tsx</code>. Edit business details and footer labels in <code>Footer.tsx</code>. Keep route paths unchanged unless the route itself is changed.</p>
+    </section>
+
+    <section class="chapter page" id="couples">
+      <div class="head"><div class="kicker">05 / Couples</div><h2>Add or update a featured wedding.</h2></div>
+      <p class="lead">Every featured page must use that couple's own photographs. Hide a ceremony when there is no verified image. Never fill a gap with another couple's photograph. Keep public slugs stable; changing one breaks saved links and search results unless a redirect is added.</p>
+      <table><thead><tr><th>Couple</th><th>Slug</th><th>Hero media</th></tr></thead><tbody>
+        <tr><td>Anvesha and Omkar</td><td class="path">anvesha-sang-omkar</td><td>13-second silent photo film</td></tr>
+        <tr><td>Pooja and Harsh</td><td class="path">harsh-sang-pooja</td><td>4:20 film with sound</td></tr>
+        <tr><td>Riya and Mohit</td><td class="path">riya-sang-mohit</td><td>3:30 film with sound</td></tr>
+        <tr><td>Joyeeta and Harsh</td><td class="path">harsh-sang-joyeeta</td><td>13-second silent photo film</td></tr>
+        <tr><td>Aishwarya and Shubham</td><td class="path">shubham-sang-aishwarya</td><td>13-second silent photo film</td></tr>
+        <tr><td>Vanya and Varun</td><td class="path">varun-sang-vanya</td><td>13-second silent photo film</td></tr>
+      </tbody></table>
+      <h3>Update an existing couple</h3>
+      <ol><li>Put new files in that couple's folder under <code>public/images</code>.</li><li>Create or update matching image records in <code>data.ts</code>.</li><li>Update the story object: cover copy, date, detail line, photo slots, sections, quote, vendors, ritual extras, hidden rituals, and extras.</li><li>Check the couple entry in the exported <code>FEATURED</code> array.</li><li>Inspect the story route, Featured index, homepage, and Tales.</li></ol>
+      <h3>Add a new couple</h3>
+      <div class="flow"><div><small>1</small>Create a lowercase folder and stable slug.</div><div><small>2</small>Prepare verified photos and optional film.</div><div><small>3</small>Add image records and typed story.</div><div><small>4</small>Add entry to <code>FEATURED</code>.</div><div><small>5</small>Build, inspect, and publish.</div></div>
+      <pre><code>{
+  bride: "Bride", groom: "Groom", place: "Venue, City",
+  img: NEW_STORY.photos.hero,
+  slug: "bride-sang-groom", story: NEW_STORY,
+  heroVideo: { src, poster, duration: "2:45" }
+}</code></pre>
+    </section>
+
+    <section class="chapter page" id="media">
+      <div class="head"><div class="kicker">06 / Media</div><h2>Photos and films that stay fast.</h2></div>
+      <div class="photo-band"><img src="../public/images/anvesha-sang-omkar/drive-aks03126.jpg" alt="Wedding celebration"><div><blockquote>Use fewer, stronger frames. Every image must belong to the named couple and ceremony.</blockquote><cite>Editorial media rule</cite></div></div>
+      <h3>Photographs</h3>
+      <ul><li>Use JPEG or WebP in sRGB. Recommended long edge: 2000-3000 pixels.</li><li>Aim for roughly 300 KB-1.5 MB after optimization while preserving full-screen quality.</li><li>Hero and poster images should be landscape; team and bridal portraits should be vertical.</li><li>Use lowercase, descriptive, hyphenated filenames without spaces.</li><li>Keep original full-resolution files in the client Drive. GitHub holds delivery copies.</li></ul>
+      <h3>Films</h3>
+      <ul><li>Use MP4 with H.264 video and AAC audio, normally 1920 x 1080 landscape.</li><li>Enable fast start and aim below 50 MB. GitHub blocks normal files at 100 MB.</li><li>Supply a poster JPEG for full films.</li><li>Set <code>withSound: false</code> for silent montages so the interface says "Photo film" and hides sound controls.</li></ul>
+      <h3>Folder pattern</h3>
+      <pre><code>public/images/couple-slug/
+  hero.jpg, bride.jpg, groom.jpg
+  storyImage1.jpg, storyImage2.jpg
+  haldi.jpg, mehendi.jpg, sangeet.jpg
+  pheras.jpg, vidaai.jpg, intimateBW.jpg
+  closing.jpg, extra1.jpg ...
+
+public/video/featured/couple-slug/
+  highlight.mp4
+  poster.jpg</code></pre>
+      <p>Next.js creates AVIF and WebP variants in production, but source files still need sensible dimensions and compression.</p>
+    </section>
+
+    <section class="chapter page" id="contact">
+      <div class="head"><div class="kicker">07 / Enquiries</div><h2>Contact details and WhatsApp.</h2></div>
+      <p class="lead">The enquiry form runs in the browser. It builds a readable message from the fields and opens WhatsApp to the studio number.</p>
+      <div class="grid2"><article class="card"><div class="label">WhatsApp destination</div><div class="value">+91 99284 12112</div><p>Stored as <code>WHATSAPP_NUMBER = "919928412112"</code>.</p></article><article class="card"><div class="label">Displayed email</div><div class="value">hello@miamortales.com</div><p>Shown on Contact and in the footer. It is not the form destination.</p></article></div>
+      <h3>What submit does</h3>
+      <ol><li>Checks the required name and email fields.</li><li>Builds a message with names, email, phone, date, venue, package, and notes.</li><li>Opens WhatsApp or WhatsApp Web with the message ready to review.</li><li>Sends only when the visitor presses Send inside WhatsApp.</li></ol>
+      <div class="warn"><strong>No lead database or automatic email</strong>The site does not save submissions, send notification emails, or maintain an enquiry dashboard. Add a verified backend and privacy disclosure before collecting data.</div>
+      <h3>Change the WhatsApp number</h3>
+      <ol><li>Edit <code>WHATSAPP_NUMBER</code> in <code>ContactClient.tsx</code>, digits only with country code.</li><li>Update the formatted number lower in that file.</li><li>Update <code>Footer.tsx</code>.</li><li>Test on phone and desktop.</li></ol>
+      <h3>FAQs and social links</h3>
+      <p>Edit <code>FAQS</code> near the top of <code>ContactClient.tsx</code>. Footer social names currently have no external URLs; adding real links requires editing <code>Footer.tsx</code>.</p>
+    </section>
+
+    <section class="chapter page" id="local">
+      <div class="head"><div class="kicker">08 / Local setup</div><h2>Run the website on a computer.</h2></div>
+      <h3>Requirements</h3><ul><li>Git</li><li>Node.js 20.9.0 or newer</li><li>npm</li><li>GitHub repository access</li></ul>
+      <h3>First setup</h3><pre><code>git clone https://github.com/varpar/MAT.git
+cd MAT
+npm ci
+npm run dev</code></pre><p>Open <code>http://localhost:3000</code>.</p>
+      <h3>Before editing</h3><pre><code>git checkout main
+git pull origin main
+npm ci</code></pre>
+      <h3>Before publishing</h3><pre><code>npm run lint
+npm run build</code></pre>
+      <div class="note"><strong>Environment variables</strong>Normal viewing needs no Cloudinary credentials because current images are under <code>public</code>. Keys in <code>.env.example</code> are for optional migration scripts. Never commit a real <code>.env</code>.</div>
+    </section>
+
+    <section class="chapter page" id="publish">
+      <div class="head"><div class="kicker">09 / Publishing</div><h2>From edit to live website.</h2></div>
+      <div class="flow"><div><small>Draft</small>Make one focused change on a branch.</div><div><small>Review</small>Check copy, identity, crops, and links.</div><div><small>Test</small>Run lint and production build.</div><div><small>Approve</small>Merge the approved change to <code>main</code>.</div><div><small>Verify</small>Wait for Vercel, then test live.</div></div>
+      <h3>Recommended Git workflow</h3><pre><code>git checkout -b content/update-name
+# make and test the change
+git add -A
+git commit -m "Update featured wedding gallery"
+git push -u origin content/update-name</code></pre>
+      <p>Open a pull request, review the preview deployment, and merge into <code>main</code>. Direct pushes should be limited to trusted maintainers and small approved changes.</p>
+      <h3>Live verification</h3><ul><li>Vercel marks production Ready.</li><li>The custom domain shows the new revision.</li><li>All main pages load.</li><li>The changed page works on phone and desktop.</li><li>Images, films, navigation, and WhatsApp work.</li></ul>
+      <h3>Rollback</h3><p><strong>Fast:</strong> promote the last known-good deployment in Vercel. <strong>Permanent:</strong></p><pre><code>git log --oneline
+git revert BAD_COMMIT_SHA
+git push origin main</code></pre>
+      <div class="warn"><strong>Preserve history</strong>Do not force-push or use <code>git reset --hard</code> as a production release strategy. A revert is reviewable and recoverable.</div>
+    </section>
+
+    <section class="chapter page" id="qa">
+      <div class="head"><div class="kicker">10 / QA</div><h2>Check before every release.</h2></div>
+      <div class="grid2"><div><h3>Content and identity</h3><ul class="checks"><li>Names and spellings are correct.</li><li>Every photo belongs to the named couple.</li><li>Ceremony labels match the visible event.</li><li>No image repeats unintentionally.</li><li>Venue, date, stats, email, and phone are current.</li><li>Stories have client approval.</li></ul></div><div><h3>Visual and functional</h3><ul class="checks"><li>No overlap or clipped text on phone, tablet, or desktop.</li><li>Hero subjects crop correctly.</li><li>Spacing remains intentional.</li><li>Films and posters are correct.</li><li>Navigation, filters, lightbox, and form work.</li><li>Keyboard focus and reduced motion remain usable.</li></ul></div></div>
+      <h3>Technical checks</h3><pre><code>npm run lint
+npm run build
+git diff --check</code></pre>
+      <h3>Routes to open</h3><pre><code>/
+/featured
+/featured/anvesha-sang-omkar
+/featured/harsh-sang-pooja
+/featured/riya-sang-mohit
+/featured/harsh-sang-joyeeta
+/featured/shubham-sang-aishwarya
+/featured/varun-sang-vanya
+/weddings
+/tales
+/about
+/contact</code></pre>
+      <div class="note"><strong>Preview before production</strong>Use a Vercel preview deployment for client approval whenever a visual change is substantial.</div>
+    </section>
+
+    <section class="chapter page" id="care">
+      <div class="head"><div class="kicker">11 / Care</div><h2>Maintenance and troubleshooting.</h2></div>
+      <h3>Monthly</h3><ul><li>Open all main pages and prepare a test WhatsApp enquiry without sending.</li><li>Check domain, HTTPS, failed deployments, and bandwidth.</li><li>Confirm approved work exists in GitHub and source media exists in the client archive.</li></ul>
+      <h3>Quarterly</h3><ul><li>Review dependency updates on a separate branch.</li><li>Run mobile performance and accessibility checks.</li><li>Audit team, statistics, details, FAQs, social links, and availability language.</li><li>Confirm GitHub recovery and backups.</li></ul>
+      <h3>Common problems</h3>
+      <table><thead><tr><th>Problem</th><th>Likely cause</th><th>First action</th></tr></thead><tbody>
+        <tr><td>Old content is live</td><td>Build pending, wrong branch, or cache</td><td>Check Vercel production commit, then hard-refresh.</td></tr>
+        <tr><td>Image is missing</td><td>Wrong filename, case, or record path</td><td>Confirm exact file and matching <code>publicId</code>.</td></tr>
+        <tr><td>Video does not play</td><td>Encoding, size, or path</td><td>Check H.264/AAC MP4, file path, poster, and browser console.</td></tr>
+        <tr><td>Wrong event photo</td><td>Story slot or ritual extras</td><td>Fix the couple story in <code>data.ts</code> or hide the ritual.</td></tr>
+        <tr><td>Wrong WhatsApp number</td><td>Values are out of sync</td><td>Update Contact and Footer, then test both devices.</td></tr>
+        <tr><td>Build fails</td><td>Syntax, type, import, or missing asset</td><td>Fix the first build error locally before publishing.</td></tr>
+        <tr><td>Domain fails</td><td>DNS, renewal, Vercel domain, or billing</td><td>Check registrar, Vercel Domains, records, and project owner.</td></tr>
+      </tbody></table>
+      <h3>Known improvements</h3><ul><li>Add real URLs to footer social labels.</li><li>Add a lead backend only if enquiry tracking is required.</li><li>Set explicit production <code>metadataBase</code> for absolute social previews.</li><li>Review unused story data before removing it.</li><li>Protect <code>main</code> with required checks and review.</li></ul>
+    </section>
+
+    <section class="chapter page" id="guide">
+      <div class="head"><div class="kicker">12 / This guide</div><h2>Update and export this handover.</h2></div>
+      <p class="lead">The editable source is this HTML file. It contains its layout and print styles and uses the website's local logo, font, and photographs.</p>
+      <h3>Editable source</h3><p><code>handover/mi-amor-tales-website-handover.html</code></p>
+      <h3>Update process</h3><ol><li>Edit the HTML in a code editor.</li><li>Open it in Chrome and review wide and narrow layouts.</li><li>Run <code>node handover/export-handover.mjs</code> from the project root.</li><li>Inspect every PDF page for clipping, overlap, missing images, or blanks.</li><li>Update the cover date and version for every major handover revision.</li></ol>
+      <h3>Update this guide when these change</h3><ul><li>URLs, account owners, repository, branch, or deployment flow.</li><li>Featured couples and film types.</li><li>Phone, email, social links, statistics, or team.</li><li>Content locations, scripts, services, environment variables, or maintenance tasks.</li><li>The production commit shown on the cover.</li></ul>
+      <div class="good"><strong>Definition of done</strong>The client can access every account, a new developer can run and publish the site, content locations are clear, domain and billing are client-controlled, and a tested rollback path exists.</div>
+    </section>
+  </div>
+
+  <div class="print-footer">Mi Amor Tales - Website Handover Guide - October 2026</div>
+</main>
+</body>
+</html>

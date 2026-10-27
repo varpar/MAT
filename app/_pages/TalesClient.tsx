@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
 import { SANS, BODY, DISPLAY, T, LAYOUT } from "../_components/tokens";
@@ -72,42 +73,37 @@ function StoryCard({
   reduceMotion: boolean | null;
 }) {
   const [hov, setHov] = useState(false);
-  const router = useRouter();
   const cover = couple.story?.photos.hero ?? couple.img;
-  const go = () => router.push(`/featured/${couple.slug ?? "riya-sang-mohit"}`);
+  const href = `/featured/${couple.slug ?? "riya-sang-mohit"}`;
 
   const initial = reduceMotion ? false : { opacity: 0, y: 30 };
 
   return (
-    <motion.article
-      onMouseEnter={() => setHov(true)}
-      onMouseLeave={() => setHov(false)}
-      onFocus={() => setHov(true)}
-      onBlur={() => setHov(false)}
-      onClick={go}
-      onKeyDown={(event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          go();
-        }
-      }}
-      role="link"
-      tabIndex={0}
+    <Link
+      href={href}
       aria-label={`Read the wedding story of ${couple.bride} and ${couple.groom}`}
-      data-cursor="Read story"
-      initial={initial}
-      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-10%" }}
-      transition={{ duration: 0.9, ease: EASE, delay: (idx % 3) * 0.06 }}
-      className="mat-story-card"
-      style={{
-        cursor: "pointer",
-        display: "flex",
-        flexDirection: "column",
-        background: T.sage,
-        overflow: "hidden",
-      }}
+      style={{ color: "inherit", textDecoration: "none", display: "flex" }}
     >
+      <motion.article
+        onMouseEnter={() => setHov(true)}
+        onMouseLeave={() => setHov(false)}
+        onFocus={() => setHov(true)}
+        onBlur={() => setHov(false)}
+        data-cursor="Read story"
+        initial={initial}
+        whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-10%" }}
+        transition={{ duration: 0.9, ease: EASE, delay: (idx % 3) * 0.06 }}
+        className="mat-story-card"
+        style={{
+          cursor: "pointer",
+          display: "flex",
+          flexDirection: "column",
+          background: T.sage,
+          overflow: "hidden",
+          width: "100%",
+        }}
+      >
       {/* Feature photo */}
       <div
         style={{
@@ -232,7 +228,8 @@ function StoryCard({
           </motion.span>
         </div>
       </div>
-    </motion.article>
+      </motion.article>
+    </Link>
   );
 }
 

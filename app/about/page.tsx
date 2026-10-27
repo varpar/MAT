@@ -1,11 +1,25 @@
+import type { Metadata } from "next";
 import { AboutClient } from "../_pages/AboutClient";
+import { JsonLd } from "../_components/JsonLd";
+import { breadcrumbJsonLd, pageMetadata } from "../_lib/seo";
 
-export const metadata = {
-  title: "About · Mi Amor Tales",
+export const metadata: Metadata = pageMetadata({
+  title: "About Our Jaipur Wedding Photography Studio",
   description:
-    "We sit with families before we ever lift a lens. The small Jaipur studio behind Mi Amor Tales — origin, philosophy, and team.",
-};
+    "Meet the founders and team behind Mi Amor Tales, a Jaipur wedding photography studio preserving honest emotion through documentary and editorial imagery.",
+  path: "/about",
+});
 
 export default function AboutPage() {
-  return <AboutClient />;
+  return (
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "About", path: "/about" },
+        ])}
+      />
+      <AboutClient />
+    </>
+  );
 }

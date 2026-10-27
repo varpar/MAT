@@ -1,11 +1,25 @@
+import type { Metadata } from "next";
 import { ContactClient } from "../_pages/ContactClient";
+import { JsonLd } from "../_components/JsonLd";
+import { breadcrumbJsonLd, pageMetadata } from "../_lib/seo";
 
-export const metadata = {
-  title: "Contact · Mi Amor Tales",
+export const metadata: Metadata = pageMetadata({
+  title: "Wedding Photography Enquiries",
   description:
-    "Tell us about your day. We answer every enquiry within 36 hours — six slots per season, hand-picked.",
-};
+    "Contact Mi Amor Tales for wedding photography and film enquiries in Jaipur and destination venues across India. Share your date, city, and celebration plans.",
+  path: "/contact",
+});
 
 export default function ContactPage() {
-  return <ContactClient />;
+  return (
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Contact", path: "/contact" },
+        ])}
+      />
+      <ContactClient />
+    </>
+  );
 }

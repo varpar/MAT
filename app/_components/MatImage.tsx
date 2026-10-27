@@ -18,11 +18,9 @@ type VariantPreset = {
  * far more often than missing AVIF.
  */
 const VARIANTS = {
-  /** Full-bleed hero image. Always above the fold. */
+  /** Full-bleed image sizing. Loading priority is set explicitly at the true page hero. */
   Hero: {
     sizes: "100vw",
-    priority: true,
-    fetchPriority: "high",
   },
   /**
    * 3-up / 4-up content grids (showcase, ritual timeline, mosaic). Tracks the
@@ -94,7 +92,6 @@ export function MatImage({
   ...rest
 }: Props) {
   const preset: VariantPreset = VARIANTS[variant];
-  const isHero = variant === "Hero";
   const lightbox = useLightbox();
   const lbActive = lightbox && !noLightbox;
 
@@ -133,8 +130,8 @@ export function MatImage({
         sizes={sizesOverride ?? preset.sizes}
         placeholder="blur"
         blurDataURL={image.blurDataURL}
-        priority={isHero ? preset.priority : rest.priority}
-        fetchPriority={isHero ? preset.fetchPriority : rest.fetchPriority}
+        priority={rest.priority}
+        fetchPriority={rest.fetchPriority}
         className={className}
         style={commonStyle}
         data-mat-image=""
@@ -153,8 +150,8 @@ export function MatImage({
       sizes={sizesOverride ?? preset.sizes}
       placeholder="blur"
       blurDataURL={image.blurDataURL}
-      priority={isHero ? preset.priority : rest.priority}
-      fetchPriority={isHero ? preset.fetchPriority : rest.fetchPriority}
+      priority={rest.priority}
+      fetchPriority={rest.fetchPriority}
       className={className}
       style={commonStyle}
       data-mat-image=""

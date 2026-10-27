@@ -81,6 +81,8 @@ function CoverHero({ couple, story }: { couple: Couple; story: FeaturedStory }) 
             <MatImage
               image={story.photos.hero}
               variant="Hero"
+              priority
+              fetchPriority="high"
               alt={`${couple.bride} sang ${couple.groom} — ${couple.place}`}
               filter="brightness(0.94)"
             />

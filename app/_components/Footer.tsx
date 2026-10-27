@@ -122,9 +122,9 @@ export function Footer() {
           <FootCol
             head="Reach"
             links={[
-              ["hello@miamortales.com", null],
-              ["+91 99 28 41 21 12", null],
-              ["WhatsApp", null],
+              ["hello@miamortales.com", "mailto:hello@miamortales.com"],
+              ["+91 99 28 41 21 12", "tel:+919928412112"],
+              ["WhatsApp", "https://wa.me/919928412112"],
               ["Check availability", "/contact"],
             ]}
           />

@@ -158,7 +158,7 @@ export function WeddingsClient() {
             zIndex: 1,
           }}
         >
-          Every Wedding<Sep />218 Frames<Sep />Eight Years
+          50+ Weddings<Sep />10+ Cities<Sep />2+ Years
         </div>
         <h1
           className="mat-weddings-h1"

@@ -70,13 +70,13 @@ function HomeHero() {
           scale,
           willChange: "transform",
         }}
-        initial={reduceMotion ? { opacity: 0 } : { opacity: 0 }}
-        animate={reduceMotion ? { opacity: 1 } : { opacity: 1 }}
-        transition={{ duration: 2.2, ease: EASE }}
+        initial={false}
       >
         <MatImage
           image={HOME_HERO_IMAGE}
           variant="Hero"
+          priority
+          fetchPriority="high"
           alt="Bride standing beneath the ornate arches of a heritage palace"
           filter="brightness(0.86)"
         />
@@ -106,7 +106,7 @@ function HomeHero() {
           opacity: fade,
         }}
       >
-        <motion.p
+        <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: EASE, delay: 0.6 }}
@@ -122,7 +122,7 @@ function HomeHero() {
           }}
         >
           Moments that don&apos;t just look good. They feel right.
-        </motion.p>
+        </motion.h1>
         <motion.div
           className="mat-hero-scroll"
           initial={{ opacity: 0 }}

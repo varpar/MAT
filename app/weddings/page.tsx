@@ -1,11 +1,25 @@
+import type { Metadata } from "next";
 import { WeddingsClient } from "../_pages/WeddingsClient";
+import { JsonLd } from "../_components/JsonLd";
+import { breadcrumbJsonLd, pageMetadata } from "../_lib/seo";
 
-export const metadata = {
-  title: "Weddings · Mi Amor Tales",
+export const metadata: Metadata = pageMetadata({
+  title: "Indian Wedding Photography Portfolio",
   description:
-    "Every wedding, kept in polaroid. The full archive — 218 frames across eight years.",
-};
+    "Explore documentary and editorial Indian wedding photography by Mi Amor Tales, captured in Jaipur and destination venues across India.",
+  path: "/weddings",
+});
 
 export default function WeddingsPage() {
-  return <WeddingsClient />;
+  return (
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Weddings", path: "/weddings" },
+        ])}
+      />
+      <WeddingsClient />
+    </>
+  );
 }
